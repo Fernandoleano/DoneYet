@@ -11,7 +11,38 @@
     <%= javascript_importmap_tags %>
   </head>
 
-  <body class="bg-gray-900 text-white h-screen overflow-hidden">
-    <%= yield %>
+  <body class="bg-gray-900 text-white h-screen overflow-hidden flex flex-col">
+    <!-- Top Navigation -->
+    <nav class="bg-gray-800 border-b border-gray-700 px-6 py-3 flex items-center justify-between flex-shrink-0">
+      <div class="flex items-center gap-4">
+        <%= link_to meetings_path, class: "flex items-center gap-2 text-gray-300 hover:text-white transition" do %>
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+          <span class="font-medium">Back to Dashboard</span>
+        <% end %>
+        
+        <div class="h-6 w-px bg-gray-700"></div>
+        
+        <div class="flex items-center gap-2">
+          <div class="w-8 h-8 bg-indigo-600 rounded-lg flex items-center justify-center font-black text-sm">D</div>
+          <span class="font-bold text-lg">DoneYet Chat</span>
+        </div>
+      </div>
+      
+      <div class="flex items-center gap-4">
+        <%= link_to team_index_path, class: "text-gray-300 hover:text-white transition text-sm" do %>
+          Team
+        <% end %>
+        <%= link_to workspace_announcements_path, class: "text-gray-300 hover:text-white transition text-sm" do %>
+          Announcements
+        <% end %>
+        <%= link_to automations_path, class: "text-gray-300 hover:text-white transition text-sm" do %>
+          Automations
+        <% end %>
+      </div>
+    </nav>
+    
+    <div class="flex-1 overflow-hidden">
+      <%= yield %>
+    </div>
   </body>
 </html>
