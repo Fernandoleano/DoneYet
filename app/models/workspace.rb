@@ -6,6 +6,7 @@ class Workspace < ApplicationRecord
   has_many :automations, dependent: :destroy
   has_many :workspace_notes, dependent: :destroy
   has_many :workspace_announcements, dependent: :destroy
+  has_many :channels, dependent: :destroy
 
   validates :name, presence: true
 

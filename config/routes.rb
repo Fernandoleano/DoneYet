@@ -1,4 +1,10 @@
 Rails.application.routes.draw do
+  get "chat_messages/create"
+  get "channels/index"
+  get "channels/show"
+  get "channels/create"
+  get "channels/join"
+  get "channels/leave"
   # Landing page for non-authenticated users
   get "landing" => "landing#index", as: :landing
 

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2025_12_22_210955) do
+ActiveRecord::Schema[8.1].define(version: 2025_12_22_211538) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -77,6 +77,39 @@ ActiveRecord::Schema[8.1].define(version: 2025_12_22_210955) do
     t.datetime "updated_at", null: false
     t.bigint "workspace_id", null: false
     t.index ["workspace_id"], name: "index_automations_on_workspace_id"
+  end
+
+  create_table "channel_memberships", force: :cascade do |t|
+    t.bigint "channel_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
+    t.index ["channel_id"], name: "index_channel_memberships_on_channel_id"
+    t.index ["user_id"], name: "index_channel_memberships_on_user_id"
+  end
+
+  create_table "channels", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.integer "created_by_id"
+    t.text "description"
+    t.string "name"
+    t.boolean "private", default: false
+    t.datetime "updated_at", null: false
+    t.bigint "workspace_id", null: false
+    t.index ["workspace_id", "name"], name: "index_channels_on_workspace_id_and_name", unique: true
+    t.index ["workspace_id"], name: "index_channels_on_workspace_id"
+  end
+
+  create_table "chat_messages", force: :cascade do |t|
+    t.bigint "channel_id", null: false
+    t.text "content"
+    t.datetime "created_at", null: false
+    t.integer "parent_message_id"
+    t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
+    t.index ["channel_id"], name: "index_chat_messages_on_channel_id"
+    t.index ["parent_message_id"], name: "index_chat_messages_on_parent_message_id"
+    t.index ["user_id"], name: "index_chat_messages_on_user_id"
   end
 
   create_table "integrations", force: :cascade do |t|
@@ -237,6 +270,11 @@ ActiveRecord::Schema[8.1].define(version: 2025_12_22_210955) do
   add_foreign_key "announcement_reads", "users"
   add_foreign_key "announcement_reads", "workspace_announcements"
   add_foreign_key "automations", "workspaces"
+  add_foreign_key "channel_memberships", "channels"
+  add_foreign_key "channel_memberships", "users"
+  add_foreign_key "channels", "workspaces"
+  add_foreign_key "chat_messages", "channels"
+  add_foreign_key "chat_messages", "users"
   add_foreign_key "integrations", "workspaces"
   add_foreign_key "meetings", "users", column: "captain_id"
   add_foreign_key "meetings", "workspaces"
