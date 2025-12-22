@@ -9,8 +9,8 @@ class Mission < ApplicationRecord
 
   enum :status, { pending: 0, done: 1, canceled: 2 }, default: :pending
   enum :dispatch_status, { pending: 0, sent: 1, failed: 2 }, default: :pending, prefix: :dispatch
-  enum :difficulty, { easy: 0, medium: 1, hard: 2, critical: 3 }, default: :medium
-  enum :threat_level, { low: 0, medium: 1, high: 2, critical: 3 }, default: :medium
+  enum :difficulty, { easy: 0, medium: 1, hard: 2, critical: 3 }, default: :medium, prefix: :difficulty
+  enum :threat_level, { low: 0, medium: 1, high: 2, critical: 3 }, default: :medium, prefix: :threat
 
   validates :title, presence: true
   validates :due_at, presence: true
@@ -75,9 +75,9 @@ class Mission < ApplicationRecord
 
     # Difficulty multiplier
     case difficulty
-    when "hard"
+    when :difficulty_hard
       bonus += 50
-    when "critical"
+    when :difficulty_critical
       bonus += 100
     end
 
