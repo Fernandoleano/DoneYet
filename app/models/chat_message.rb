@@ -9,15 +9,4 @@ class ChatMessage < ApplicationRecord
 
   scope :recent, -> { order(created_at: :asc) }
   scope :root_messages, -> { where(parent_message_id: nil) }
-
-  after_create_commit :broadcast_message
-
-  private
-
-  def broadcast_message
-    broadcast_append_to "channel_#{channel_id}_messages",
-                       target: "messages",
-                       partial: "chat_messages/message",
-                       locals: { message: self }
-  end
 end
