@@ -1,13 +1,6 @@
-<div class="relative">
-  <!-- Animated Background -->
-  <div class="fixed inset-0 overflow-hidden pointer-events-none">
-    <div class="absolute top-0 -left-4 w-96 h-96 bg-indigo-600 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob"></div>
-    <div class="absolute top-0 -right-4 w-96 h-96 bg-purple-600 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000"></div>
-    <div class="absolute -bottom-8 left-20 w-96 h-96 bg-pink-600 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-4000"></div>
-  </div>
-
+<div class="relative bg-gray-900">
   <!-- Navigation -->
-  <nav class="relative z-10 border-b border-gray-800 bg-gray-900/50 backdrop-blur-xl">
+  <nav class="fixed top-0 left-0 right-0 z-50 bg-gray-900/95 backdrop-blur-xl border-b border-gray-800">
     <div class="max-w-7xl mx-auto px-6 py-4">
       <div class="flex items-center justify-between">
         <div class="flex items-center gap-2">
@@ -16,88 +9,123 @@
           </div>
           <span class="font-black text-2xl">DoneYet</span>
         </div>
+        <div class="hidden md:flex items-center gap-8 text-sm">
+          <a href="#features" class="text-gray-300 hover:text-white transition">Features</a>
+          <a href="#how-it-works" class="text-gray-300 hover:text-white transition">How It Works</a>
+          <a href="#pricing" class="text-gray-300 hover:text-white transition">Pricing</a>
+        </div>
         <div class="flex items-center gap-4">
-          <%= link_to "Sign In", new_session_path, class: "px-4 py-2 text-gray-300 hover:text-white transition" %>
-          <%= link_to "Get Started", new_registration_path, class: "px-6 py-2 bg-indigo-600 hover:bg-indigo-500 rounded-lg font-semibold transition shadow-lg hover:shadow-indigo-500/50" %>
+          <%= link_to "Sign In", new_session_path, class: "px-4 py-2 text-gray-300 hover:text-white transition text-sm font-medium" %>
+          <%= link_to "Get Started Free", new_registration_path, class: "px-6 py-2.5 bg-indigo-600 hover:bg-indigo-500 rounded-lg font-semibold transition shadow-lg hover:shadow-indigo-500/50 text-sm" %>
         </div>
       </div>
     </div>
   </nav>
 
   <!-- Hero Section -->
-  <section class="relative z-10 min-h-screen flex items-center justify-center px-6">
-    <div class="max-w-6xl mx-auto text-center">
-      <!-- Classified Badge -->
-      <div class="inline-block mb-6 px-4 py-2 bg-red-500/10 border border-red-500/20 rounded-full">
-        <span class="text-red-400 text-sm font-bold uppercase tracking-wider flex items-center gap-2">
-          <span class="w-2 h-2 bg-red-500 rounded-full animate-pulse"></span>
-          Classified: Top Secret
-        </span>
-      </div>
+  <section class="pt-32 pb-20 px-6">
+    <div class="max-w-7xl mx-auto">
+      <div class="text-center max-w-4xl mx-auto mb-16">
+        <!-- Badge -->
+        <div class="inline-flex items-center gap-2 px-4 py-2 bg-indigo-500/10 border border-indigo-500/20 rounded-full mb-8">
+          <span class="w-2 h-2 bg-indigo-500 rounded-full animate-pulse"></span>
+          <span class="text-indigo-400 text-sm font-semibold">The #1 Mission Control for Elite Teams</span>
+        </div>
 
-      <!-- Main Headline with Typewriter -->
-      <h1 class="text-7xl md:text-8xl font-black mb-6 leading-tight" data-controller="typewriter">
-        <span class="bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400 bg-clip-text text-transparent"
-              data-typewriter-target="text"
-              data-typewriter-speed-value="80"
-              data-text="Mission Control">
-        </span>
-      </h1>
-      <h2 class="text-4xl md:text-5xl font-bold text-white mb-8">
-        For Elite Teams
-      </h2>
+        <!-- Main Headline -->
+        <h1 class="text-6xl md:text-7xl lg:text-8xl font-black mb-8 leading-tight">
+          Turn Tasks Into
+          <span class="block bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
+            Secret Missions
+          </span>
+        </h1>
 
-      <!-- Subheadline -->
-      <p class="text-xl md:text-2xl text-gray-400 mb-12 max-w-3xl mx-auto leading-relaxed">
-        Transform your team into a <span class="text-indigo-400 font-semibold">covert operations unit</span>. 
-        Track missions, earn achievements, and dominate objectives like a secret agent.
-      </p>
+        <!-- Subheadline -->
+        <p class="text-xl md:text-2xl text-gray-400 mb-12 leading-relaxed max-w-3xl mx-auto">
+          Gamify your workflow with XP, achievements, and ranks. Track missions with military precision. Make productivity feel like a spy operation.
+        </p>
 
-      <!-- CTA Buttons -->
-      <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16">
-        <%= link_to new_registration_path, class: "group px-8 py-4 bg-indigo-600 hover:bg-indigo-500 rounded-xl font-bold text-lg transition shadow-2xl hover:shadow-indigo-500/50 flex items-center gap-3" do %>
-          <span>Start Your Mission</span>
-          <svg class="w-5 h-5 group-hover:translate-x-1 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path></svg>
-        <% end %>
-        <%= link_to "#features", class: "px-8 py-4 bg-gray-800 hover:bg-gray-700 border border-gray-700 rounded-xl font-bold text-lg transition" do %>
-          View Intel
-        <% end %>
+        <!-- CTA Buttons -->
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12">
+          <%= link_to new_registration_path, class: "group px-8 py-4 bg-indigo-600 hover:bg-indigo-500 rounded-xl font-bold text-lg transition shadow-2xl hover:shadow-indigo-500/50 flex items-center gap-3 w-full sm:w-auto justify-center" do %>
+            <span>Start Free Mission</span>
+            <svg class="w-5 h-5 group-hover:translate-x-1 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path></svg>
+          <% end %>
+          <a href="#demo" class="px-8 py-4 bg-gray-800 hover:bg-gray-700 border border-gray-700 rounded-xl font-bold text-lg transition w-full sm:w-auto text-center">
+            Watch Demo
+          </a>
+        </div>
+
+        <!-- Trust Indicators -->
+        <div class="flex flex-wrap items-center justify-center gap-8 text-sm text-gray-500">
+          <div class="flex items-center gap-2">
+            <svg class="w-5 h-5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+            <span>Free forever plan</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <svg class="w-5 h-5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+            <span>No credit card required</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <svg class="w-5 h-5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+            <span>Setup in 60 seconds</span>
+          </div>
+        </div>
       </div>
 
       <!-- Stats -->
-      <div class="grid grid-cols-3 gap-8 max-w-2xl mx-auto">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-4xl mx-auto mb-16">
         <div class="text-center">
           <p class="text-4xl font-black text-indigo-400 mb-2">100+</p>
-          <p class="text-sm text-gray-500 uppercase tracking-wider">Active Agents</p>
+          <p class="text-sm text-gray-500">Active Agents</p>
         </div>
         <div class="text-center">
           <p class="text-4xl font-black text-purple-400 mb-2">1K+</p>
-          <p class="text-sm text-gray-500 uppercase tracking-wider">Missions Completed</p>
+          <p class="text-sm text-gray-500">Missions Completed</p>
         </div>
         <div class="text-center">
           <p class="text-4xl font-black text-pink-400 mb-2">99%</p>
-          <p class="text-sm text-gray-500 uppercase tracking-wider">Success Rate</p>
+          <p class="text-sm text-gray-500">Success Rate</p>
         </div>
+        <div class="text-center">
+          <p class="text-4xl font-black text-emerald-400 mb-2">4.9★</p>
+          <p class="text-sm text-gray-500">User Rating</p>
+        </div>
+      </div>
+
+      <!-- Product Preview Placeholder -->
+      <div class="relative max-w-6xl mx-auto">
+        <div class="relative rounded-2xl overflow-hidden border border-gray-800 shadow-2xl bg-gray-800/50 backdrop-blur">
+          <div class="aspect-video flex items-center justify-center">
+            <div class="text-center p-12">
+              <svg class="w-24 h-24 mx-auto mb-6 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
+              <p class="text-gray-500 text-lg font-semibold">Product Demo Video</p>
+              <p class="text-gray-600 text-sm mt-2">See DoneYet in action</p>
+            </div>
+          </div>
+        </div>
+        <!-- Glow effect -->
+        <div class="absolute -inset-4 bg-gradient-to-r from-indigo-600/20 via-purple-600/20 to-pink-600/20 blur-3xl -z-10"></div>
       </div>
     </div>
   </section>
 
   <!-- Features Section -->
-  <section id="features" class="relative z-10 py-24 px-6">
+  <section id="features" class="py-24 px-6 bg-gray-800/30">
     <div class="max-w-7xl mx-auto">
       <div class="text-center mb-16">
-        <h2 class="text-5xl font-black mb-4">Classified Features</h2>
-        <p class="text-xl text-gray-400">Everything you need to run covert operations</p>
+        <h2 class="text-5xl md:text-6xl font-black mb-4">Everything You Need</h2>
+        <p class="text-xl text-gray-400 max-w-2xl mx-auto">Transform your team into a covert operations unit with powerful features</p>
       </div>
 
-      <div class="grid md:grid-cols-3 gap-8">
-        <!-- Feature 1: Gamification -->
-        <div class="group bg-gradient-to-br from-indigo-500/10 to-indigo-600/5 border border-indigo-500/20 rounded-2xl p-8 hover:border-indigo-500/50 transition-all hover:scale-105 cursor-pointer">
-          <div class="w-16 h-16 bg-indigo-500/20 rounded-xl flex items-center justify-center mb-6 group-hover:bg-indigo-500/30 transition">
-            <svg class="w-8 h-8 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path></svg>
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <!-- Feature 1 -->
+        <div class="bg-gray-800 border border-gray-700 rounded-2xl p-8 hover:border-indigo-500/50 transition-all hover:scale-105">
+          <div class="w-14 h-14 bg-indigo-500/20 rounded-xl flex items-center justify-center mb-6">
+            <svg class="w-7 h-7 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path></svg>
           </div>
           <h3 class="text-2xl font-bold mb-3">Spy Gamification</h3>
-          <p class="text-gray-400 mb-4">Earn XP, unlock achievements, and climb ranks from Recruit to Director. Every mission makes you stronger.</p>
+          <p class="text-gray-400 mb-4 leading-relaxed">Earn XP, unlock achievements, and climb ranks from Recruit to Director. Every mission makes you stronger.</p>
           <ul class="space-y-2 text-sm text-gray-500">
             <li class="flex items-center gap-2">
               <span class="text-indigo-400">✓</span> 6 Agent Ranks
@@ -111,13 +139,13 @@
           </ul>
         </div>
 
-        <!-- Feature 2: Mission Control -->
-        <div class="group bg-gradient-to-br from-purple-500/10 to-purple-600/5 border border-purple-500/20 rounded-2xl p-8 hover:border-purple-500/50 transition-all hover:scale-105 cursor-pointer">
-          <div class="w-16 h-16 bg-purple-500/20 rounded-xl flex items-center justify-center mb-6 group-hover:bg-purple-500/30 transition">
-            <svg class="w-8 h-8 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path></svg>
+        <!-- Feature 2 -->
+        <div class="bg-gray-800 border border-gray-700 rounded-2xl p-8 hover:border-purple-500/50 transition-all hover:scale-105">
+          <div class="w-14 h-14 bg-purple-500/20 rounded-xl flex items-center justify-center mb-6">
+            <svg class="w-7 h-7 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path></svg>
           </div>
           <h3 class="text-2xl font-bold mb-3">Mission Briefings</h3>
-          <p class="text-gray-400 mb-4">Create, assign, and track missions with military precision. Progress trackers show every step of the operation.</p>
+          <p class="text-gray-400 mb-4 leading-relaxed">Create, assign, and track missions with military precision. Progress trackers show every step.</p>
           <ul class="space-y-2 text-sm text-gray-500">
             <li class="flex items-center gap-2">
               <span class="text-purple-400">✓</span> Real-time Progress
@@ -131,13 +159,13 @@
           </ul>
         </div>
 
-        <!-- Feature 3: Analytics -->
-        <div class="group bg-gradient-to-br from-pink-500/10 to-pink-600/5 border border-pink-500/20 rounded-2xl p-8 hover:border-pink-500/50 transition-all hover:scale-105 cursor-pointer">
-          <div class="w-16 h-16 bg-pink-500/20 rounded-xl flex items-center justify-center mb-6 group-hover:bg-pink-500/30 transition">
-            <svg class="w-8 h-8 text-pink-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
+        <!-- Feature 3 -->
+        <div class="bg-gray-800 border border-gray-700 rounded-2xl p-8 hover:border-pink-500/50 transition-all hover:scale-105">
+          <div class="w-14 h-14 bg-pink-500/20 rounded-xl flex items-center justify-center mb-6">
+            <svg class="w-7 h-7 text-pink-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
           </div>
           <h3 class="text-2xl font-bold mb-3">Command Center</h3>
-          <p class="text-gray-400 mb-4">Interactive dashboards with charts, stats, and HQ notes. See everything at a glance like a true operative.</p>
+          <p class="text-gray-400 mb-4 leading-relaxed">Interactive dashboards with charts, stats, and HQ notes. See everything at a glance.</p>
           <ul class="space-y-2 text-sm text-gray-500">
             <li class="flex items-center gap-2">
               <span class="text-pink-400">✓</span> Live Charts
@@ -150,49 +178,109 @@
             </li>
           </ul>
         </div>
+
+        <!-- Feature 4 -->
+        <div class="bg-gray-800 border border-gray-700 rounded-2xl p-8 hover:border-emerald-500/50 transition-all hover:scale-105">
+          <div class="w-14 h-14 bg-emerald-500/20 rounded-xl flex items-center justify-center mb-6">
+            <svg class="w-7 h-7 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+          </div>
+          <h3 class="text-2xl font-bold mb-3">Team Collaboration</h3>
+          <p class="text-gray-400 mb-4 leading-relaxed">Assign multiple agents, share files, and communicate in real-time on every mission.</p>
+          <ul class="space-y-2 text-sm text-gray-500">
+            <li class="flex items-center gap-2">
+              <span class="text-emerald-400">✓</span> Multiple Assignees
+            </li>
+            <li class="flex items-center gap-2">
+              <span class="text-emerald-400">✓</span> Comments & Files
+            </li>
+            <li class="flex items-center gap-2">
+              <span class="text-emerald-400">✓</span> @Mentions
+            </li>
+          </ul>
+        </div>
+
+        <!-- Feature 5 -->
+        <div class="bg-gray-800 border border-gray-700 rounded-2xl p-8 hover:border-yellow-500/50 transition-all hover:scale-105">
+          <div class="w-14 h-14 bg-yellow-500/20 rounded-xl flex items-center justify-center mb-6">
+            <svg class="w-7 h-7 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+          </div>
+          <h3 class="text-2xl font-bold mb-3">Instant Notifications</h3>
+          <p class="text-gray-400 mb-4 leading-relaxed">Get alerted when missions are assigned, completed, or need your attention.</p>
+          <ul class="space-y-2 text-sm text-gray-500">
+            <li class="flex items-center gap-2">
+              <span class="text-yellow-400">✓</span> Real-time Alerts
+            </li>
+            <li class="flex items-center gap-2">
+              <span class="text-yellow-400">✓</span> Email Digests
+            </li>
+            <li class="flex items-center gap-2">
+              <span class="text-yellow-400">✓</span> Slack Integration
+            </li>
+          </ul>
+        </div>
+
+        <!-- Feature 6 -->
+        <div class="bg-gray-800 border border-gray-700 rounded-2xl p-8 hover:border-cyan-500/50 transition-all hover:scale-105">
+          <div class="w-14 h-14 bg-cyan-500/20 rounded-xl flex items-center justify-center mb-6">
+            <svg class="w-7 h-7 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+          </div>
+          <h3 class="text-2xl font-bold mb-3">Enterprise Security</h3>
+          <p class="text-gray-400 mb-4 leading-relaxed">Bank-level encryption and security. Your missions stay classified.</p>
+          <ul class="space-y-2 text-sm text-gray-500">
+            <li class="flex items-center gap-2">
+              <span class="text-cyan-400">✓</span> SOC 2 Compliant
+            </li>
+            <li class="flex items-center gap-2">
+              <span class="text-cyan-400">✓</span> End-to-End Encryption
+            </li>
+            <li class="flex items-center gap-2">
+              <span class="text-cyan-400">✓</span> Private Storage
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
   </section>
 
   <!-- How It Works -->
-  <section class="relative z-10 py-24 px-6 bg-gray-800/30">
+  <section id="how-it-works" class="py-24 px-6">
     <div class="max-w-5xl mx-auto">
       <div class="text-center mb-16">
-        <h2 class="text-5xl font-black mb-4">Mission Protocol</h2>
-        <p class="text-xl text-gray-400">Three steps to operational excellence</p>
+        <h2 class="text-5xl md:text-6xl font-black mb-4">How It Works</h2>
+        <p class="text-xl text-gray-400">Three simple steps to operational excellence</p>
       </div>
 
-      <div class="space-y-12">
+      <div class="space-y-16">
         <!-- Step 1 -->
-        <div class="flex items-start gap-6">
-          <div class="flex-shrink-0 w-16 h-16 bg-indigo-600 rounded-full flex items-center justify-center text-2xl font-black">
+        <div class="flex flex-col md:flex-row items-center gap-8">
+          <div class="flex-shrink-0 w-20 h-20 bg-indigo-600 rounded-2xl flex items-center justify-center text-3xl font-black shadow-lg shadow-indigo-600/50">
             1
           </div>
-          <div class="flex-1">
-            <h3 class="text-2xl font-bold mb-2">Create Your Briefing</h3>
-            <p class="text-gray-400">Set up your mission parameters, assign agents, and define objectives. Every detail matters.</p>
+          <div class="flex-1 text-center md:text-left">
+            <h3 class="text-3xl font-bold mb-3">Create Your Briefing</h3>
+            <p class="text-gray-400 text-lg leading-relaxed">Set up your mission parameters, assign agents, and define objectives. Add files, set deadlines, and choose difficulty levels.</p>
           </div>
         </div>
 
         <!-- Step 2 -->
-        <div class="flex items-start gap-6">
-          <div class="flex-shrink-0 w-16 h-16 bg-purple-600 rounded-full flex items-center justify-center text-2xl font-black">
+        <div class="flex flex-col md:flex-row-reverse items-center gap-8">
+          <div class="flex-shrink-0 w-20 h-20 bg-purple-600 rounded-2xl flex items-center justify-center text-3xl font-black shadow-lg shadow-purple-600/50">
             2
           </div>
-          <div class="flex-1">
-            <h3 class="text-2xl font-bold mb-2">Execute the Mission</h3>
-            <p class="text-gray-400">Track progress in real-time, collaborate with your team, and earn XP for every completed objective.</p>
+          <div class="flex-1 text-center md:text-right">
+            <h3 class="text-3xl font-bold mb-3">Execute the Mission</h3>
+            <p class="text-gray-400 text-lg leading-relaxed">Track progress in real-time, collaborate with your team, and earn XP for every completed objective. Comment, share files, and stay in sync.</p>
           </div>
         </div>
 
         <!-- Step 3 -->
-        <div class="flex items-start gap-6">
-          <div class="flex-shrink-0 w-16 h-16 bg-pink-600 rounded-full flex items-center justify-center text-2xl font-black">
+        <div class="flex flex-col md:flex-row items-center gap-8">
+          <div class="flex-shrink-0 w-20 h-20 bg-pink-600 rounded-2xl flex items-center justify-center text-3xl font-black shadow-lg shadow-pink-600/50">
             3
           </div>
-          <div class="flex-1">
-            <h3 class="text-2xl font-bold mb-2">Achieve Victory</h3>
-            <p class="text-gray-400">Complete missions, unlock achievements, and climb the ranks. Become a legendary operative.</p>
+          <div class="flex-1 text-center md:text-left">
+            <h3 class="text-3xl font-bold mb-3">Achieve Victory</h3>
+            <p class="text-gray-400 text-lg leading-relaxed">Complete missions, unlock achievements, and climb the ranks. Watch confetti rain down and celebrate your success like a true operative.</p>
           </div>
         </div>
       </div>
@@ -200,20 +288,20 @@
   </section>
 
   <!-- Final CTA -->
-  <section class="relative z-10 py-24 px-6">
+  <section class="py-24 px-6 bg-gradient-to-b from-gray-900 to-gray-800">
     <div class="max-w-4xl mx-auto text-center">
-      <h2 class="text-5xl md:text-6xl font-black mb-6">Ready for Your First Mission?</h2>
-      <p class="text-xl text-gray-400 mb-12">Join the elite. Start tracking missions like a secret agent.</p>
+      <h2 class="text-5xl md:text-6xl font-black mb-6">Ready to Deploy?</h2>
+      <p class="text-xl text-gray-400 mb-12 max-w-2xl mx-auto">Join elite teams using DoneYet to gamify their workflow and dominate objectives.</p>
       <%= link_to new_registration_path, class: "inline-flex items-center gap-3 px-10 py-5 bg-indigo-600 hover:bg-indigo-500 rounded-xl font-bold text-xl transition shadow-2xl hover:shadow-indigo-500/50" do %>
-        <span>Deploy Now</span>
+        <span>Start Your First Mission</span>
         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path></svg>
       <% end %>
-      <p class="text-sm text-gray-500 mt-6">No credit card required. Start your mission in 60 seconds.</p>
+      <p class="text-sm text-gray-500 mt-6">Free forever • No credit card • Setup in 60 seconds</p>
     </div>
   </section>
 
   <!-- Footer -->
-  <footer class="relative z-10 border-t border-gray-800 py-12 px-6">
+  <footer class="border-t border-gray-800 py-12 px-6">
     <div class="max-w-7xl mx-auto">
       <div class="flex flex-col md:flex-row items-center justify-between gap-6">
         <div class="flex items-center gap-2">
@@ -232,24 +320,3 @@
     </div>
   </footer>
 </div>
-
-<style>
-  @keyframes blob {
-    0%, 100% { transform: translate(0, 0) scale(1); }
-    25% { transform: translate(20px, -50px) scale(1.1); }
-    50% { transform: translate(-20px, 20px) scale(0.9); }
-    75% { transform: translate(50px, 50px) scale(1.05); }
-  }
-  
-  .animate-blob {
-    animation: blob 20s infinite;
-  }
-  
-  .animation-delay-2000 {
-    animation-delay: 2s;
-  }
-  
-  .animation-delay-4000 {
-    animation-delay: 4s;
-  }
-</style>
