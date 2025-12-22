@@ -1,0 +1,65 @@
+<div class="max-w-4xl mx-auto">
+  <h1 class="text-3xl font-bold text-white mb-6">Notifications</h1>
+
+  <!-- Overdue Missions -->
+  <% if @overdue_missions.any? %>
+    <div class="mb-8">
+      <h2 class="text-xl font-bold text-red-400 mb-4 flex items-center gap-2">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+        Overdue (<%= @overdue_missions.count %>)
+      </h2>
+      <div class="space-y-3">
+        <% @overdue_missions.each do |mission| %>
+          <%= link_to mission, class: "block bg-red-500/10 border border-red-500/20 rounded-xl p-4 hover:bg-red-500/20 transition" do %>
+            <div class="flex items-start justify-between">
+              <div class="flex-1">
+                <h3 class="font-semibold text-white mb-1"><%= mission.title %></h3>
+                <div class="flex items-center gap-3 text-sm text-gray-400">
+                  <span>👤 <%= mission.agent.name %></span>
+                  <span>·</span>
+                  <span>📅 Due <%= time_ago_in_words(mission.due_at) %> ago</span>
+                  <span>·</span>
+                  <span>📁 <%= mission.meeting.title %></span>
+                </div>
+              </div>
+              <span class="px-3 py-1 bg-red-500 text-white rounded-full text-xs font-bold">OVERDUE</span>
+            </div>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+
+  <!-- Pending Missions -->
+  <div>
+    <h2 class="text-xl font-bold text-white mb-4">Pending Missions (<%= @pending_missions.count %>)</h2>
+    <% if @pending_missions.any? %>
+      <div class="space-y-3">
+        <% @pending_missions.each do |mission| %>
+          <%= link_to mission, class: "block bg-gray-800 border border-gray-700 rounded-xl p-4 hover:bg-gray-750 transition" do %>
+            <div class="flex items-start justify-between">
+              <div class="flex-1">
+                <h3 class="font-semibold text-white mb-1"><%= mission.title %></h3>
+                <div class="flex items-center gap-3 text-sm text-gray-400">
+                  <span>👤 <%= mission.agent.name %></span>
+                  <span>·</span>
+                  <span>📅 Due <%= mission.due_at.strftime("%b %d, %Y") %></span>
+                  <span>·</span>
+                  <span>📁 <%= mission.meeting.title %></span>
+                </div>
+              </div>
+              <% if mission.due_at < 24.hours.from_now %>
+                <span class="px-3 py-1 bg-yellow-500/20 text-yellow-400 border border-yellow-500/30 rounded-full text-xs font-bold">DUE SOON</span>
+              <% end %>
+            </div>
+          <% end %>
+        <% end %>
+      </div>
+    <% else %>
+      <div class="text-center py-12 bg-gray-800 border border-gray-700 rounded-xl">
+        <svg class="w-16 h-16 text-gray-600 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+        <p class="text-gray-400">All caught up! No pending missions.</p>
+      </div>
+    <% end %>
+  </div>
+</div>

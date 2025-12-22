@@ -1,0 +1,109 @@
+<div class="max-w-6xl mx-auto px-4" data-controller="meet">
+  <!-- Compact Header -->
+  <div class="flex items-center justify-between py-4 border-b border-gray-800 mb-6">
+    <div class="flex items-center gap-4">
+      <% if @meeting.briefing? %>
+        <span class="flex items-center gap-2 px-3 py-1.5 bg-red-500/10 text-red-400 border border-red-500/20 rounded-lg text-sm font-semibold animate-pulse" data-meet-target="statusBadge">
+          <span class="w-2 h-2 bg-red-500 rounded-full"></span>
+          LIVE SESSION
+        </span>
+      <% else %>
+        <span class="px-3 py-1.5 bg-gray-800 text-gray-400 border border-gray-700 rounded-lg text-sm font-semibold uppercase">
+          <%= @meeting.status %>
+        </span>
+      <% end %>
+      <div>
+        <h1 class="text-2xl font-bold text-white"><%= @meeting.title %></h1>
+        <p class="text-sm text-gray-500">Captain <%= @meeting.captain.name %> · <%= @meeting.created_at.to_date.to_fs(:long) %></p>
+      </div>
+    </div>
+    
+    <% if @meeting.meet_code.present? %>
+      <a href="<%= @meeting.meet_url %>" target="_blank" class="flex items-center gap-2 px-4 py-2 bg-green-600 hover:bg-green-500 text-white rounded-lg font-semibold transition">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
+        Open Google Meet
+      </a>
+    <% end %>
+  </div>
+
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+    <!-- Left: Quick Capture -->
+    <div class="lg:col-span-2 space-y-6">
+      <% if @meeting.briefing? %>
+        <div class="bg-gray-800 border border-gray-700 rounded-2xl p-6">
+          <h2 class="text-lg font-bold text-white mb-4 flex items-center gap-2">
+            <svg class="w-5 h-5 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+            Quick Capture
+          </h2>
+          
+          <%= form_with(model: [@meeting, Mission.new], class: "space-y-4") do |f| %>
+            <%= f.text_field :title, class: "w-full bg-gray-900 border border-gray-700 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-lg", placeholder: "What needs to be done?", data: { meet_target: "titleInput" }, autofocus: true %>
+            
+            <div class="grid grid-cols-2 gap-3">
+              <%= f.collection_select :agent_id, Current.user.workspace.users, :id, :name, { prompt: "Assign to..." }, { class: "bg-gray-900 border border-gray-700 rounded-xl px-4 py-2.5 text-white focus:ring-2 focus:ring-indigo-500" } %>
+              <%= f.datetime_field :due_at, class: "bg-gray-900 border border-gray-700 rounded-xl px-4 py-2.5 text-white focus:ring-2 focus:ring-indigo-500", value: 24.hours.from_now.strftime("%Y-%m-%dT%H:%M"), data: { meet_target: "dateInput" } %>
+            </div>
+
+            <div class="flex items-center gap-2">
+              <button type="button" class="px-4 py-2 bg-gray-900 hover:bg-gray-800 border border-gray-700 rounded-lg text-sm text-gray-300 transition" data-action="click->meet#setToday">Today</button>
+              <button type="button" class="px-4 py-2 bg-gray-900 hover:bg-gray-800 border border-gray-700 rounded-lg text-sm text-gray-300 transition" data-action="click->meet#setTomorrow">Tomorrow</button>
+              <button type="button" class="px-4 py-2 bg-gray-900 hover:bg-gray-800 border border-gray-700 rounded-lg text-sm text-gray-300 transition" data-action="click->meet#setFriday">Friday</button>
+              <div class="flex-1"></div>
+              <%= f.button class: "px-6 py-2 bg-indigo-600 hover:bg-indigo-500 rounded-lg font-semibold text-white transition" do %>
+                Add Mission
+              <% end %>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
+
+      <!-- Mission List -->
+      <div>
+        <div class="flex items-center justify-between mb-4">
+          <h2 class="text-xl font-bold text-white">Missions (<%= @meeting.missions.count %>)</h2>
+        </div>
+
+        <div id="missions" class="space-y-3">
+          <% @meeting.missions.order(created_at: :desc).each do |mission| %>
+            <div class="bg-gray-800 border border-gray-700 rounded-xl p-4 hover:border-gray-600 transition">
+              <div class="flex items-start gap-4">
+                <div class="h-10 w-10 rounded-full bg-indigo-600 flex items-center justify-center font-bold text-white shrink-0">
+                  <%= mission.agent.name[0] %>
+                </div>
+                <div class="flex-1 min-w-0">
+                  <h3 class="font-semibold text-white text-lg mb-1"><%= mission.title %></h3>
+                  <div class="flex items-center gap-3 text-sm text-gray-400">
+                    <span><%= mission.agent.name %></span>
+                    <span>·</span>
+                    <span>Due <%= mission.due_at.strftime("%b %d") %></span>
+                    <% if mission.completed? %>
+                      <span class="px-2 py-0.5 bg-emerald-500/10 text-emerald-400 rounded text-xs font-semibold">DONE</span>
+                    <% end %>
+                  </div>
+                </div>
+              </div>
+            </div>
+          <% end %>
+
+          <% if @meeting.missions.empty? %>
+            <div class="text-center py-12 border-2 border-dashed border-gray-800 rounded-xl">
+              <p class="text-gray-500">No missions yet. Start capturing!</p>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right: Actions -->
+    <div class="space-y-4">
+      <% if @meeting.briefing? %>
+        <%= button_to "End & Dispatch →", dispatch_meeting_meeting_path(@meeting), method: :post, class: "w-full bg-indigo-600 hover:bg-indigo-500 text-white py-4 rounded-xl font-bold text-lg transition shadow-lg", data: { turbo: false, confirm: "Dispatch all missions to agents?" } %>
+      <% else %>
+        <div class="bg-gray-800 border border-gray-700 rounded-xl p-4 text-center">
+          <p class="text-sm text-gray-400">Status</p>
+          <p class="font-bold text-white text-lg"><%= @meeting.status.titleize %></p>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

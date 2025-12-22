@@ -1,0 +1,124 @@
+<div class="max-w-7xl mx-auto">
+  <!-- Header -->
+  <div class="flex items-center justify-between mb-8">
+    <div>
+      <h1 class="text-4xl font-bold text-white mb-2"><%= Current.user.name.split.first %> Command Center</h1>
+      <p class="text-gray-400">Live Operations & Active Missions</p>
+    </div>
+    <%= link_to new_meeting_path, class: "px-6 py-3 bg-indigo-600 hover:bg-indigo-500 text-white font-semibold rounded-xl transition flex items-center gap-2" do %>
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+      New Briefing
+    <% end %>
+  </div>
+
+  <!-- Activity Chart -->
+  <div class="bg-gray-800 border border-gray-700 rounded-2xl p-6 mb-8">
+    <h3 class="text-lg font-bold text-white mb-4">Activity Overview</h3>
+    <div class="grid grid-cols-4 gap-4">
+      <div class="text-center">
+        <p class="text-3xl font-black text-indigo-400"><%= @meetings.count %></p>
+        <p class="text-sm text-gray-400 mt-1">Total Briefings</p>
+      </div>
+      <div class="text-center">
+        <p class="text-3xl font-black text-emerald-400"><%= @meetings.where(status: :dispatched).count %></p>
+        <p class="text-sm text-gray-400 mt-1">Dispatched</p>
+      </div>
+      <div class="text-center">
+        <p class="text-3xl font-black text-yellow-400"><%= @meetings.where(status: :briefing).count %></p>
+        <p class="text-sm text-gray-400 mt-1">In Progress</p>
+      </div>
+      <div class="text-center">
+        <p class="text-3xl font-black text-red-400"><%= @overdue_missions.count %></p>
+        <p class="text-sm text-gray-400 mt-1">Overdue</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Dashboard Cards -->
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+    <!-- Live Operations -->
+    <div class="bg-gray-800 border border-gray-700 rounded-2xl p-6 relative overflow-hidden">
+      <div class="absolute top-4 right-4 opacity-10">
+        <svg class="w-24 h-24 text-indigo-500" fill="currentColor" viewBox="0 0 20 20"><path d="M11 3a1 1 0 10-2 0v1a1 1 0 102 0V3zM15.657 5.757a1 1 0 00-1.414-1.414l-.707.707a1 1 0 001.414 1.414l.707-.707zM18 10a1 1 0 01-1 1h-1a1 1 0 110-2h1a1 1 0 011 1zM5.05 6.464A1 1 0 106.464 5.05l-.707-.707a1 1 0 00-1.414 1.414l.707.707zM5 10a1 1 0 01-1 1H3a1 1 0 110-2h1a1 1 0 011 1zM8 16v-1h4v1a2 2 0 11-4 0zM12 14c.015-.34.208-.646.477-.859a4 4 0 10-4.954 0c.27.213.462.519.476.859h4.002z"></path></svg>
+      </div>
+      <div class="relative z-10">
+        <h3 class="text-lg font-bold text-indigo-400 mb-2">Live Operations</h3>
+        <% live_count = @meetings.where(status: :briefing).count %>
+        <% if live_count > 0 %>
+          <p class="text-3xl font-black text-white mb-2"><%= live_count %></p>
+          <p class="text-sm text-gray-400">Active briefings in progress</p>
+        <% else %>
+          <p class="text-gray-500 text-sm mt-4">All quiet on the front.</p>
+        <% end %>
+      </div>
+    </div>
+
+    <!-- Escalations -->
+    <div class="bg-gray-800 border border-gray-700 rounded-2xl p-6 relative overflow-hidden">
+      <div class="absolute top-4 right-4 opacity-10">
+        <svg class="w-24 h-24 text-red-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path></svg>
+      </div>
+      <div class="relative z-10">
+        <h3 class="text-lg font-bold text-red-400 mb-2">Escalations</h3>
+        <% if @overdue_missions.any? %>
+          <p class="text-3xl font-black text-white mb-2"><%= @overdue_missions.count %></p>
+          <p class="text-sm text-gray-400">Overdue missions</p>
+        <% else %>
+          <div class="flex items-center gap-2 mt-4">
+            <svg class="w-5 h-5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+            <p class="text-sm text-emerald-400">Zero Overdue Missions</p>
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+    <!-- Recent Briefings -->
+    <div class="bg-gray-800 border border-gray-700 rounded-2xl p-6 relative overflow-hidden">
+      <div class="absolute top-4 right-4 opacity-10">
+        <svg class="w-24 h-24 text-gray-600" fill="currentColor" viewBox="0 0 20 20"><path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"></path><path fill-rule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z" clip-rule="evenodd"></path></svg>
+      </div>
+      <div class="relative z-10">
+        <h3 class="text-lg font-bold text-gray-300 mb-2">Recent Briefings</h3>
+        <p class="text-3xl font-black text-white mb-2"><%= @meetings.count %></p>
+        <p class="text-sm text-gray-400">Total meetings</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Recent Meetings List -->
+  <div class="bg-gray-800 border border-gray-700 rounded-2xl p-6">
+    <h2 class="text-xl font-bold text-white mb-4">Recent Briefings</h2>
+    
+    <% if @meetings.any? %>
+      <div class="space-y-3">
+        <% @meetings.limit(10).each do |meeting| %>
+          <%= link_to meeting, class: "block bg-gray-900 hover:bg-gray-850 border border-gray-700 rounded-xl p-4 transition" do %>
+            <div class="flex items-center justify-between">
+              <div class="flex-1">
+                <h3 class="font-semibold text-white mb-1"><%= meeting.title %></h3>
+                <div class="flex items-center gap-3 text-sm text-gray-400">
+                  <span><%= meeting.missions.count %> missions</span>
+                  <span>·</span>
+                  <span><%= meeting.created_at.strftime("%b %d, %Y") %></span>
+                </div>
+              </div>
+              <div class="flex items-center gap-3">
+                <% if meeting.briefing? %>
+                  <span class="px-3 py-1 bg-indigo-500/20 text-indigo-400 border border-indigo-500/30 rounded-full text-xs font-semibold uppercase">Live</span>
+                <% elsif meeting.dispatched? %>
+                  <span class="px-3 py-1 bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 rounded-full text-xs font-semibold uppercase">Dispatched</span>
+                <% end %>
+                <svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+              </div>
+            </div>
+          <% end %>
+        <% end %>
+      </div>
+    <% else %>
+      <div class="text-center py-12">
+        <p class="text-gray-500 mb-4">No briefings yet</p>
+        <%= link_to "Create your first briefing", new_meeting_path, class: "text-indigo-400 hover:text-indigo-300 font-semibold" %>
+      </div>
+    <% end %>
+  </div>
+</div>

@@ -1,0 +1,146 @@
+<div class="min-h-screen pb-20" data-controller="meet">
+  <!-- Sticky Glass Header -->
+  <div class="sticky top-0 z-50 bg-gray-900/80 backdrop-blur-md border-b border-white/10 px-4 py-3">
+     <div class="flex items-center justify-between">
+       <div class="flex items-center gap-2">
+         <div class="h-6 w-6 rounded flex items-center justify-center">
+            <%= image_tag "logo.svg", class: "w-full h-full" %>
+         </div>
+         <span class="font-bold text-white text-sm tracking-tight" data-meet-target="headerTitle">Briefing Room</span>
+       </div>
+       <% if Current.user %>
+         <div class="flex items-center gap-1.5 bg-white/5 px-2 py-1 rounded-full border border-white/5">
+            <div class="h-4 w-4 rounded-full bg-indigo-500 flex items-center justify-center text-[8px] font-bold text-white">
+              <%= Current.user.name[0] %>
+            </div>
+            <span class="text-[10px] text-gray-300 font-medium truncate max-w-[80px]"><%= Current.user.name %></span>
+         </div>
+       <% end %>
+     </div>
+  </div>
+
+  <div class="p-4 space-y-6">
+      <!-- Meeting Card -->
+      <!-- Meeting Card -->
+      <div class="bg-gray-800 border border-white/10 p-4 rounded-2xl relative overflow-hidden">
+         <div class="absolute top-0 right-0 p-3 opacity-20">
+            <svg class="w-16 h-16 text-indigo-500" fill="currentColor" viewBox="0 0 20 20"><path d="M2 5a2 2 0 012-2h7a2 2 0 012 2v4a2 2 0 01-2 2H9l-3 3v-3H4a2 2 0 01-2-2V5z"/></svg>
+         </div>
+         
+         <div class="relative z-10">
+           <div class="flex items-center gap-2 mb-2">
+             <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 uppercase tracking-wider">
+               <%= @meeting.status %>
+             </span>
+             <span class="text-[10px] text-gray-400 font-mono"><%= @meeting.created_at.strftime("%b %d") %></span>
+           </div>
+           <h1 class="text-xl font-black text-white leading-tight mb-1"><%= @meeting.title %></h1>
+           <p class="text-xs text-indigo-200/70">Captain <%= @meeting.captain.name %></p>
+         </div>
+      </div>
+
+      <!-- Quick Add Mission -->
+      <!-- Quick Add Mission -->
+      <% if @meeting.briefing? %>
+        <div class="bg-gray-800 border border-gray-700 rounded-xl p-3" data-meet-target="captureArea">
+          <h3 class="font-bold text-[10px] uppercase text-gray-400 mb-2 flex items-center gap-1">
+            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg>
+            Capture Directive
+          </h3>
+          <%= form_with(model: [@meeting, Mission.new], class: "space-y-2", data: { turbo: true }) do |f| %>
+            <%= f.text_field :title, class: "w-full bg-black/40 border-0 rounded-lg text-white text-xs placeholder-gray-600 focus:ring-1 focus:ring-indigo-500", placeholder: "e.g., Secure payload...", data: { meet_target: "titleInput" } %>
+            
+            <div class="flex gap-2">
+               <%= f.collection_select :agent_id, Current.user.workspace.users, :id, :name, { prompt: "Agent" }, { class: "w-2/3 bg-black/40 border-0 rounded-lg text-white text-[10px] focus:ring-1 focus:ring-indigo-500 py-1.5" } %>
+               <%= f.datetime_field :due_at, class: "w-1/3 bg-black/40 border-0 rounded-lg text-white text-[10px] focus:ring-1 focus:ring-indigo-500 py-1.5", value: 24.hours.from_now.strftime("%Y-%m-%dT%H:%M"), data: { meet_target: "dateInput" } %>
+            </div>
+
+            <!-- Quick Date Chips -->
+            <div class="flex gap-2">
+               <button type="button" class="px-2 py-1 rounded bg-gray-700 hover:bg-gray-600 text-[10px] text-gray-400 border border-gray-600" data-action="click->meet#setToday">Today</button>
+               <button type="button" class="px-2 py-1 rounded bg-gray-700 hover:bg-gray-600 text-[10px] text-gray-400 border border-gray-600" data-action="click->meet#setTomorrow">Tmrw</button>
+               <button type="button" class="px-2 py-1 rounded bg-gray-700 hover:bg-gray-600 text-[10px] text-gray-400 border border-gray-600" data-action="click->meet#setFriday">Fri</button>
+            </div>
+    
+            <%= f.button class: "w-full py-2 bg-indigo-600 hover:bg-indigo-500 rounded-lg font-bold text-white text-xs transition-all mt-2" do %>
+               + Add (Enter)
+            <% end %>
+          <% end %>
+        </div>
+      <% end %>
+
+      <!-- Mission List -->
+      <div class="space-y-3">
+        <div class="flex items-center justify-between">
+           <h3 class="font-bold text-[10px] uppercase text-gray-500 tracking-wider">Directives (<%= @missions.count %>)</h3>
+        </div>
+        
+        <% if @missions.any? %>
+          <% @missions.each do |mission| %>
+            <div class="flex items-center gap-3 bg-white/5 border border-white/5 rounded-xl p-2.5 transition hover:bg-white/10">
+              <div class="h-8 w-8 flex-shrink-0 rounded-full bg-gray-800 border border-white/10 flex items-center justify-center text-xs font-bold text-gray-300">
+                <%= mission.agent.name[0] %>
+              </div>
+              <div class="min-w-0 flex-1">
+                <p class="font-bold text-xs text-gray-200 truncate leading-tight mb-0.5"><%= mission.title %></p>
+                <div class="flex items-center gap-2">
+                   <p class="text-[10px] text-gray-500">Agent <%= mission.agent.name %></p>
+                   <% if mission.completed? %>
+                     <span class="text-[8px] text-emerald-400 bg-emerald-500/10 px-1 rounded">DONE</span>
+                   <% end %>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        <% else %>
+           <div class="text-center py-6 border border-dashed border-white/10 rounded-xl">
+              <p class="text-xs text-gray-500">No missions assigned yet.</p>
+           </div>
+        <% end %>
+      </div>
+  </div>
+
+  <!-- Sticky Footer Action -->
+  <!-- Sticky Footer Action -->
+  <% if @meeting.briefing? %>
+    <div class="fixed bottom-0 left-0 right-0 p-4 bg-gray-900/90 backdrop-blur border-t border-white/10">
+       
+       <!-- 1. Capture State: End Meeting Button -->
+       <div data-meet-target="captureArea">
+         <button data-action="click->meet#endMeeting" class="w-full bg-gray-700 hover:bg-gray-600 text-white py-3 rounded-xl font-bold text-sm transition-all border border-gray-600">
+           End Meeting (Review)
+         </button>
+       </div>
+
+       <!-- 2. Preview State: Dispatch Actions -->
+       <div class="hidden space-y-2" data-meet-target="previewArea">
+         <%= button_to dispatch_meeting_meeting_path(@meeting), method: :post, class: "group relative w-full bg-indigo-600 text-white py-3 rounded-xl font-bold text-sm hover:bg-indigo-500 transition-all overflow-hidden", form: { data: { turbo_confirm: "Dispatch missions to all agents?" } } do %>
+            <span class="relative flex items-center justify-center gap-2">
+              <span>DISPATCH ORDERS</span>
+              <svg class="w-4 h-4 group-hover:translate-x-1 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+            </span>
+         <% end %>
+         
+         <button data-action="click->meet#resumeMeeting" class="w-full text-gray-400 text-xs hover:text-white py-2">
+           ← Back to Live Capture
+         </button>
+       </div>
+
+    </div>
+  <% end %>
+</div>
+
+<style>
+  /* Custom Scrollbar for the narrow view */
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.2); border-radius: 4px; }
+  ::-webkit-scrollbar-thumb:hover { background: rgba(255, 255, 255, 0.3); }
+  
+  @keyframes shimmer {
+    100% { transform: translateX(100%); }
+  }
+  .animate-shimmer {
+    animation: shimmer 1.5s infinite;
+  }
+</style>

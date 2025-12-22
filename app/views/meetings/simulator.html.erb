@@ -1,0 +1,29 @@
+<div class="min-h-screen bg-gray-900 flex flex-col items-center justify-center p-8">
+  <div class="text-white text-center mb-8">
+    <h1 class="text-3xl font-bold">Google Meet Simulator</h1>
+    <p class="text-gray-400 mt-2">Simulating Side Panel (320px width)</p>
+  </div>
+  
+  <div class="flex gap-8 items-start">
+    <!-- Main Call Area (Dummy) -->
+    <div class="w-[800px] h-[600px] bg-gray-800 rounded-xl flex items-center justify-center border-4 border-gray-700">
+      <div class="text-center">
+        <div class="flex -space-x-4 justify-center mb-4">
+          <div class="h-20 w-20 rounded-full bg-blue-500 border-4 border-gray-800"></div>
+          <div class="h-20 w-20 rounded-full bg-red-500 border-4 border-gray-800"></div>
+          <div class="h-20 w-20 rounded-full bg-green-500 border-4 border-gray-800"></div>
+        </div>
+        <p class="text-gray-500 font-mono">Simulated Call...</p>
+      </div>
+    </div>
+    
+    <!-- Side Panel (The App) -->
+    <div class="w-[340px] h-[600px] bg-white rounded-xl overflow-hidden border-4 border-gray-700 shadow-2xl">
+      <div class="bg-gray-100 p-2 border-b flex justify-between items-center">
+        <span class="text-xs font-bold text-gray-500 uppercase">Activities</span>
+        <button class="text-gray-400 hover:text-gray-600">&times;</button>
+      </div>
+      <iframe src="<%= meet_meeting_path(@meeting) %>" class="w-full h-full border-none" title="Agent Follow-Through"></iframe>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,61 @@
+<div class="max-w-6xl mx-auto">
+  <!-- Header -->
+  <div class="flex items-center justify-between mb-8">
+    <div>
+      <h1 class="text-3xl font-bold text-white mb-2">Automations</h1>
+      <p class="text-gray-400">Automate recurring tasks and workflows</p>
+    </div>
+    <%= link_to new_automation_path, class: "px-6 py-3 bg-indigo-600 hover:bg-indigo-500 text-white font-semibold rounded-xl transition flex items-center gap-2" do %>
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+      Create Automation
+    <% end %>
+  </div>
+
+  <!-- Automations List -->
+  <% if @automations.any? %>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <% @automations.each do |automation| %>
+        <div class="bg-gray-800 border border-gray-700 rounded-2xl p-6">
+          <div class="flex items-start justify-between mb-4">
+            <div class="flex-1">
+              <h3 class="text-xl font-bold text-white mb-1"><%= automation.name %></h3>
+              <span class="inline-block px-3 py-1 bg-indigo-500/20 text-indigo-400 border border-indigo-500/30 rounded-full text-xs font-semibold uppercase">
+                <%= automation.automation_type.humanize %>
+              </span>
+            </div>
+            
+            <%= button_to toggle_automation_path(automation), method: :patch, class: "shrink-0" do %>
+              <div class="relative inline-block w-12 h-6 transition duration-200 ease-in-out <%= automation.enabled? ? 'bg-indigo-600' : 'bg-gray-600' %> rounded-full cursor-pointer">
+                <span class="absolute left-1 top-1 bg-white w-4 h-4 rounded-full transition-transform <%= automation.enabled? ? 'translate-x-6' : '' %>"></span>
+              </div>
+            <% end %>
+          </div>
+
+          <div class="space-y-2 text-sm text-gray-400 mb-4">
+            <div class="flex items-center gap-2">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+              <span>Last run: <%= automation.last_run_at ? time_ago_in_words(automation.last_run_at) + " ago" : "Never" %></span>
+            </div>
+            <% if automation.next_run_at %>
+              <div class="flex items-center gap-2">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path></svg>
+                <span>Next run: <%= automation.next_run_at.strftime("%b %d at %H:%M") %></span>
+              </div>
+            <% end %>
+          </div>
+
+          <div class="flex gap-2">
+            <%= link_to "Edit", edit_automation_path(automation), class: "flex-1 text-center px-4 py-2 bg-gray-700 hover:bg-gray-600 text-white rounded-lg transition" %>
+            <%= button_to "Delete", automation_path(automation), method: :delete, data: { confirm: "Are you sure?" }, class: "flex-1 px-4 py-2 bg-red-500/10 hover:bg-red-500/20 text-red-400 border border-red-500/20 rounded-lg transition" %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  <% else %>
+    <div class="text-center py-16 bg-gray-800 border border-gray-700 rounded-2xl">
+      <svg class="w-16 h-16 text-gray-600 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"></path></svg>
+      <p class="text-gray-400 mb-4">No automations yet</p>
+      <%= link_to "Create your first automation", new_automation_path, class: "text-indigo-400 hover:text-indigo-300 font-semibold" %>
+    </div>
+  <% end %>
+</div>

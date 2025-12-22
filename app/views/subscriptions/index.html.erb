@@ -1,0 +1,183 @@
+<div class="max-w-7xl mx-auto">
+  <!-- Header -->
+  <div class="text-center mb-16">
+    <h1 class="text-5xl font-black text-white mb-4">Supercharge Your Meetings</h1>
+    <p class="text-xl text-gray-400 max-w-2xl mx-auto">
+      Flexible plans for teams of all sizes. Upgrade to get unlimited mission tracking, 
+      automated follow-ups, and team collaboration.
+    </p>
+  </div>
+
+  <!-- Billing Toggle -->
+  <div class="flex items-center justify-center gap-4 mb-12">
+    <span class="text-gray-400 font-medium">Monthly</span>
+    <button class="relative w-14 h-7 bg-indigo-600 rounded-full transition">
+      <span class="absolute left-1 top-1 w-5 h-5 bg-white rounded-full transition"></span>
+    </button>
+    <span class="text-white font-medium">Annual</span>
+    <span class="px-3 py-1 bg-emerald-500/10 text-emerald-400 rounded-full text-sm font-semibold border border-emerald-500/20">
+      Save up to 44%
+    </span>
+  </div>
+
+  <!-- Pricing Cards -->
+  <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+    <!-- Free Plan -->
+    <div class="bg-gray-800 border border-gray-700 rounded-2xl p-8">
+      <div class="mb-6">
+        <h3 class="text-2xl font-bold text-white mb-2">Free</h3>
+        <p class="text-sm text-gray-400">For individuals starting out</p>
+      </div>
+      
+      <div class="mb-6">
+        <div class="flex items-baseline gap-1">
+          <span class="text-4xl font-black text-white">$0</span>
+        </div>
+        <p class="text-sm text-gray-400 mt-1">Free forever</p>
+      </div>
+
+      <button class="w-full py-3 bg-gray-700 hover:bg-gray-600 text-white font-semibold rounded-lg transition mb-6">
+        Get Started
+      </button>
+
+      <div class="space-y-3 text-sm">
+        <div class="flex items-start gap-2">
+          <svg class="w-5 h-5 text-gray-400 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+          <span class="text-gray-300">5 meetings per month</span>
+        </div>
+        <div class="flex items-start gap-2">
+          <svg class="w-5 h-5 text-gray-400 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+          <span class="text-gray-300">Basic mission tracking</span>
+        </div>
+        <div class="flex items-start gap-2">
+          <svg class="w-5 h-5 text-gray-400 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+          <span class="text-gray-300">Email notifications</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pro Plan -->
+    <div class="bg-gray-800 border border-gray-700 rounded-2xl p-8">
+      <div class="mb-6">
+        <h3 class="text-2xl font-bold text-white mb-2">Pro</h3>
+        <p class="text-sm text-gray-400">For professional individuals and small teams</p>
+      </div>
+      
+      <div class="mb-6">
+        <div class="flex items-baseline gap-1">
+          <span class="text-4xl font-black text-white">$18</span>
+          <span class="text-gray-400">/month</span>
+        </div>
+        <p class="text-sm text-gray-400 mt-1">per seat / month, billed monthly</p>
+      </div>
+
+      <%= button_to subscriptions_path, params: { plan: 'pro' }, method: :post, class: "w-full py-3 bg-indigo-600 hover:bg-indigo-500 text-white font-semibold rounded-lg transition mb-6" do %>
+        Get Started
+      <% end %>
+
+      <div class="space-y-3 text-sm">
+        <p class="text-gray-400 font-semibold mb-2">Everything in Free, plus...</p>
+        <div class="flex items-start gap-2">
+          <svg class="w-5 h-5 text-indigo-400 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+          <span class="text-gray-300">Unlimited meetings</span>
+        </div>
+        <div class="flex items-start gap-2">
+          <svg class="w-5 h-5 text-indigo-400 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+          <span class="text-gray-300">Slack integration</span>
+        </div>
+        <div class="flex items-start gap-2">
+          <svg class="w-5 h-5 text-indigo-400 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke="linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+          <span class="text-gray-300">Google Meet integration</span>
+        </div>
+        <div class="flex items-start gap-2">
+          <svg class="w-5 h-5 text-indigo-400 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+          <span class="text-gray-300">Automated reminders</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Business Plan (Most Popular) -->
+    <div class="bg-gradient-to-b from-indigo-600 to-indigo-700 border-2 border-indigo-500 rounded-2xl p-8 relative">
+      <div class="absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1 bg-indigo-500 text-white text-xs font-bold rounded-full uppercase">
+        Most Popular
+      </div>
+      
+      <div class="mb-6">
+        <h3 class="text-2xl font-bold text-white mb-2">Business</h3>
+        <p class="text-sm text-indigo-100">For fast growing businesses</p>
+      </div>
+      
+      <div class="mb-6">
+        <div class="flex items-baseline gap-1">
+          <span class="text-4xl font-black text-white">$29</span>
+          <span class="text-indigo-100">/month</span>
+        </div>
+        <p class="text-sm text-indigo-100 mt-1">per seat / month, billed monthly</p>
+      </div>
+
+      <%= button_to subscriptions_path, params: { plan: 'business' }, method: :post, class: "w-full py-3 bg-white hover:bg-gray-100 text-indigo-600 font-semibold rounded-lg transition mb-6" do %>
+        Get Started
+      <% end %>
+
+      <div class="space-y-3 text-sm">
+        <p class="text-indigo-100 font-semibold mb-2">Everything in Pro, plus...</p>
+        <div class="flex items-start gap-2">
+          <svg class="w-5 h-5 text-white mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+          <span class="text-white">Unlimited team members</span>
+        </div>
+        <div class="flex items-start gap-2">
+          <svg class="w-5 h-5 text-white mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+          <span class="text-white">Advanced analytics</span>
+        </div>
+        <div class="flex items-start gap-2">
+          <svg class="w-5 h-5 text-white mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+          <span class="text-white">Priority support</span>
+        </div>
+        <div class="flex items-start gap-2">
+          <svg class="w-5 h-5 text-white mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+          <span class="text-white">Custom integrations</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Enterprise Plan -->
+    <div class="bg-gray-800 border border-gray-700 rounded-2xl p-8">
+      <div class="mb-6">
+        <h3 class="text-2xl font-bold text-white mb-2">Enterprise</h3>
+        <p class="text-sm text-gray-400">For large scale enterprises</p>
+      </div>
+      
+      <div class="mb-6">
+        <div class="flex items-baseline gap-1">
+          <span class="text-4xl font-black text-white">$39</span>
+          <span class="text-gray-400">/month</span>
+        </div>
+        <p class="text-sm text-gray-400 mt-1">per seat / month, billed annually</p>
+      </div>
+
+      <button class="w-full py-3 bg-gray-700 hover:bg-gray-600 text-white font-semibold rounded-lg transition mb-6">
+        Contact Us
+      </button>
+
+      <div class="space-y-3 text-sm">
+        <p class="text-gray-400 font-semibold mb-2">Everything in Business, plus...</p>
+        <div class="flex items-start gap-2">
+          <svg class="w-5 h-5 text-gray-400 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+          <span class="text-gray-300">SSO & SCIM</span>
+        </div>
+        <div class="flex items-start gap-2">
+          <svg class="w-5 h-5 text-gray-400 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+          <span class="text-gray-300">Dedicated account manager</span>
+        </div>
+        <div class="flex items-start gap-2">
+          <svg class="w-5 h-5 text-gray-400 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+          <span class="text-gray-300">Custom SLA</span>
+        </div>
+        <div class="flex items-start gap-2">
+          <svg class="w-5 h-5 text-gray-400 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+          <span class="text-gray-300">On-premise deployment</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>DoneYet - Sign In</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
+  </head>
+
+  <body class="bg-gray-900 min-h-screen text-white font-sans antialiased flex items-center justify-center">
+    <div class="w-full max-w-md px-6">
+      <!-- Logo -->
+      <div class="text-center mb-8">
+        <%= link_to root_path, class: "inline-flex items-center gap-2" do %>
+          <%= image_tag "logo.svg", class: "h-12 w-12" %>
+          <span class="font-bold text-3xl">DoneYet</span>
+        <% end %>
+      </div>
+
+      <!-- Flash Messages -->
+      <% if notice %>
+        <div class="mb-6 p-4 bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 rounded-lg text-sm">
+          <%= notice %>
+        </div>
+      <% end %>
+
+      <% if alert %>
+        <div class="mb-6 p-4 bg-red-500/10 border border-red-500/20 text-red-400 rounded-lg text-sm">
+          <%= alert %>
+        </div>
+      <% end %>
+
+      <%= yield %>
+    </div>
+  </body>
+</html>

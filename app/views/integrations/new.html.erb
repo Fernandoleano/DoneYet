@@ -1,0 +1,32 @@
+<div class="max-w-md mx-auto p-6 mt-10 bg-white rounded-lg shadow-md">
+  <h1 class="text-2xl font-bold mb-6">Connect Integrations</h1>
+  
+  <div class="space-y-4">
+    <div class="border p-4 rounded-lg flex justify-between items-center">
+      <div class="flex items-center gap-3">
+        <div class="h-10 w-10 bg-gray-100 rounded flex items-center justify-center font-bold text-gray-600">S</div>
+        <div>
+          <h3 class="font-bold">Slack</h3>
+          <p class="text-xs text-gray-500">Send missions to Slack DMs</p>
+        </div>
+      </div>
+      
+      <% if Current.user.workspace.integrations.slack.exists? %>
+        <span class="text-green-600 font-bold text-sm">Connected</span>
+      <% else %>
+        <%= button_to "Connect", integrations_path(provider: 'slack'), class: "bg-indigo-600 text-white px-4 py-2 rounded text-sm hover:bg-indigo-700" %>
+      <% end %>
+    </div>
+    
+    <div class="border p-4 rounded-lg flex justify-between items-center opacity-50 cursor-not-allowed">
+      <div class="flex items-center gap-3">
+        <div class="h-10 w-10 bg-gray-100 rounded flex items-center justify-center font-bold text-gray-600">Z</div>
+        <div>
+          <h3 class="font-bold">Zoho Cliq</h3>
+          <p class="text-xs text-gray-500">Coming soon</p>
+        </div>
+      </div>
+      <span class="text-gray-400 text-sm">Soon</span>
+    </div>
+  </div>
+</div>

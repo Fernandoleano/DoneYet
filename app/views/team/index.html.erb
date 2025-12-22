@@ -1,0 +1,65 @@
+<div class="max-w-6xl mx-auto px-4 py-8" data-controller="team">
+  <!-- Header -->
+  <div class="flex items-center justify-between mb-8">
+    <div>
+      <h1 class="text-3xl font-bold text-white mb-2">Team Members</h1>
+      <p class="text-gray-400">Manage your workspace team</p>
+    </div>
+    <button data-action="click->team#showInviteModal" class="px-6 py-3 bg-indigo-600 hover:bg-indigo-500 text-white font-semibold rounded-xl transition">
+      + Invite Member
+    </button>
+  </div>
+
+  <!-- Team Grid -->
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+    <% Current.user.workspace.users.each do |user| %>
+      <div class="bg-gray-800 border border-gray-700 rounded-xl p-6">
+        <div class="flex items-start gap-4">
+          <div class="h-12 w-12 rounded-full bg-indigo-600 flex items-center justify-center font-bold text-white text-lg shrink-0">
+            <%= user.name[0] %>
+          </div>
+          <div class="flex-1 min-w-0">
+            <h3 class="font-semibold text-white text-lg"><%= user.name %></h3>
+            <p class="text-sm text-gray-400 truncate"><%= user.email_address %></p>
+            <% if user == Current.user %>
+              <span class="inline-block mt-2 px-2 py-0.5 bg-indigo-500/10 text-indigo-400 rounded text-xs font-semibold">You</span>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+  <!-- Invite Modal -->
+  <div data-team-target="modal" class="hidden fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center">
+    <div class="bg-gray-800 border border-gray-700 rounded-2xl p-8 max-w-md w-full mx-4">
+      <div class="flex items-center justify-between mb-6">
+        <h2 class="text-2xl font-bold text-white">Invite Team Member</h2>
+        <button data-action="click->team#hideInviteModal" class="text-gray-400 hover:text-white">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+        </button>
+      </div>
+
+      <%= form_with(url: team_invite_path, method: :post, class: "space-y-4") do |f| %>
+        <div>
+          <%= f.label :email, "Email Address", class: "block text-sm font-semibold text-gray-400 mb-2" %>
+          <%= f.email_field :email, class: "w-full bg-gray-900 border border-gray-700 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:ring-2 focus:ring-indigo-500", placeholder: "colleague@company.com", required: true %>
+        </div>
+
+        <div>
+          <%= f.label :name, "Full Name", class: "block text-sm font-semibold text-gray-400 mb-2" %>
+          <%= f.text_field :name, class: "w-full bg-gray-900 border border-gray-700 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:ring-2 focus:ring-indigo-500", placeholder: "John Doe", required: true %>
+        </div>
+
+        <div class="bg-gray-900 border border-gray-700 rounded-lg p-4">
+          <p class="text-xs text-gray-400">
+            <svg class="w-4 h-4 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+            They'll receive an email invite to join your workspace
+          </p>
+        </div>
+
+        <%= f.submit "Send Invite", class: "w-full bg-indigo-600 hover:bg-indigo-500 text-white py-3 rounded-xl font-semibold transition" %>
+      <% end %>
+    </div>
+  </div>
+</div>

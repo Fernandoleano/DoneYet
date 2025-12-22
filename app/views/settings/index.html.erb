@@ -1,0 +1,87 @@
+<div class="max-w-4xl mx-auto">
+  <h1 class="text-3xl font-bold text-white mb-8">Settings</h1>
+
+  <div class="space-y-6">
+    <!-- Profile Picture -->
+    <div class="bg-gray-800 border border-gray-700 rounded-2xl p-6">
+      <h2 class="text-xl font-bold text-white mb-4">Profile Picture</h2>
+      
+      <%= form_with model: @user, url: settings_path, method: :patch, class: "space-y-4" do |f| %>
+        <div class="flex items-center gap-6">
+          <div class="h-24 w-24 rounded-full bg-indigo-600 flex items-center justify-center font-bold text-white text-3xl shrink-0 overflow-hidden">
+            <% if @user.avatar.attached? %>
+              <%= image_tag @user.avatar, class: "h-full w-full object-cover" %>
+            <% else %>
+              <%= @user.name[0] %>
+            <% end %>
+          </div>
+          <div class="flex-1">
+            <%= f.file_field :avatar, accept: "image/*", class: "block w-full text-sm text-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-indigo-600 file:text-white hover:file:bg-indigo-500 file:cursor-pointer" %>
+            <p class="text-xs text-gray-500 mt-2">JPG, PNG or GIF. Max 5MB.</p>
+          </div>
+        </div>
+        <%= f.submit "Update Picture", class: "px-6 py-2 bg-indigo-600 hover:bg-indigo-500 text-white font-semibold rounded-lg transition" %>
+      <% end %>
+    </div>
+
+    <!-- Profile Settings -->
+    <div class="bg-gray-800 border border-gray-700 rounded-2xl p-6">
+      <h2 class="text-xl font-bold text-white mb-4">Profile</h2>
+      
+      <%= form_with model: @user, url: settings_path, method: :patch, class: "space-y-4" do |f| %>
+        <div>
+          <%= f.label :name, "Full Name", class: "block text-sm font-medium text-gray-300 mb-2" %>
+          <%= f.text_field :name, class: "w-full bg-gray-900 border border-gray-700 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:ring-2 focus:ring-indigo-500" %>
+        </div>
+
+        <div>
+          <%= f.label :email_address, "Email Address", class: "block text-sm font-medium text-gray-300 mb-2" %>
+          <%= f.email_field :email_address, class: "w-full bg-gray-900 border border-gray-700 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:ring-2 focus:ring-indigo-500" %>
+        </div>
+
+        <%= f.submit "Update Profile", class: "px-6 py-2 bg-indigo-600 hover:bg-indigo-500 text-white font-semibold rounded-lg transition" %>
+      <% end %>
+    </div>
+
+    <!-- Workspace Settings -->
+    <div class="bg-gray-800 border border-gray-700 rounded-2xl p-6">
+      <h2 class="text-xl font-bold text-white mb-4">Workspace</h2>
+      
+      <%= form_with model: @workspace, url: settings_path, method: :patch, class: "space-y-4" do |f| %>
+        <div>
+          <%= f.label :name, "Workspace Name", class: "block text-sm font-medium text-gray-300 mb-2" %>
+          <%= f.text_field :name, class: "w-full bg-gray-900 border border-gray-700 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:ring-2 focus:ring-indigo-500" %>
+        </div>
+
+        <%= f.submit "Update Workspace", class: "px-6 py-2 bg-indigo-600 hover:bg-indigo-500 text-white font-semibold rounded-lg transition" %>
+      <% end %>
+    </div>
+
+    <!-- Account Actions -->
+    <div class="bg-gray-800 border border-gray-700 rounded-2xl p-6">
+      <h2 class="text-xl font-bold text-white mb-4">Account</h2>
+      
+      <div class="space-y-3">
+        <%= link_to new_password_path, class: "block px-4 py-3 bg-gray-900 hover:bg-gray-850 border border-gray-700 rounded-lg text-white transition" do %>
+          <div class="flex items-center justify-between">
+            <div>
+              <p class="font-semibold">Change Password</p>
+              <p class="text-sm text-gray-400">Update your password</p>
+            </div>
+            <svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+          </div>
+        <% end %>
+
+        <%= button_to session_path, method: :delete, class: "w-full px-4 py-3 bg-red-500/10 hover:bg-red-500/20 border border-red-500/20 rounded-lg text-red-400 transition text-left", data: { confirm: "Are you sure you want to sign out?" } do %>
+          <div class="flex items-center justify-between">
+            <div>
+              <p class="font-semibold">Sign Out</p>
+              <p class="text-sm text-red-400/70">Sign out of your account</p>
+            </div>
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
