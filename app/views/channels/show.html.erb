@@ -75,11 +75,25 @@
     <!-- Message Composer -->
     <div class="border-t border-gray-700 p-4">
       <%= form_with model: [@channel, @new_message], url: channel_chat_messages_path(@channel), id: "message-form", class: "space-y-3" do |f| %>
-        <%= f.text_area :content, rows: 3, placeholder: "Type a message... (Press Enter to send, Shift+Enter for new line)", class: "w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 focus:outline-none resize-none", required: true, onkeydown: "if(event.key === 'Enter' && !event.shiftKey) { event.preventDefault(); document.getElementById('message-form').requestSubmit(); }" %>
+        <%= f.text_area :content, rows: 3, placeholder: "Type a message... (Press Enter to send, Shift+Enter for new line)", id: "message-input", class: "w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 focus:outline-none resize-none", required: true, onkeydown: "if(event.key === 'Enter' && !event.shiftKey) { event.preventDefault(); document.getElementById('message-form').requestSubmit(); }" %>
         
         <div class="flex items-center justify-between">
-          <div>
-            <%= f.file_field :attachments, multiple: true, class: "text-sm text-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-gray-700 file:text-white file:cursor-pointer hover:file:bg-gray-600" %>
+          <div class="flex items-center gap-2">
+            <%= f.file_field :attachments, multiple: true, id: "file-input", class: "hidden" %>
+            <button type="button" onclick="document.getElementById('file-input').click()" class="px-3 py-2 bg-gray-700 hover:bg-gray-600 rounded-lg text-sm font-semibold transition flex items-center gap-2">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13"></path></svg>
+              Attach
+            </button>
+            
+            <button type="button" onclick="insertCodeSnippet()" class="px-3 py-2 bg-gray-700 hover:bg-gray-600 rounded-lg text-sm font-semibold transition flex items-center gap-2">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg>
+              Code
+            </button>
+            
+            <button type="button" onclick="document.getElementById('gifModal').classList.remove('hidden')" class="px-3 py-2 bg-gray-700 hover:bg-gray-600 rounded-lg text-sm font-semibold transition flex items-center gap-2">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+              GIF
+            </button>
           </div>
           <%= f.submit "Send", class: "px-6 py-2 bg-indigo-600 hover:bg-indigo-500 rounded-lg font-semibold transition cursor-pointer" %>
         </div>
@@ -120,10 +134,58 @@
   </div>
 </div>
 
+<!-- GIF Modal -->
+<div id="gifModal" class="hidden fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-6">
+  <div class="bg-gray-800 border border-gray-700 rounded-2xl max-w-2xl w-full p-8">
+    <div class="flex items-center justify-between mb-6">
+      <h2 class="text-2xl font-bold">Insert GIF</h2>
+      <button onclick="document.getElementById('gifModal').classList.add('hidden')" class="text-gray-400 hover:text-white">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+      </button>
+    </div>
+    
+    <div class="space-y-4">
+      <input type="text" id="gifSearch" placeholder="Search for GIFs..." class="w-full bg-gray-900 border border-gray-700 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 focus:outline-none">
+      
+      <div class="text-center py-12">
+        <p class="text-gray-500 mb-4">Paste a GIF URL below:</p>
+        <input type="text" id="gifUrl" placeholder="https://media.giphy.com/media/..." class="w-full bg-gray-900 border border-gray-700 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 focus:outline-none mb-4">
+        <button onclick="insertGif()" class="px-6 py-3 bg-indigo-600 hover:bg-indigo-500 rounded-lg font-semibold transition">
+          Insert GIF
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <script>
   // Auto-scroll to bottom of messages
   const messagesDiv = document.getElementById('messages');
   if (messagesDiv) {
     messagesDiv.scrollTop = messagesDiv.scrollHeight;
+  }
+  
+  // Insert code snippet
+  function insertCodeSnippet() {
+    const textarea = document.getElementById('message-input');
+    const codeTemplate = '```\n// Your code here\n```';
+    const cursorPos = textarea.selectionStart;
+    const textBefore = textarea.value.substring(0, cursorPos);
+    const textAfter = textarea.value.substring(cursorPos);
+    textarea.value = textBefore + codeTemplate + textAfter;
+    textarea.focus();
+    textarea.setSelectionRange(cursorPos + 4, cursorPos + 4);
+  }
+  
+  // Insert GIF
+  function insertGif() {
+    const gifUrl = document.getElementById('gifUrl').value;
+    if (gifUrl) {
+      const textarea = document.getElementById('message-input');
+      textarea.value += '\n' + gifUrl;
+      document.getElementById('gifModal').classList.add('hidden');
+      document.getElementById('gifUrl').value = '';
+      textarea.focus();
+    }
   }
 </script>
