@@ -1,8 +1,7 @@
-```ruby
 Rails.application.routes.draw do
   # Landing page for non-authenticated users
   get "landing" => "landing#index", as: :landing
-  
+
   get "team" => "team#index", as: :team_index
   post "team/invite" => "team#invite", as: :team_invite
   resource :session
@@ -62,7 +61,6 @@ Rails.application.routes.draw do
   authenticated :user do
     root "meetings#index", as: :authenticated_root
   end
-  
+
   root "landing#index"
 end
-```
