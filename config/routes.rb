@@ -30,6 +30,10 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :channels, only: [ :index, :show, :create ] do
+    resources :chat_messages, only: [ :create ], path: "messages"
+  end
+
   resources :automations do
     member do
       patch :toggle
