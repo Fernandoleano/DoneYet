@@ -68,8 +68,8 @@
     
     <!-- Message Composer -->
     <div class="border-t border-gray-700 p-4">
-      <%= form_with model: [@channel, @new_message], url: channel_chat_messages_path(@channel), class: "space-y-3" do |f| %>
-        <%= f.text_area :content, rows: 3, placeholder: "Type a message...", class: "w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 focus:outline-none resize-none", required: true %>
+      <%= form_with model: [@channel, @new_message], url: channel_chat_messages_path(@channel), id: "message-form", class: "space-y-3" do |f| %>
+        <%= f.text_area :content, rows: 3, placeholder: "Type a message... (Press Enter to send, Shift+Enter for new line)", class: "w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 focus:outline-none resize-none", required: true, onkeydown: "if(event.key === 'Enter' && !event.shiftKey) { event.preventDefault(); document.getElementById('message-form').requestSubmit(); }" %>
         
         <div class="flex items-center justify-between">
           <div>
