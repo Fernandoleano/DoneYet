@@ -1,7 +1,7 @@
-<div class="max-w-7xl mx-auto">
-  <!-- Header -->
-  <div class="flex items-center justify-between mb-8">
-    <div class="mb-8">
+<div class="max-w-7xl mx-auto space-y-6">
+  <!-- Animated Header -->
+  <div class="flex items-center justify-between">
+    <div>
       <h1 class="text-5xl font-black mb-3" data-controller="typewriter">
         <span class="text-indigo-400" 
               data-typewriter-target="text" 
@@ -10,120 +10,186 @@
       </h1>
       <p class="text-xl text-gray-300 font-semibold">Here is your debriefing</p>
     </div>
-    <%= link_to new_meeting_path, class: "px-6 py-3 bg-indigo-600 hover:bg-indigo-500 text-white font-semibold rounded-xl transition flex items-center gap-2" do %>
+    <%= link_to new_meeting_path, class: "px-6 py-3 bg-indigo-600 hover:bg-indigo-500 text-white font-semibold rounded-xl transition flex items-center gap-2 shadow-lg hover:shadow-indigo-500/50" do %>
       <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
       New Briefing
     <% end %>
   </div>
 
-  <!-- Activity Chart -->
-  <div class="bg-gray-800 border border-gray-700 rounded-2xl p-6 mb-8">
-    <h3 class="text-lg font-bold text-white mb-4">Activity Overview</h3>
-    <div class="grid grid-cols-4 gap-4">
-      <div class="text-center">
-        <p class="text-3xl font-black text-indigo-400"><%= @meetings.count %></p>
-        <p class="text-sm text-gray-400 mt-1">Total Briefings</p>
+  <!-- Quick Stats Grid with Animations -->
+  <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+    <!-- Total Missions -->
+    <div class="bg-gradient-to-br from-indigo-500/10 to-indigo-600/5 border border-indigo-500/20 rounded-2xl p-6 hover:scale-105 transition-transform duration-300 cursor-pointer group">
+      <div class="flex items-center justify-between mb-4">
+        <div class="p-3 bg-indigo-500/20 rounded-xl group-hover:bg-indigo-500/30 transition">
+          <svg class="w-6 h-6 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path></svg>
+        </div>
+        <span class="text-xs font-semibold text-indigo-400 uppercase tracking-wider">Total</span>
       </div>
-      <div class="text-center">
-        <p class="text-3xl font-black text-emerald-400"><%= @meetings.where(status: :dispatched).count %></p>
-        <p class="text-sm text-gray-400 mt-1">Dispatched</p>
+      <p class="text-4xl font-black text-white mb-1"><%= @total_missions %></p>
+      <p class="text-sm text-gray-400">All Missions</p>
+    </div>
+
+    <!-- Completed -->
+    <div class="bg-gradient-to-br from-emerald-500/10 to-emerald-600/5 border border-emerald-500/20 rounded-2xl p-6 hover:scale-105 transition-transform duration-300 cursor-pointer group">
+      <div class="flex items-center justify-between mb-4">
+        <div class="p-3 bg-emerald-500/20 rounded-xl group-hover:bg-emerald-500/30 transition">
+          <svg class="w-6 h-6 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+        </div>
+        <span class="text-xs font-semibold text-emerald-400 uppercase tracking-wider">Done</span>
       </div>
-      <div class="text-center">
-        <p class="text-3xl font-black text-yellow-400"><%= @meetings.where(status: :briefing).count %></p>
-        <p class="text-sm text-gray-400 mt-1">In Progress</p>
+      <p class="text-4xl font-black text-white mb-1"><%= @completed_missions %></p>
+      <p class="text-sm text-gray-400">Completed</p>
+    </div>
+
+    <!-- In Progress -->
+    <div class="bg-gradient-to-br from-yellow-500/10 to-yellow-600/5 border border-yellow-500/20 rounded-2xl p-6 hover:scale-105 transition-transform duration-300 cursor-pointer group">
+      <div class="flex items-center justify-between mb-4">
+        <div class="p-3 bg-yellow-500/20 rounded-xl group-hover:bg-yellow-500/30 transition">
+          <svg class="w-6 h-6 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+        </div>
+        <span class="text-xs font-semibold text-yellow-400 uppercase tracking-wider">Active</span>
       </div>
-      <div class="text-center">
-        <p class="text-3xl font-black text-red-400"><%= @overdue_missions.count %></p>
-        <p class="text-sm text-gray-400 mt-1">Overdue</p>
+      <p class="text-4xl font-black text-white mb-1"><%= @in_progress_missions %></p>
+      <p class="text-sm text-gray-400">In Progress</p>
+    </div>
+
+    <!-- Overdue -->
+    <div class="bg-gradient-to-br from-red-500/10 to-red-600/5 border border-red-500/20 rounded-2xl p-6 hover:scale-105 transition-transform duration-300 cursor-pointer group">
+      <div class="flex items-center justify-between mb-4">
+        <div class="p-3 bg-red-500/20 rounded-xl group-hover:bg-red-500/30 transition">
+          <svg class="w-6 h-6 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+        </div>
+        <span class="text-xs font-semibold text-red-400 uppercase tracking-wider">Alert</span>
+      </div>
+      <p class="text-4xl font-black text-white mb-1"><%= @overdue_missions.count %></p>
+      <p class="text-sm text-gray-400">Overdue</p>
+    </div>
+  </div>
+
+  <!-- Charts Row -->
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+    <!-- Mission Status Chart -->
+    <div class="bg-gray-800 border border-gray-700 rounded-2xl p-6">
+      <h3 class="text-lg font-bold text-white mb-4 flex items-center gap-2">
+        <span class="w-2 h-2 bg-indigo-500 rounded-full animate-pulse"></span>
+        Mission Status Distribution
+      </h3>
+      <div class="h-64" 
+           data-controller="chart"
+           data-chart-type-value="doughnut"
+           data-chart-data-value='<%= {
+             labels: ["Completed", "In Progress", "Pending"],
+             datasets: [{
+               data: [@completed_missions, @in_progress_missions, @pending_missions],
+               backgroundColor: ["#10B981", "#FBBF24", "#6366F1"],
+               borderColor: "#1F2937",
+               borderWidth: 2
+             }]
+           }.to_json %>'>
+        <canvas data-chart-target="canvas"></canvas>
+      </div>
+    </div>
+
+    <!-- Weekly Activity Chart -->
+    <div class="bg-gray-800 border border-gray-700 rounded-2xl p-6">
+      <h3 class="text-lg font-bold text-white mb-4 flex items-center gap-2">
+        <span class="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></span>
+        Weekly Completions
+      </h3>
+      <div class="h-64"
+           data-controller="chart"
+           data-chart-type-value="bar"
+           data-chart-data-value='<%= {
+             labels: @weekly_data.map { |d| d[:date] },
+             datasets: [{
+               label: "Missions Completed",
+               data: @weekly_data.map { |d| d[:completed] },
+               backgroundColor: "#6366F1",
+               borderColor: "#818CF8",
+               borderWidth: 1,
+               borderRadius: 8
+             }]
+           }.to_json %>'>
+        <canvas data-chart-target="canvas"></canvas>
       </div>
     </div>
   </div>
 
-  <!-- Dashboard Cards -->
-  <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-    <!-- Live Operations -->
-    <div class="bg-gray-800 border border-gray-700 rounded-2xl p-6 relative overflow-hidden">
-      <div class="absolute top-4 right-4 opacity-10">
-        <svg class="w-24 h-24 text-indigo-500" fill="currentColor" viewBox="0 0 20 20"><path d="M11 3a1 1 0 10-2 0v1a1 1 0 102 0V3zM15.657 5.757a1 1 0 00-1.414-1.414l-.707.707a1 1 0 001.414 1.414l.707-.707zM18 10a1 1 0 01-1 1h-1a1 1 0 110-2h1a1 1 0 011 1zM5.05 6.464A1 1 0 106.464 5.05l-.707-.707a1 1 0 00-1.414 1.414l.707.707zM5 10a1 1 0 01-1 1H3a1 1 0 110-2h1a1 1 0 011 1zM8 16v-1h4v1a2 2 0 11-4 0zM12 14c.015-.34.208-.646.477-.859a4 4 0 10-4.954 0c.27.213.462.519.476.859h4.002z"></path></svg>
-      </div>
-      <div class="relative z-10">
-        <h3 class="text-lg font-bold text-indigo-400 mb-2">Live Operations</h3>
-        <% live_count = @meetings.where(status: :briefing).count %>
-        <% if live_count > 0 %>
-          <p class="text-3xl font-black text-white mb-2"><%= live_count %></p>
-          <p class="text-sm text-gray-400">Active briefings in progress</p>
-        <% else %>
-          <p class="text-gray-500 text-sm mt-4">All quiet on the front.</p>
-        <% end %>
-      </div>
-    </div>
-
-    <!-- Escalations -->
-    <div class="bg-gray-800 border border-gray-700 rounded-2xl p-6 relative overflow-hidden">
-      <div class="absolute top-4 right-4 opacity-10">
-        <svg class="w-24 h-24 text-red-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path></svg>
-      </div>
-      <div class="relative z-10">
-        <h3 class="text-lg font-bold text-red-400 mb-2">Escalations</h3>
-        <% if @overdue_missions.any? %>
-          <p class="text-3xl font-black text-white mb-2"><%= @overdue_missions.count %></p>
-          <p class="text-sm text-gray-400">Overdue missions</p>
-        <% else %>
-          <div class="flex items-center gap-2 mt-4">
-            <svg class="w-5 h-5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-            <p class="text-sm text-emerald-400">Zero Overdue Missions</p>
-          </div>
-        <% end %>
+  <!-- Manager Notes & Recent Briefings Row -->
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+    <!-- Manager Notes -->
+    <div class="lg:col-span-1 bg-gradient-to-br from-purple-500/10 to-purple-600/5 border border-purple-500/20 rounded-2xl p-6">
+      <h3 class="text-lg font-bold text-white mb-4 flex items-center gap-2">
+        <svg class="w-5 h-5 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
+        Manager Notes
+      </h3>
+      <div class="space-y-3">
+        <div class="bg-gray-800/50 rounded-lg p-4 border border-purple-500/10">
+          <p class="text-sm text-gray-300 mb-2">📌 <strong class="text-purple-400">Priority:</strong> Review Q4 objectives</p>
+          <p class="text-xs text-gray-500">2 hours ago</p>
+        </div>
+        <div class="bg-gray-800/50 rounded-lg p-4 border border-purple-500/10">
+          <p class="text-sm text-gray-300 mb-2">🎯 <strong class="text-purple-400">Reminder:</strong> Team sync tomorrow at 2pm</p>
+          <p class="text-xs text-gray-500">Yesterday</p>
+        </div>
+        <div class="bg-gray-800/50 rounded-lg p-4 border border-purple-500/10">
+          <p class="text-sm text-gray-300 mb-2">⭐ <strong class="text-purple-400">Achievement:</strong> 100 missions completed!</p>
+          <p class="text-xs text-gray-500">3 days ago</p>
+        </div>
+        <button class="w-full py-2 px-4 bg-purple-600/20 hover:bg-purple-600/30 text-purple-400 rounded-lg transition text-sm font-semibold border border-purple-500/20">
+          + Add Note
+        </button>
       </div>
     </div>
 
     <!-- Recent Briefings -->
-    <div class="bg-gray-800 border border-gray-700 rounded-2xl p-6 relative overflow-hidden">
-      <div class="absolute top-4 right-4 opacity-10">
-        <svg class="w-24 h-24 text-gray-600" fill="currentColor" viewBox="0 0 20 20"><path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"></path><path fill-rule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z" clip-rule="evenodd"></path></svg>
-      </div>
-      <div class="relative z-10">
-        <h3 class="text-lg font-bold text-gray-300 mb-2">Recent Briefings</h3>
-        <p class="text-3xl font-black text-white mb-2"><%= @meetings.count %></p>
-        <p class="text-sm text-gray-400">Total meetings</p>
-      </div>
-    </div>
-  </div>
-
-  <!-- Recent Meetings List -->
-  <div class="bg-gray-800 border border-gray-700 rounded-2xl p-6">
-    <h2 class="text-xl font-bold text-white mb-4">Recent Briefings</h2>
-    
-    <% if @meetings.any? %>
-      <div class="space-y-3">
-        <% @meetings.limit(10).each do |meeting| %>
-          <%= link_to meeting, class: "block bg-gray-900 hover:bg-gray-850 border border-gray-700 rounded-xl p-4 transition" do %>
-            <div class="flex items-center justify-between">
-              <div class="flex-1">
-                <h3 class="font-semibold text-white mb-1"><%= meeting.title %></h3>
-                <div class="flex items-center gap-3 text-sm text-gray-400">
-                  <span><%= meeting.missions.count %> missions</span>
-                  <span>·</span>
-                  <span><%= meeting.created_at.strftime("%b %d, %Y") %></span>
+    <div class="lg:col-span-2 bg-gray-800 border border-gray-700 rounded-2xl p-6">
+      <h3 class="text-lg font-bold text-white mb-4 flex items-center gap-2">
+        <svg class="w-5 h-5 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+        Recent Briefings
+      </h3>
+      
+      <% if @meetings.any? %>
+        <div class="space-y-3 max-h-96 overflow-y-auto">
+          <% @meetings.limit(5).each do |meeting| %>
+            <%= link_to meeting, class: "block bg-gray-900/50 hover:bg-gray-900 border border-gray-700 hover:border-indigo-500/50 rounded-xl p-4 transition group" do %>
+              <div class="flex items-center justify-between">
+                <div class="flex-1">
+                  <h4 class="font-semibold text-white mb-1 group-hover:text-indigo-400 transition"><%= meeting.title %></h4>
+                  <div class="flex items-center gap-3 text-sm text-gray-400">
+                    <span class="flex items-center gap-1">
+                      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path></svg>
+                      <%= meeting.missions.count %> missions
+                    </span>
+                    <span>·</span>
+                    <span><%= meeting.created_at.strftime("%b %d, %Y") %></span>
+                  </div>
+                </div>
+                <div class="flex items-center gap-3">
+                  <% if meeting.briefing? %>
+                    <span class="px-3 py-1 bg-indigo-500/20 text-indigo-400 border border-indigo-500/30 rounded-full text-xs font-semibold uppercase flex items-center gap-1">
+                      <span class="w-2 h-2 bg-indigo-400 rounded-full animate-pulse"></span>
+                      Live
+                    </span>
+                  <% elsif meeting.dispatched? %>
+                    <span class="px-3 py-1 bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 rounded-full text-xs font-semibold uppercase">Dispatched</span>
+                  <% end %>
+                  <svg class="w-5 h-5 text-gray-500 group-hover:text-indigo-400 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
                 </div>
               </div>
-              <div class="flex items-center gap-3">
-                <% if meeting.briefing? %>
-                  <span class="px-3 py-1 bg-indigo-500/20 text-indigo-400 border border-indigo-500/30 rounded-full text-xs font-semibold uppercase">Live</span>
-                <% elsif meeting.dispatched? %>
-                  <span class="px-3 py-1 bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 rounded-full text-xs font-semibold uppercase">Dispatched</span>
-                <% end %>
-                <svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
-              </div>
-            </div>
+            <% end %>
           <% end %>
-        <% end %>
-      </div>
-    <% else %>
-      <div class="text-center py-12">
-        <p class="text-gray-500 mb-4">No briefings yet</p>
-        <%= link_to "Create your first briefing", new_meeting_path, class: "text-indigo-400 hover:text-indigo-300 font-semibold" %>
-      </div>
-    <% end %>
+        </div>
+      <% else %>
+        <div class="text-center py-12">
+          <div class="w-16 h-16 bg-gray-700 rounded-full flex items-center justify-center mx-auto mb-4">
+            <svg class="w-8 h-8 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+          </div>
+          <p class="text-gray-500 mb-4">No briefings yet</p>
+          <%= link_to "Create your first briefing", new_meeting_path, class: "text-indigo-400 hover:text-indigo-300 font-semibold" %>
+        </div>
+      <% end %>
+    </div>
   </div>
 </div>

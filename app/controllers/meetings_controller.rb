@@ -3,6 +3,21 @@ class MeetingsController < ApplicationController
     @meetings = Current.user.workspace.meetings.order(created_at: :desc)
     @active_meetings = @meetings.where(status: :dispatched)
     @overdue_missions = Current.user.workspace.missions.pending.where("due_at < ?", Time.current)
+
+    # Mission statistics for charts
+    all_missions = Current.user.workspace.missions
+    @total_missions = all_missions.count
+    @completed_missions = all_missions.done.count
+    @pending_missions = all_missions.pending.count
+    @in_progress_missions = all_missions.where.not(started_at: nil).where(status: :pending).count
+
+    # Weekly activity data
+    @weekly_data = (6.days.ago.to_date..Date.today).map do |date|
+      {
+        date: date.strftime("%a"),
+        completed: all_missions.done.where("DATE(completed_at) = ?", date).count
+      }
+    end
   end
 
   def new
