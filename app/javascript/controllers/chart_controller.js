@@ -1,7 +1,4 @@
 import { Controller } from "@hotwired/stimulus"
-import { Chart, registerables } from 'chart.js'
-
-Chart.register(...registerables)
 
 export default class extends Controller {
   static targets = ["canvas"]
@@ -12,7 +9,12 @@ export default class extends Controller {
   }
   
   connect() {
-    this.createChart()
+    // Wait for Chart.js to load from CDN
+    if (typeof Chart !== 'undefined') {
+      this.createChart()
+    } else {
+      setTimeout(() => this.createChart(), 100)
+    }
   }
   
   disconnect() {
@@ -22,6 +24,8 @@ export default class extends Controller {
   }
   
   createChart() {
+    if (!this.canvasTarget || typeof Chart === 'undefined') return
+    
     const ctx = this.canvasTarget.getContext('2d')
     
     this.chart = new Chart(ctx, {
@@ -48,8 +52,9 @@ export default class extends Controller {
           }
         }
       },
-      scales: {
+      scales: this.typeValue === 'doughnut' ? {} : {
         y: {
+          beginAtZero: true,
           ticks: {
             color: '#9CA3AF'
           },
