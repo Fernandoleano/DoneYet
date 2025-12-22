@@ -4,6 +4,8 @@ class LandingController < ApplicationController
 
   def index
     # Redirect authenticated users to their dashboard
-    redirect_to meetings_path if Current.session
+    if cookies.signed[:session_id].present?
+      redirect_to meetings_path
+    end
   end
 end
