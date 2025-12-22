@@ -1,4 +1,8 @@
+```ruby
 Rails.application.routes.draw do
+  # Landing page for non-authenticated users
+  get "landing" => "landing#index", as: :landing
+  
   get "team" => "team#index", as: :team_index
   post "team/invite" => "team#invite", as: :team_invite
   resource :session
@@ -55,5 +59,10 @@ Rails.application.routes.draw do
   # get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
 
   # Defines the root path route ("/")
-  root "meetings#index"
+  authenticated :user do
+    root "meetings#index", as: :authenticated_root
+  end
+  
+  root "landing#index"
 end
+```
