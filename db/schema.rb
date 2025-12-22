@@ -10,9 +10,23 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2025_12_22_200600) do
+ActiveRecord::Schema[8.1].define(version: 2025_12_22_201527) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
+
+  create_table "achievements", force: :cascade do |t|
+    t.string "category"
+    t.datetime "created_at", null: false
+    t.text "description"
+    t.string "icon"
+    t.string "key", null: false
+    t.string "name", null: false
+    t.json "requirements"
+    t.string "tier"
+    t.datetime "updated_at", null: false
+    t.integer "xp_reward", default: 0
+    t.index ["key"], name: "index_achievements_on_key", unique: true
+  end
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.bigint "blob_id", null: false
@@ -107,6 +121,7 @@ ActiveRecord::Schema[8.1].define(version: 2025_12_22_200600) do
     t.datetime "completed_at"
     t.datetime "created_at", null: false
     t.text "description"
+    t.integer "difficulty", default: 1
     t.jsonb "dispatch_metadata"
     t.integer "dispatch_status"
     t.datetime "due_at"
@@ -114,8 +129,10 @@ ActiveRecord::Schema[8.1].define(version: 2025_12_22_200600) do
     t.bigint "meeting_id", null: false
     t.datetime "started_at"
     t.integer "status"
+    t.integer "threat_level", default: 1
     t.string "title"
     t.datetime "updated_at", null: false
+    t.integer "xp_reward", default: 100
     t.index ["agent_id"], name: "index_missions_on_agent_id"
     t.index ["meeting_id"], name: "index_missions_on_meeting_id"
   end
@@ -127,6 +144,34 @@ ActiveRecord::Schema[8.1].define(version: 2025_12_22_200600) do
     t.string "user_agent"
     t.bigint "user_id", null: false
     t.index ["user_id"], name: "index_sessions_on_user_id"
+  end
+
+  create_table "user_achievements", force: :cascade do |t|
+    t.bigint "achievement_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "unlocked_at"
+    t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
+    t.index ["achievement_id"], name: "index_user_achievements_on_achievement_id"
+    t.index ["user_id", "achievement_id"], name: "index_user_achievements_on_user_id_and_achievement_id", unique: true
+    t.index ["user_id"], name: "index_user_achievements_on_user_id"
+  end
+
+  create_table "user_stats", force: :cascade do |t|
+    t.string "code_name"
+    t.integer "comments_posted", default: 0
+    t.datetime "created_at", null: false
+    t.integer "current_streak", default: 0
+    t.date "last_login_date"
+    t.integer "level", default: 1
+    t.integer "longest_streak", default: 0
+    t.integer "missions_completed", default: 0
+    t.integer "missions_created", default: 0
+    t.string "rank", default: "Recruit"
+    t.integer "total_xp", default: 0
+    t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
+    t.index ["user_id"], name: "index_user_stats_on_user_id", unique: true
   end
 
   create_table "users", force: :cascade do |t|
@@ -168,5 +213,8 @@ ActiveRecord::Schema[8.1].define(version: 2025_12_22_200600) do
   add_foreign_key "missions", "meetings"
   add_foreign_key "missions", "users", column: "agent_id"
   add_foreign_key "sessions", "users"
+  add_foreign_key "user_achievements", "achievements"
+  add_foreign_key "user_achievements", "users"
+  add_foreign_key "user_stats", "users"
   add_foreign_key "users", "workspaces"
 end
