@@ -8,10 +8,21 @@ Rails.application.routes.draw do
   resources :passwords, param: :token
   resources :registrations, only: [ :new, :create ]
   resources :notifications, only: [ :index ]
+  resource :session
+  resources :passwords, param: :token
+  resources :registrations, only: [ :new, :create ]
+  resources :notifications, only: [ :index ]
   get "settings" => "settings#index", as: :settings
   patch "settings" => "settings#update"
 
   resources :workspace_notes, only: [ :create, :destroy ]
+
+  resources :workspace_announcements, only: [ :index, :create ] do
+    member do
+      post :mark_as_read
+      post :toggle_pin
+    end
+  end
 
   resources :automations do
     member do

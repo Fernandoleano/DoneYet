@@ -1,0 +1,174 @@
+<div class="max-w-7xl mx-auto">
+  <!-- Header -->
+  <div class="flex items-center justify-between mb-8">
+    <div>
+      <h1 class="text-4xl font-bold text-white mb-2">📢 HQ Announcements</h1>
+      <p class="text-gray-400">Stay updated with team-wide communications</p>
+    </div>
+    <% if Current.user.captain? %>
+      <button onclick="document.getElementById('newAnnouncementModal').classList.remove('hidden')" class="px-6 py-3 bg-indigo-600 hover:bg-indigo-500 text-white font-semibold rounded-xl transition flex items-center gap-2">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+        New Announcement
+      </button>
+    <% end %>
+  </div>
+
+  <!-- Unread Count -->
+  <% if @unread_count > 0 %>
+    <div class="mb-6 p-4 bg-indigo-500/10 border border-indigo-500/20 rounded-xl flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 bg-indigo-500/20 rounded-full flex items-center justify-center">
+          <span class="text-indigo-400 font-bold"><%= @unread_count %></span>
+        </div>
+        <span class="text-white font-semibold">You have <%= @unread_count %> unread announcement<%= 's' if @unread_count != 1 %></span>
+      </div>
+    </div>
+  <% end %>
+
+  <!-- Announcements List -->
+  <div class="space-y-4">
+    <% if @announcements.any? %>
+      <% @announcements.each do |announcement| %>
+        <div class="bg-gray-800 border <%= announcement.read_by?(Current.user) ? 'border-gray-700' : 'border-indigo-500/50' %> rounded-2xl p-6 <%= 'ring-2 ring-indigo-500/20' if announcement.pinned? %>">
+          <!-- Header -->
+          <div class="flex items-start justify-between mb-4">
+            <div class="flex items-start gap-4 flex-1">
+              <!-- Author Avatar -->
+              <div class="w-12 h-12 bg-indigo-600 rounded-full flex items-center justify-center font-bold text-lg flex-shrink-0">
+                <%= announcement.user.name.first %>
+              </div>
+              
+              <div class="flex-1">
+                <!-- Title & Badges -->
+                <div class="flex items-center gap-2 mb-2 flex-wrap">
+                  <h3 class="text-xl font-bold text-white"><%= announcement.title %></h3>
+                  
+                  <% if announcement.pinned? %>
+                    <span class="px-2 py-1 bg-indigo-500/20 text-indigo-400 border border-indigo-500/30 rounded-full text-xs font-semibold flex items-center gap-1">
+                      📌 Pinned
+                    </span>
+                  <% end %>
+                  
+                  <% if announcement.urgent? %>
+                    <span class="px-2 py-1 bg-red-500/20 text-red-400 border border-red-500/30 rounded-full text-xs font-semibold">
+                      🚨 Urgent
+                    </span>
+                  <% elsif announcement.important? %>
+                    <span class="px-2 py-1 bg-yellow-500/20 text-yellow-400 border border-yellow-500/30 rounded-full text-xs font-semibold">
+                      ⚠️ Important
+                    </span>
+                  <% end %>
+                  
+                  <% unless announcement.read_by?(Current.user) %>
+                    <span class="px-2 py-1 bg-indigo-500/20 text-indigo-400 border border-indigo-500/30 rounded-full text-xs font-semibold">
+                      New
+                    </span>
+                  <% end %>
+                </div>
+                
+                <!-- Meta Info -->
+                <div class="flex items-center gap-3 text-sm text-gray-500 mb-3">
+                  <span><%= announcement.user.name %></span>
+                  <span>•</span>
+                  <span><%= time_ago_in_words(announcement.created_at) %> ago</span>
+                  <span>•</span>
+                  <span><%= announcement.unread_count %> unread</span>
+                </div>
+                
+                <!-- Content -->
+                <div class="text-gray-300 leading-relaxed whitespace-pre-wrap">
+                  <%= announcement.content %>
+                </div>
+                
+                <!-- Attachments -->
+                <% if announcement.attachments.attached? %>
+                  <div class="mt-4 flex flex-wrap gap-2">
+                    <% announcement.attachments.each do |attachment| %>
+                      <%= link_to rails_blob_path(attachment, disposition: "attachment"), class: "inline-flex items-center gap-2 px-3 py-2 bg-gray-700 hover:bg-gray-600 rounded-lg text-sm transition" do %>
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13"></path></svg>
+                        <%= attachment.filename %>
+                      <% end %>
+                    <% end %>
+                  </div>
+                <% end %>
+              </div>
+            </div>
+            
+            <!-- Actions -->
+            <div class="flex items-center gap-2 flex-shrink-0">
+              <% unless announcement.read_by?(Current.user) %>
+                <%= button_to mark_as_read_workspace_announcement_path(announcement), method: :post, class: "px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg text-sm font-semibold transition" do %>
+                  Mark as Read
+                <% end %>
+              <% end %>
+              
+              <% if Current.user.captain? %>
+                <%= button_to toggle_pin_workspace_announcement_path(announcement), method: :post, class: "p-2 bg-gray-700 hover:bg-gray-600 text-gray-300 rounded-lg transition" do %>
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"></path></svg>
+                <% end %>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    <% else %>
+      <div class="text-center py-16">
+        <div class="w-24 h-24 bg-gray-800 rounded-full flex items-center justify-center mx-auto mb-6">
+          <svg class="w-12 h-12 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z"></path></svg>
+        </div>
+        <p class="text-gray-500 text-lg mb-2">No announcements yet</p>
+        <% if Current.user.captain? %>
+          <p class="text-gray-600 text-sm">Be the first to post an announcement!</p>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<!-- New Announcement Modal -->
+<% if Current.user.captain? %>
+  <div id="newAnnouncementModal" class="hidden fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-6">
+    <div class="bg-gray-800 border border-gray-700 rounded-2xl max-w-2xl w-full p-8">
+      <div class="flex items-center justify-between mb-6">
+        <h2 class="text-2xl font-bold text-white">New Announcement</h2>
+        <button onclick="document.getElementById('newAnnouncementModal').classList.add('hidden')" class="text-gray-400 hover:text-white">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+        </button>
+      </div>
+      
+      <%= form_with model: WorkspaceAnnouncement.new, url: workspace_announcements_path, class: "space-y-6" do |f| %>
+        <!-- Title -->
+        <div>
+          <label class="block text-sm font-semibold text-gray-300 mb-2">Title</label>
+          <%= f.text_field :title, placeholder: "Announcement title...", class: "w-full bg-gray-900 border border-gray-700 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 focus:outline-none" %>
+        </div>
+        
+        <!-- Content -->
+        <div>
+          <label class="block text-sm font-semibold text-gray-300 mb-2">Message</label>
+          <%= f.text_area :content, rows: 6, placeholder: "What would you like to announce?", class: "w-full bg-gray-900 border border-gray-700 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 focus:outline-none resize-none" %>
+        </div>
+        
+        <!-- Priority -->
+        <div>
+          <label class="block text-sm font-semibold text-gray-300 mb-2">Priority</label>
+          <%= f.select :priority, [['Normal', 'normal'], ['Important ⚠️', 'important'], ['Urgent 🚨', 'urgent']], {}, class: "w-full bg-gray-900 border border-gray-700 rounded-lg px-4 py-3 text-white focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 focus:outline-none" %>
+        </div>
+        
+        <!-- Attachments -->
+        <div>
+          <label class="block text-sm font-semibold text-gray-300 mb-2">Attachments (optional)</label>
+          <%= f.file_field :attachments, multiple: true, class: "w-full bg-gray-900 border border-gray-700 rounded-lg px-4 py-3 text-white file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-indigo-600 file:text-white file:cursor-pointer hover:file:bg-indigo-500" %>
+        </div>
+        
+        <!-- Actions -->
+        <div class="flex items-center gap-4">
+          <%= f.submit "Post Announcement", class: "flex-1 py-3 bg-indigo-600 hover:bg-indigo-500 text-white font-semibold rounded-lg transition cursor-pointer" %>
+          <button type="button" onclick="document.getElementById('newAnnouncementModal').classList.add('hidden')" class="px-6 py-3 bg-gray-700 hover:bg-gray-600 text-white font-semibold rounded-lg transition">
+            Cancel
+          </button>
+        </div>
+      <% end %>
+    </div>
+  </div>
+<% end %>
