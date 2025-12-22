@@ -31,6 +31,9 @@
           <%= f.hidden_field :status, value: :done %>
           <%= f.button "✓ Mark Complete", class: "px-6 py-3 bg-emerald-600 hover:bg-emerald-500 text-white font-semibold rounded-lg transition cursor-pointer" %>
         <% end %>
+      <% else %>
+        <!-- Confetti Trigger for Completed Missions -->
+        <div data-controller="confetti"></div>
       <% end %>
     </div>
   </div>
