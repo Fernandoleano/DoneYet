@@ -6,15 +6,35 @@ class MissionsController < ApplicationController
     ensure_agent_access!
   end
 
+  def edit
+    @mission = Mission.find(params[:id])
+    ensure_agent_access!
+  end
+
   def update
     @mission = Mission.find(params[:id])
     ensure_agent_access!
 
-    if @mission.update(mission_params_update)
-      redirect_to @mission, notice: "Mission status updated."
+    if @mission.update(mission_params_full)
+      # Track status change timestamps
+      case @mission.status
+      when "done"
+        @mission.update(completed_at: Time.current) unless @mission.completed_at
+        @mission.update(started_at: Time.current) unless @mission.started_at
+      end
+
+      redirect_to @mission, notice: "Mission updated!"
     else
-      redirect_to @mission, alert: "Could not update mission."
+      render :edit, alert: "Could not update mission."
     end
+  end
+
+  def mark_in_progress
+    @mission = Mission.find(params[:id])
+    ensure_agent_access!
+
+    @mission.update(started_at: Time.current) unless @mission.started_at
+    redirect_to @mission, notice: "Mission started!"
   end
 
   def create
@@ -47,6 +67,10 @@ class MissionsController < ApplicationController
 
   def mission_params_update
     params.require(:mission).permit(:status)
+  end
+
+  def mission_params_full
+    params.require(:mission).permit(:title, :description, :due_at, :status, :agent_id, assigned_user_ids: [], attachments: [])
   end
 
   def mission_params

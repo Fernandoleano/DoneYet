@@ -65,24 +65,31 @@
 
         <div id="missions" class="space-y-3">
           <% @meeting.missions.order(created_at: :desc).each do |mission| %>
-            <div class="bg-gray-800 border border-gray-700 rounded-xl p-4 hover:border-gray-600 transition">
-              <div class="flex items-start gap-4">
-                <div class="h-10 w-10 rounded-full bg-indigo-600 flex items-center justify-center font-bold text-white shrink-0">
-                  <%= mission.agent.name[0] %>
-                </div>
-                <div class="flex-1 min-w-0">
-                  <h3 class="font-semibold text-white text-lg mb-1"><%= mission.title %></h3>
-                  <div class="flex items-center gap-3 text-sm text-gray-400">
-                    <span><%= mission.agent.name %></span>
-                    <span>·</span>
-                    <span>Due <%= mission.due_at.strftime("%b %d") %></span>
-                    <% if mission.completed? %>
-                      <span class="px-2 py-0.5 bg-emerald-500/10 text-emerald-400 rounded text-xs font-semibold">DONE</span>
-                    <% end %>
+            <%= link_to mission, class: "block" do %>
+              <div class="bg-gray-800 border border-gray-700 rounded-xl p-4 hover:border-indigo-500 hover:bg-gray-750 transition cursor-pointer">
+                <div class="flex items-start gap-4">
+                  <div class="h-10 w-10 rounded-full bg-indigo-600 flex items-center justify-center font-bold text-white shrink-0">
+                    <%= mission.agent.name[0] %>
+                  </div>
+                  <div class="flex-1 min-w-0">
+                    <h3 class="font-semibold text-white text-lg mb-1"><%= mission.title %></h3>
+                    <div class="flex items-center gap-3 text-sm text-gray-400">
+                      <span><%= mission.agent.name %></span>
+                      <span>·</span>
+                      <span>Due <%= mission.due_at.strftime("%b %d") %></span>
+                      <% case mission.current_stage %>
+                      <% when 'completed' %>
+                        <span class="px-2 py-0.5 bg-emerald-500/10 text-emerald-400 rounded text-xs font-semibold">COMPLETED</span>
+                      <% when 'in_progress' %>
+                        <span class="px-2 py-0.5 bg-indigo-500/10 text-indigo-400 rounded text-xs font-semibold">IN PROGRESS</span>
+                      <% else %>
+                        <span class="px-2 py-0.5 bg-gray-500/10 text-gray-400 rounded text-xs font-semibold">DISPATCHED</span>
+                      <% end %>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
+            <% end %>
           <% end %>
 
           <% if @meeting.missions.empty? %>

@@ -1,0 +1,63 @@
+<div class="bg-gray-800 border border-gray-700 rounded-2xl p-6 mb-6">
+  <h3 class="text-sm font-semibold text-gray-400 mb-4 uppercase">Mission Progress</h3>
+  
+  <div class="relative">
+    <!-- Progress Line -->
+    <div class="absolute top-6 left-0 right-0 h-0.5 bg-gray-700"></div>
+    <div class="absolute top-6 left-0 h-0.5 bg-indigo-500 transition-all duration-500" style="width: <%= mission.done? ? '100%' : (mission.started_at.present? ? '50%' : '0%') %>"></div>
+    
+    <!-- Stages -->
+    <div class="relative flex justify-between">
+      <!-- Stage 1: Dispatched -->
+      <div class="flex flex-col items-center flex-1">
+        <div class="w-12 h-12 rounded-full <%= mission.stage_completed?('dispatched') ? 'bg-indigo-600' : 'bg-gray-700' %> flex items-center justify-center mb-2 relative z-10 border-4 border-gray-800">
+          <% if mission.stage_completed?('dispatched') %>
+            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
+          <% else %>
+            <div class="w-3 h-3 rounded-full bg-gray-500"></div>
+          <% end %>
+        </div>
+        <p class="text-sm font-semibold text-white mb-1">Dispatched</p>
+        <% if mission.stage_timestamp('dispatched') %>
+          <p class="text-xs text-gray-400"><%= mission.stage_timestamp('dispatched').strftime("%b %d, %I:%M %p") %></p>
+        <% end %>
+      </div>
+
+      <!-- Stage 2: In Progress -->
+      <div class="flex flex-col items-center flex-1">
+        <div class="w-12 h-12 rounded-full <%= mission.current_stage == 'in_progress' ? 'bg-indigo-600 animate-pulse' : (mission.stage_completed?('in_progress') ? 'bg-indigo-600' : 'bg-gray-700') %> flex items-center justify-center mb-2 relative z-10 border-4 border-gray-800">
+          <% if mission.stage_completed?('in_progress') && mission.current_stage != 'in_progress' %>
+            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
+          <% elsif mission.current_stage == 'in_progress' %>
+            <div class="w-3 h-3 rounded-full bg-white"></div>
+          <% else %>
+            <div class="w-3 h-3 rounded-full bg-gray-500"></div>
+          <% end %>
+        </div>
+        <p class="text-sm font-semibold <%= mission.current_stage == 'in_progress' ? 'text-indigo-400' : 'text-white' %> mb-1">In Progress</p>
+        <% if mission.stage_timestamp('in_progress') %>
+          <p class="text-xs text-gray-400"><%= mission.stage_timestamp('in_progress').strftime("%b %d, %I:%M %p") %></p>
+        <% else %>
+          <p class="text-xs text-gray-500">Waiting...</p>
+        <% end %>
+      </div>
+
+      <!-- Stage 3: Completed -->
+      <div class="flex flex-col items-center flex-1">
+        <div class="w-12 h-12 rounded-full <%= mission.stage_completed?('completed') ? 'bg-emerald-600' : 'bg-gray-700' %> flex items-center justify-center mb-2 relative z-10 border-4 border-gray-800">
+          <% if mission.stage_completed?('completed') %>
+            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
+          <% else %>
+            <div class="w-3 h-3 rounded-full bg-gray-500"></div>
+          <% end %>
+        </div>
+        <p class="text-sm font-semibold <%= mission.stage_completed?('completed') ? 'text-emerald-400' : 'text-white' %> mb-1">Completed</p>
+        <% if mission.stage_timestamp('completed') %>
+          <p class="text-xs text-gray-400"><%= mission.stage_timestamp('completed').strftime("%b %d, %I:%M %p") %></p>
+        <% else %>
+          <p class="text-xs text-gray-500">Pending</p>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

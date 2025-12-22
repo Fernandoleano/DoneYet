@@ -1,48 +1,177 @@
-<div class="max-w-2xl mx-auto py-12">
-  <div class="bg-gray-900/50 backdrop-blur-xl border border-white/10 rounded-3xl p-8 shadow-2xl relative overflow-hidden">
-     <!-- Decorative Background -->
-     <div class="absolute inset-0 bg-gradient-to-b from-transparent to-black/50 pointer-events-none"></div>
-     <div class="absolute top-0 right-0 w-64 h-64 bg-indigo-600/20 rounded-full blur-[80px] pointer-events-none"></div>
+<div class="max-w-4xl mx-auto py-8 px-4">
+  <!-- Progress Tracker -->
+  <%= render 'missions/progress_tracker', mission: @mission %>
 
-     <div class="relative z-10 text-center mb-10">
-       <span class="inline-block px-3 py-1 mb-4 rounded-full bg-white/10 border border-white/10 text-xs font-bold uppercase tracking-widest text-indigo-300">Classified Directive</span>
-       <h1 class="text-3xl font-black text-white mb-2"><%= @mission.title %></h1>
-       <p class="text-gray-400">Assigned to Agent <%= @mission.agent.name %></p>
-     </div>
+  <!-- Mission Header & Actions -->
+  <div class="bg-gray-800 border border-gray-700 rounded-2xl p-6 mb-6">
+    <div class="flex items-start justify-between mb-4">
+      <div class="flex-1">
+        <span class="inline-block px-3 py-1 mb-3 rounded-full bg-indigo-600/20 border border-indigo-500/30 text-xs font-bold uppercase tracking-wide text-indigo-300">Classified Directive</span>
+        <h1 class="text-3xl font-bold text-white mb-2"><%= @mission.title %></h1>
+        <div class="flex items-center gap-4 text-sm text-gray-400">
+          <span>📅 Due <%= @mission.due_at.strftime("%b %d, %Y at %I:%M %p") %></span>
+          <span>·</span>
+          <span class="<%= @mission.current_stage == 'completed' ? 'text-emerald-400' : (@mission.current_stage == 'in_progress' ? 'text-indigo-400' : 'text-gray-400') %> font-semibold">
+            <%= @mission.current_stage.titleize %>
+          </span>
+        </div>
+      </div>
+    </div>
 
-     <div class="space-y-6 relative z-10">
-       <!-- Status Card -->
-       <div class="bg-black/40 rounded-2xl p-6 border border-white/5 flex items-center justify-between">
-          <div>
-            <p class="text-xs uppercase text-gray-500 font-bold">Current Status</p>
-            <p class="text-xl font-bold <%= @mission.completed? ? 'text-emerald-400' : 'text-yellow-400' %>">
-              <%= @mission.status.titleize.upcase %>
-            </p>
-          </div>
-          <div>
-            <p class="text-xs uppercase text-gray-500 font-bold text-right">Deadline</p>
-            <p class="text-white font-mono"><%= @mission.due_at.strftime("%H:%M UTC • %b %d") %></p>
-          </div>
-       </div>
+    <!-- Action Buttons -->
+    <div class="flex flex-wrap gap-3">
+      <% unless @mission.started_at %>
+        <%= button_to "▶ Start Mission", mark_in_progress_mission_path(@mission), method: :patch, class: "px-6 py-3 bg-indigo-600 hover:bg-indigo-500 text-white font-semibold rounded-lg transition" %>
+      <% end %>
+      
+      <%= link_to "✏️ Edit Mission", edit_mission_path(@mission), class: "px-6 py-3 bg-gray-700 hover:bg-gray-600 text-white font-semibold rounded-lg transition" %>
+      
+      <% unless @mission.done? %>
+        <%= form_with(model: @mission, class: "inline-block") do |f| %>
+          <%= f.hidden_field :status, value: :done %>
+          <%= f.button "✓ Mark Complete", class: "px-6 py-3 bg-emerald-600 hover:bg-emerald-500 text-white font-semibold rounded-lg transition cursor-pointer" %>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
 
-       <!-- Action Area -->
-       <% if @mission.completed? %>
-          <div class="p-8 bg-emerald-500/10 border border-emerald-500/20 rounded-2xl text-center animate-pulse">
-            <span class="text-4xl block mb-2">🎉</span>
-            <h3 class="text-xl font-bold text-emerald-400">Mission Accomplished</h3>
-            <p class="text-emerald-200/70 text-sm mt-1">Great work, Agent.</p>
+  <!-- Assignees Section -->
+  <div class="bg-gray-800 border border-gray-700 rounded-2xl p-6 mb-6">
+    <h3 class="text-sm font-semibold text-gray-400 mb-4 uppercase">Assigned To</h3>
+    <div class="flex flex-wrap items-center gap-3">
+      <!-- Primary Agent -->
+      <div class="flex items-center gap-2 px-4 py-2 bg-indigo-600 rounded-lg">
+        <% if @mission.agent.avatar.attached? %>
+          <%= image_tag @mission.agent.avatar, class: "w-8 h-8 rounded-full object-cover" %>
+        <% else %>
+          <div class="w-8 h-8 rounded-full bg-indigo-700 flex items-center justify-center text-white font-bold text-sm">
+            <%= @mission.agent.name[0] %>
           </div>
-       <% else %>
-          <%= form_with(model: @mission, class: "mt-8") do |f| %>
-            <%= f.hidden_field :status, value: :done %>
-            <%= f.button class: "group w-full relative py-4 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-xl transition-all shadow-[0_0_20px_rgba(16,185,129,0.3)] hover:shadow-[0_0_30px_rgba(16,185,129,0.5)] overflow-hidden" do %>
-               <div class="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
-               <span class="relative flex items-center justify-center gap-3">
-                 <span class="text-lg">✓</span> Mark as Complete
-               </span>
+        <% end %>
+        <span class="text-white font-semibold"><%= @mission.agent.name %></span>
+        <span class="text-xs text-indigo-300 font-semibold">PRIMARY</span>
+      </div>
+      
+      <!-- Additional Assignees -->
+      <% @mission.assigned_users.each do |user| %>
+        <div class="flex items-center gap-2 px-4 py-2 bg-gray-700 rounded-lg">
+          <% if user.avatar.attached? %>
+            <%= image_tag user.avatar, class: "w-8 h-8 rounded-full object-cover" %>
+          <% else %>
+            <div class="w-8 h-8 rounded-full bg-gray-600 flex items-center justify-center text-white font-bold text-sm">
+              <%= user.name[0] %>
+            </div>
+          <% end %>
+          <span class="text-white"><%= user.name %></span>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+  <!-- Description Section -->
+  <div class="bg-gray-800 border border-gray-700 rounded-2xl p-6 mb-6">
+    <h3 class="text-sm font-semibold text-gray-400 mb-4 uppercase">Mission Details</h3>
+    <% if @mission.description.present? %>
+      <div class="text-gray-300 whitespace-pre-wrap leading-relaxed"><%= @mission.description %></div>
+    <% else %>
+      <p class="text-gray-500 italic">No description provided. <%= link_to "Add one", edit_mission_path(@mission), class: "text-indigo-400 hover:underline" %></p>
+    <% end %>
+  </div>
+
+  <!-- Attachments Section -->
+  <% if @mission.attachments.any? %>
+    <div class="bg-gray-800 border border-gray-700 rounded-2xl p-6 mb-6">
+      <h3 class="text-sm font-semibold text-gray-400 mb-4 uppercase">Attachments (<%= @mission.attachments.count %>)</h3>
+      
+      <div class="grid grid-cols-2 gap-4">
+        <% @mission.attachments.each do |attachment| %>
+          <% if attachment.image? %>
+            <div class="group relative">
+              <%= image_tag attachment, class: "w-full h-48 object-cover rounded-lg border border-gray-600 group-hover:border-indigo-500 transition" %>
+              <%= link_to "Download", rails_blob_path(attachment, disposition: "attachment"), class: "absolute bottom-2 right-2 px-3 py-1 bg-black/70 hover:bg-black text-white text-xs rounded opacity-0 group-hover:opacity-100 transition" %>
+            </div>
+          <% else %>
+            <%= link_to rails_blob_path(attachment, disposition: "attachment"), class: "flex items-center gap-3 p-4 bg-gray-700 rounded-lg hover:bg-gray-600 transition border border-gray-600 hover:border-indigo-500" do %>
+              <span class="text-2xl">📎</span>
+              <div class="flex-1 min-w-0">
+                <p class="text-white font-semibold truncate"><%= attachment.filename %></p>
+                <p class="text-xs text-gray-400"><%= number_to_human_size(attachment.byte_size) %></p>
+              </div>
+              <span class="text-gray-400">↓</span>
             <% end %>
           <% end %>
-       <% end %>
-     </div>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+
+  <!-- Comments Section -->
+  <div class="bg-gray-800 border border-gray-700 rounded-2xl p-6">
+    <h3 class="text-sm font-semibold text-gray-400 mb-6 uppercase">Activity & Comments</h3>
+    
+    <!-- Comment Thread -->
+    <div class="space-y-6 mb-8">
+      <% if @mission.mission_comments.any? %>
+        <% @mission.mission_comments.recent.each do |comment| %>
+          <div class="flex gap-4">
+            <% if comment.user.avatar.attached? %>
+              <%= image_tag comment.user.avatar, class: "w-10 h-10 rounded-full object-cover shrink-0" %>
+            <% else %>
+              <div class="w-10 h-10 rounded-full bg-indigo-600 flex items-center justify-center text-white font-bold shrink-0">
+                <%= comment.user.name[0] %>
+              </div>
+            <% end %>
+            <div class="flex-1">
+              <div class="flex items-center gap-2 mb-2">
+                <span class="font-semibold text-white"><%= comment.user.name %></span>
+                <span class="text-xs text-gray-500"><%= time_ago_in_words(comment.created_at) %> ago</span>
+              </div>
+              <p class="text-gray-300 mb-3"><%= comment.content %></p>
+              
+              <% if comment.attachments.any? %>
+                <div class="flex flex-wrap gap-2">
+                  <% comment.attachments.each do |attachment| %>
+                    <% if attachment.image? %>
+                      <%= image_tag attachment, class: "w-32 h-32 object-cover rounded border border-gray-600 hover:border-indigo-500 transition cursor-pointer" %>
+                    <% else %>
+                      <%= link_to rails_blob_path(attachment, disposition: "attachment"), class: "flex items-center gap-2 px-3 py-2 bg-gray-700 rounded hover:bg-gray-600 transition text-sm" do %>
+                        <span>📎</span>
+                        <span class="text-indigo-400"><%= attachment.filename %></span>
+                      <% end %>
+                    <% end %>
+                  <% end %>
+                </div>
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+      <% else %>
+        <p class="text-center text-gray-500 italic py-8">No comments yet. Be the first to comment!</p>
+      <% end %>
+    </div>
+    
+    <!-- Add Comment Form -->
+    <%= form_with model: MissionComment.new, url: mission_mission_comments_path(@mission), class: "flex gap-4" do |f| %>
+      <% if Current.user.avatar.attached? %>
+        <%= image_tag Current.user.avatar, class: "w-10 h-10 rounded-full object-cover shrink-0" %>
+      <% else %>
+        <div class="w-10 h-10 rounded-full bg-gray-700 flex items-center justify-center text-white font-bold shrink-0">
+          <%= Current.user.name[0] %>
+        </div>
+      <% end %>
+      <div class="flex-1">
+        <%= f.text_area :content, placeholder: "Add a comment...", rows: 3, class: "w-full bg-gray-700 border border-gray-600 rounded-lg px-4 py-3 text-white placeholder-gray-400 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 focus:outline-none resize-none" %>
+        <div class="flex items-center justify-between mt-3">
+          <div class="flex items-center gap-3">
+            <%= f.label :attachments, class: "flex items-center gap-2 px-4 py-2 bg-gray-700 hover:bg-gray-600 text-gray-300 rounded-lg cursor-pointer transition" do %>
+              <span>📎</span>
+              <span class="text-sm">Attach files</span>
+              <%= f.file_field :attachments, multiple: true, class: "hidden" %>
+            <% end %>
+          </div>
+          <%= f.submit "Post Comment", class: "px-6 py-2 bg-indigo-600 hover:bg-indigo-500 text-white font-semibold rounded-lg cursor-pointer transition" %>
+        </div>
+      </div>
+    <% end %>
   </div>
 </div>

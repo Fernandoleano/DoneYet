@@ -23,7 +23,12 @@ Rails.application.routes.draw do
     resources :missions, only: [ :create, :destroy ]
   end
 
-  resources :missions, only: [ :show, :update ]
+  resources :missions, only: [ :show, :edit, :update ] do
+    member do
+      patch :mark_in_progress
+    end
+    resources :mission_comments, only: [ :create ], path: "comments"
+  end
 
   resources :integrations, only: [ :new ] do
     collection do

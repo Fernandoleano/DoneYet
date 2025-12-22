@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2025_12_22_192400) do
+ActiveRecord::Schema[8.1].define(version: 2025_12_22_200600) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -82,14 +82,37 @@ ActiveRecord::Schema[8.1].define(version: 2025_12_22_192400) do
     t.index ["workspace_id"], name: "index_meetings_on_workspace_id"
   end
 
+  create_table "mission_assignments", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.bigint "mission_id", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
+    t.index ["mission_id", "user_id"], name: "index_mission_assignments_on_mission_id_and_user_id", unique: true
+    t.index ["mission_id"], name: "index_mission_assignments_on_mission_id"
+    t.index ["user_id"], name: "index_mission_assignments_on_user_id"
+  end
+
+  create_table "mission_comments", force: :cascade do |t|
+    t.text "content"
+    t.datetime "created_at", null: false
+    t.bigint "mission_id", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
+    t.index ["mission_id"], name: "index_mission_comments_on_mission_id"
+    t.index ["user_id"], name: "index_mission_comments_on_user_id"
+  end
+
   create_table "missions", force: :cascade do |t|
     t.bigint "agent_id", null: false
+    t.datetime "completed_at"
     t.datetime "created_at", null: false
+    t.text "description"
     t.jsonb "dispatch_metadata"
     t.integer "dispatch_status"
     t.datetime "due_at"
     t.datetime "last_reminded_at"
     t.bigint "meeting_id", null: false
+    t.datetime "started_at"
     t.integer "status"
     t.string "title"
     t.datetime "updated_at", null: false
@@ -138,6 +161,10 @@ ActiveRecord::Schema[8.1].define(version: 2025_12_22_192400) do
   add_foreign_key "integrations", "workspaces"
   add_foreign_key "meetings", "users", column: "captain_id"
   add_foreign_key "meetings", "workspaces"
+  add_foreign_key "mission_assignments", "missions"
+  add_foreign_key "mission_assignments", "users"
+  add_foreign_key "mission_comments", "missions"
+  add_foreign_key "mission_comments", "users"
   add_foreign_key "missions", "meetings"
   add_foreign_key "missions", "users", column: "agent_id"
   add_foreign_key "sessions", "users"
