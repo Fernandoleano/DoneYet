@@ -1,4 +1,6 @@
 class ChannelsController < ApplicationController
+  layout "chat"
+
   def index
     @channels = Current.user.workspace.channels.order(created_at: :asc)
 
