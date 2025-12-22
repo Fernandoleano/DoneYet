@@ -4,6 +4,7 @@ class Workspace < ApplicationRecord
   has_many :missions, through: :meetings
   has_many :integrations, dependent: :destroy
   has_many :automations, dependent: :destroy
+  has_many :workspace_notes, dependent: :destroy
 
   validates :name, presence: true
 

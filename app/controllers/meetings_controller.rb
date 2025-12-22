@@ -18,6 +18,9 @@ class MeetingsController < ApplicationController
         completed: all_missions.done.where("DATE(completed_at) = ?", date).count
       }
     end
+
+    # HQ Notes
+    @workspace_notes = Current.user.workspace.workspace_notes.recent.limit(5)
   end
 
   def new

@@ -8,6 +8,8 @@ Rails.application.routes.draw do
   get "settings" => "settings#index", as: :settings
   patch "settings" => "settings#update"
 
+  resources :workspace_notes, only: [ :create, :destroy ]
+
   resources :automations do
     member do
       patch :toggle
