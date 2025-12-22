@@ -47,11 +47,17 @@
               <div class="text-gray-300 whitespace-pre-wrap"><%= message.content %></div>
               
               <% if message.attachments.attached? %>
-                <div class="mt-2 flex flex-wrap gap-2">
+                <div class="mt-2 space-y-2">
                   <% message.attachments.each do |attachment| %>
-                    <%= link_to rails_blob_path(attachment, disposition: "attachment"), class: "inline-flex items-center gap-2 px-3 py-1 bg-gray-700 hover:bg-gray-600 rounded text-sm" do %>
-                      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13"></path></svg>
-                      <%= attachment.filename %>
+                    <% if attachment.content_type.start_with?('image/') %>
+                      <%= link_to rails_blob_path(attachment), target: "_blank", class: "block" do %>
+                        <%= image_tag rails_blob_path(attachment), class: "max-w-md rounded-lg border border-gray-700 hover:border-indigo-500 transition cursor-pointer" %>
+                      <% end %>
+                    <% else %>
+                      <%= link_to rails_blob_path(attachment, disposition: "attachment"), class: "inline-flex items-center gap-2 px-3 py-2 bg-gray-700 hover:bg-gray-600 rounded-lg text-sm transition" do %>
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13"></path></svg>
+                        <%= attachment.filename %>
+                      <% end %>
                     <% end %>
                   <% end %>
                 </div>
