@@ -1,4 +1,123 @@
-<div>
-  <h1 class="font-bold text-4xl">Channels#show</h1>
-  <p>Find me in app/views/channels/show.html.erb</p>
+<div class="flex h-full">
+  <!-- Channel Sidebar -->
+  <div class="w-64 bg-gray-800 border-r border-gray-700 flex flex-col">
+    <div class="p-4 border-b border-gray-700">
+      <h2 class="font-bold text-lg mb-4">💬 Team Chat</h2>
+      <button onclick="document.getElementById('newChannelModal').classList.remove('hidden')" class="w-full py-2 px-4 bg-indigo-600 hover:bg-indigo-500 rounded-lg text-sm font-semibold transition">
+        + New Channel
+      </button>
+    </div>
+    
+    <div class="flex-1 overflow-y-auto p-4">
+      <div class="space-y-1">
+        <% @channels.each do |channel| %>
+          <%= link_to channel_path(channel), class: "block px-3 py-2 rounded-lg hover:bg-gray-700 transition #{channel.id == @channel.id ? 'bg-gray-700 text-white' : 'text-gray-300'}" do %>
+            <span class="font-medium"><%= channel.display_name %></span>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Chat Area -->
+  <div class="flex-1 flex flex-col">
+    <!-- Channel Header -->
+    <div class="h-16 bg-gray-800 border-b border-gray-700 flex items-center px-6">
+      <div>
+        <h3 class="font-bold text-lg"><%= @channel.display_name %></h3>
+        <% if @channel.description.present? %>
+          <p class="text-sm text-gray-400"><%= @channel.description %></p>
+        <% end %>
+      </div>
+    </div>
+    
+    <!-- Messages -->
+    <div class="flex-1 overflow-y-auto p-6 space-y-4" id="messages">
+      <% if @messages.any? %>
+        <% @messages.each do |message| %>
+          <div class="flex items-start gap-3">
+            <div class="w-10 h-10 bg-indigo-600 rounded-full flex items-center justify-center font-bold flex-shrink-0">
+              <%= message.user.name.first %>
+            </div>
+            <div class="flex-1">
+              <div class="flex items-baseline gap-2 mb-1">
+                <span class="font-semibold"><%= message.user.name %></span>
+                <span class="text-xs text-gray-500"><%= time_ago_in_words(message.created_at) %> ago</span>
+              </div>
+              <div class="text-gray-300 whitespace-pre-wrap"><%= message.content %></div>
+              
+              <% if message.attachments.attached? %>
+                <div class="mt-2 flex flex-wrap gap-2">
+                  <% message.attachments.each do |attachment| %>
+                    <%= link_to rails_blob_path(attachment, disposition: "attachment"), class: "inline-flex items-center gap-2 px-3 py-1 bg-gray-700 hover:bg-gray-600 rounded text-sm" do %>
+                      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13"></path></svg>
+                      <%= attachment.filename %>
+                    <% end %>
+                  <% end %>
+                </div>
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+      <% else %>
+        <div class="text-center py-16">
+          <p class="text-gray-500">No messages yet. Start the conversation!</p>
+        </div>
+      <% end %>
+    </div>
+    
+    <!-- Message Composer -->
+    <div class="border-t border-gray-700 p-4">
+      <%= form_with model: [@channel, @new_message], url: channel_chat_messages_path(@channel), class: "space-y-3" do |f| %>
+        <%= f.text_area :content, rows: 3, placeholder: "Type a message...", class: "w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 focus:outline-none resize-none", required: true %>
+        
+        <div class="flex items-center justify-between">
+          <div>
+            <%= f.file_field :attachments, multiple: true, class: "text-sm text-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-gray-700 file:text-white file:cursor-pointer hover:file:bg-gray-600" %>
+          </div>
+          <%= f.submit "Send", class: "px-6 py-2 bg-indigo-600 hover:bg-indigo-500 rounded-lg font-semibold transition cursor-pointer" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
 </div>
+
+<!-- New Channel Modal -->
+<div id="newChannelModal" class="hidden fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-6">
+  <div class="bg-gray-800 border border-gray-700 rounded-2xl max-w-md w-full p-8">
+    <div class="flex items-center justify-between mb-6">
+      <h2 class="text-2xl font-bold">Create Channel</h2>
+      <button onclick="document.getElementById('newChannelModal').classList.add('hidden')" class="text-gray-400 hover:text-white">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+      </button>
+    </div>
+    
+    <%= form_with model: Channel.new, url: channels_path, class: "space-y-4" do |f| %>
+      <div>
+        <label class="block text-sm font-semibold mb-2">Channel Name</label>
+        <%= f.text_field :name, placeholder: "e.g., marketing", class: "w-full bg-gray-900 border border-gray-700 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 focus:outline-none" %>
+        <p class="text-xs text-gray-500 mt-1">Lowercase letters, numbers, and hyphens only</p>
+      </div>
+      
+      <div>
+        <label class="block text-sm font-semibold mb-2">Description (optional)</label>
+        <%= f.text_area :description, rows: 2, placeholder: "What's this channel about?", class: "w-full bg-gray-900 border border-gray-700 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 focus:outline-none resize-none" %>
+      </div>
+      
+      <div class="flex items-center gap-4">
+        <%= f.submit "Create Channel", class: "flex-1 py-3 bg-indigo-600 hover:bg-indigo-500 rounded-lg font-semibold transition cursor-pointer" %>
+        <button type="button" onclick="document.getElementById('newChannelModal').classList.add('hidden')" class="px-6 py-3 bg-gray-700 hover:bg-gray-600 rounded-lg font-semibold transition">
+          Cancel
+        </button>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<script>
+  // Auto-scroll to bottom of messages
+  const messagesDiv = document.getElementById('messages');
+  if (messagesDiv) {
+    messagesDiv.scrollTop = messagesDiv.scrollHeight;
+  }
+</script>
