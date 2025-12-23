@@ -37,7 +37,15 @@ Time is the most valuable asset in the field.
 - **Visual Feedback:** Live ticking clocks and dynamic status updates.
 - **Efficiency Reports:** Time data is logged for performance review.
 
-### 4. 💬 Secure Comms (Chat 2.0)
+### 4. 🗳️ Community Intelligence (Feature Voting)
+
+Agents can now influence the agency's roadmap.
+
+- **Propose Initiatives:** Submit requests for new field equipment or protocols.
+- **Democratic Process:** Upvote the most critical needs.
+- **One Agent, One Vote:** Strict unique voting enforcement to prevent ballot stuffing.
+
+### 5. 💬 Secure Comms (Chat 2.0)
 
 Communication channels upgrading to high-bandwidth protocols.
 
