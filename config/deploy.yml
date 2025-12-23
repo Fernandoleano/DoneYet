@@ -2,7 +2,7 @@
 service: doneyet
 
 # Name of the container image.
-image: fernandoleano/doneyet
+image: fernandoleanodoneyet/doneyet
 
 # Deploy to these servers.
 servers:
@@ -16,8 +16,7 @@ proxy:
 
 # Where you keep your container images.
 registry:
-  server: hub.docker.com
-  username: fernandoleano
+  username: fernandoleanodoneyet
   password:
     - KAMAL_REGISTRY_PASSWORD
 
