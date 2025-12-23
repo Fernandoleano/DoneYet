@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2025_12_22_234301) do
+ActiveRecord::Schema[8.1].define(version: 2025_12_23_162423) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -154,6 +154,24 @@ ActiveRecord::Schema[8.1].define(version: 2025_12_22_234301) do
     t.index ["channel_id"], name: "index_chat_messages_on_channel_id"
     t.index ["parent_message_id"], name: "index_chat_messages_on_parent_message_id"
     t.index ["user_id"], name: "index_chat_messages_on_user_id"
+  end
+
+  create_table "feature_requests", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.text "description"
+    t.string "title"
+    t.datetime "updated_at", null: false
+    t.integer "votes_count", default: 0
+  end
+
+  create_table "feature_votes", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.bigint "feature_request_id", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
+    t.index ["feature_request_id", "user_id"], name: "index_feature_votes_on_feature_request_id_and_user_id", unique: true
+    t.index ["feature_request_id"], name: "index_feature_votes_on_feature_request_id"
+    t.index ["user_id"], name: "index_feature_votes_on_user_id"
   end
 
   create_table "integrations", force: :cascade do |t|
@@ -322,6 +340,8 @@ ActiveRecord::Schema[8.1].define(version: 2025_12_22_234301) do
   add_foreign_key "channels", "workspaces"
   add_foreign_key "chat_messages", "channels"
   add_foreign_key "chat_messages", "users"
+  add_foreign_key "feature_votes", "feature_requests"
+  add_foreign_key "feature_votes", "users"
   add_foreign_key "integrations", "workspaces"
   add_foreign_key "meetings", "users", column: "captain_id"
   add_foreign_key "meetings", "workspaces"

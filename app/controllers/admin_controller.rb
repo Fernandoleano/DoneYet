@@ -48,7 +48,7 @@ class AdminController < ApplicationController
 
   def ensure_admin!
     # Check if user is admin (you can customize this)
-    unless Current.user&.email_address == "fernandoleano4@gmail.com" # Replace with your email
+    unless Current.user&.captain? || Current.user&.email_address == "fernandoleano4@gmail.com"
       redirect_to root_path, alert: "Access denied"
     end
   end

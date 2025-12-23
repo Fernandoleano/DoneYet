@@ -7,6 +7,15 @@ Rails.application.routes.draw do
   get "channels/leave"
   # Landing page for non-authenticated users
   get "landing" => "landing#index", as: :landing
+  get "contact" => "landing#contact", as: :contact
+  get "privacy" => "landing#privacy", as: :privacy
+  get "terms" => "landing#terms", as: :terms
+
+  resources :feature_requests, only: [ :index, :create ] do
+    member do
+      post :upvote
+    end
+  end
 
   get "team" => "team#index", as: :team_index
   post "team/invite" => "team#invite", as: :team_invite

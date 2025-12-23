@@ -20,7 +20,7 @@ class Admin::AnalyticsController < AdminController
 
     # Top active users
     @top_users = User.joins(:ahoy_visits)
-                     .group("users.id, users.name")
+                     .group("users.id", "users.name")
                      .order("count(ahoy_visits.id) DESC")
                      .limit(5)
                      .count

@@ -1,0 +1,81 @@
+<div class="min-h-screen bg-gray-900 pt-24 pb-12 relative overflow-hidden text-gray-300">
+  <!-- Dynamic Background -->
+  <div class="absolute inset-0 bg-[#0a0a0a] z-0"></div>
+  
+  <!-- Grid Pattern -->
+  <div class="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-10 z-0"></div>
+  
+  <div class="max-w-3xl mx-auto px-6 relative z-10 font-mono">
+    <!-- Classified Stamp -->
+    <div class="border-4 border-red-500/50 p-2 inline-block rounded mb-12 transform -rotate-3 opacity-80">
+      <div class="text-red-500 font-black text-2xl uppercase tracking-[0.2em]">Declassified</div>
+      <div class="text-red-500/80 font-bold text-xs uppercase tracking-wider text-center">Auth: Level 5</div>
+    </div>
+
+    <!-- Header -->
+    <h1 class="text-4xl md:text-5xl font-black text-white mb-8 tracking-tighter uppercase decoration-indigo-500 underline decoration-4 underline-offset-8">
+      Privacy Protocol
+    </h1>
+
+    <div class="prose prose-invert prose-indigo max-w-none space-y-8">
+      
+      <div class="bg-gray-800/50 border border-gray-700/50 p-6 rounded-lg backdrop-blur-sm">
+        <p class="text-xs font-bold text-gray-500 uppercase tracking-widest mb-4 border-b border-gray-700 pb-2">Document ID: PRIV-2025-X</p>
+        
+        <p class="leading-relaxed">
+          <span class="font-bold text-white">1. Data Collection Directives</span><br>
+          We collect intelligence only as required for mission success. This includes:
+        </p>
+        <ul class="list-disc pl-5 space-y-1 mt-2 mb-4">
+          <li>Agent Identification Credentials (Name, Email)</li>
+          <li>Mission Parameters (Tasks, Projects)</li>
+          <li>Telemetry Data (Usage Analytics)</li>
+        </ul>
+        <p class="text-sm bg-black/30 p-2 rounded border-l-2 border-yellow-500">
+          <span class="text-yellow-500 font-bold">NOTE:</span> We do not spy on your personal life. We aren't *that* kind of agency.
+        </p>
+      </div>
+
+      <div class="relative pl-6 border-l border-gray-700">
+        <h3 class="text-xl font-bold text-white mb-3">2. Information Usage</h3>
+        <p class="mb-2">Your data is utilized strictly for:</p>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm">
+           <div class="bg-gray-800 p-2 rounded">Operational enhancements</div>
+           <div class="bg-gray-800 p-2 rounded">System integrity verification</div>
+           <div class="bg-gray-800 p-2 rounded">Secure communications</div>
+           <div class="bg-gray-800 p-2 rounded">Mission dispatch coordination</div>
+        </div>
+      </div>
+
+      <div class="bg-gray-800/20 border border-dashed border-gray-600 p-6 rounded-lg relative overflow-hidden group">
+         <div class="absolute inset-0 bg-black/80 flex items-center justify-center opacity-0 group-hover:opacity-0 transition-opacity z-20 pointer-events-none"></div>
+         <h3 class="text-xl font-bold text-white mb-3 relative z-10">3. Third-Party Intelligence Sharing</h3>
+         <p class="relative z-10">
+           We do not sell your data to adversarial factions, marketing agencies, or rogue states. 
+           <span class="bg-gray-800 text-gray-400 px-1 rounded cursor-help" title="Unless required by intergalactic law">Exceptions apply only for legal compliance.</span>
+         </p>
+         <!-- Redacted Visual Element -->
+         <div class="mt-4 flex gap-2 opacity-50 select-none">
+            <span class="bg-white/10 w-24 h-4 rounded"></span>
+            <span class="bg-white/10 w-32 h-4 rounded"></span>
+            <span class="bg-white/10 w-16 h-4 rounded"></span>
+         </div>
+      </div>
+
+      <div>
+        <h3 class="text-xl font-bold text-white mb-3">4. Security Clearance</h3>
+        <p>All data is encrypted using 256-bit AES protocols. Access is restricted to personnel with Level 4 clearance or higher. Your secrets are safe in our vault.</p>
+      </div>
+
+    </div>
+
+    <!-- Footer -->
+    <div class="mt-16 pt-8 border-t border-gray-800 flex justify-between items-end">
+       <div class="text-xs text-gray-500 font-mono">
+         <p>APPROVED BY: FERNANDO LEANO</p>
+         <p>DATE: 2025-12-23</p>
+       </div>
+       <%= image_tag "logo.svg", class: "w-12 h-12 opacity-20 grayscale", alt: "Watermark" %>
+    </div>
+  </div>
+</div>

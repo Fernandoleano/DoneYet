@@ -6,7 +6,7 @@ class Channel < ApplicationRecord
   has_many :chat_messages, dependent: :destroy
 
   validates :name, presence: true, uniqueness: { scope: :workspace_id }
-  validates :name, format: { with: /\A[a-z0-9-]+\z/, message: "only allows lowercase letters, numbers, and hyphens" }
+  validates :name, format: { with: /\A[a-z0-9_\-]+\z/, message: "only allows lowercase letters, numbers, hyphens, and underscores" }
 
   scope :public_channels, -> { where(private: false, is_direct_message: false) }
   scope :private_channels, -> { where(private: true, is_direct_message: false) }
@@ -20,8 +20,12 @@ class Channel < ApplicationRecord
 
     channel = workspace.channels.find_by(name: dm_name, is_direct_message: true)
 
-    unless channel
-      channel = workspace.channels.create!(
+    if channel
+      channel.add_member(user1)
+      channel.add_member(user2)
+    else
+      channel = Channel.create!(
+        workspace: workspace,
         name: dm_name,
         description: "Direct message between #{user1.name} and #{user2.name}",
         private: true,
@@ -61,7 +65,7 @@ class Channel < ApplicationRecord
   end
 
   def add_member(user)
-    members << user unless members.include?(user)
+    ChannelMembership.find_or_create_by(channel: self, user: user)
   end
 
   def remove_member(user)

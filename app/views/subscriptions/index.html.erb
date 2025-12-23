@@ -1,4 +1,4 @@
-<div class="max-w-7xl mx-auto">
+<div class="max-w-7xl mx-auto" x-data="{ billing: 'monthly' }">
   <!-- Header -->
   <div class="text-center mb-16">
     <h1 class="text-5xl font-black text-white mb-4">Supercharge Your Meetings</h1>
@@ -10,11 +10,16 @@
 
   <!-- Billing Toggle -->
   <div class="flex items-center justify-center gap-4 mb-12">
-    <span class="text-gray-400 font-medium">Monthly</span>
-    <button class="relative w-14 h-7 bg-indigo-600 rounded-full transition">
-      <span class="absolute left-1 top-1 w-5 h-5 bg-white rounded-full transition"></span>
+    <span class="font-medium transition-colors duration-300" :class="billing === 'monthly' ? 'text-white' : 'text-gray-400'">Monthly</span>
+    
+    <button @click="billing = (billing === 'monthly' ? 'annual' : 'monthly')" 
+            class="relative w-14 h-7 rounded-full transition-colors duration-300 focus:outline-none"
+            :class="billing === 'monthly' ? 'bg-gray-700' : 'bg-indigo-600'">
+      <span class="absolute left-1 top-1 w-5 h-5 bg-white rounded-full transition-transform duration-300"
+            :class="billing === 'monthly' ? 'translate-x-0' : 'translate-x-7'"></span>
     </button>
-    <span class="text-white font-medium">Annual</span>
+    
+    <span class="font-medium transition-colors duration-300" :class="billing === 'annual' ? 'text-white' : 'text-gray-400'">Annual</span>
     <span class="px-3 py-1 bg-emerald-500/10 text-emerald-400 rounded-full text-sm font-semibold border border-emerald-500/20">
       Save up to 44%
     </span>
@@ -23,7 +28,7 @@
   <!-- Pricing Cards -->
   <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
     <!-- Free Plan -->
-    <div class="bg-gray-800 border border-gray-700 rounded-2xl p-8">
+    <div class="bg-gray-800 border border-gray-700 rounded-2xl p-8 transform hover:-translate-y-1 transition duration-300">
       <div class="mb-6">
         <h3 class="text-2xl font-bold text-white mb-2">Free</h3>
         <p class="text-sm text-gray-400">For individuals starting out</p>
@@ -57,7 +62,7 @@
     </div>
 
     <!-- Pro Plan -->
-    <div class="bg-gray-800 border border-gray-700 rounded-2xl p-8">
+    <div class="bg-gray-800 border border-gray-700 rounded-2xl p-8 transform hover:-translate-y-1 transition duration-300">
       <div class="mb-6">
         <h3 class="text-2xl font-bold text-white mb-2">Pro</h3>
         <p class="text-sm text-gray-400">For professional individuals and small teams</p>
@@ -65,10 +70,10 @@
       
       <div class="mb-6">
         <div class="flex items-baseline gap-1">
-          <span class="text-4xl font-black text-white">$18</span>
+          <span class="text-4xl font-black text-white" x-text="billing === 'monthly' ? '$18' : '$12'">$18</span>
           <span class="text-gray-400">/month</span>
         </div>
-        <p class="text-sm text-gray-400 mt-1">per seat / month, billed monthly</p>
+        <p class="text-sm text-gray-400 mt-1">per seat / month, billed <span x-text="billing">monthly</span></p>
       </div>
 
       <%= button_to subscriptions_path, params: { plan: 'pro' }, method: :post, class: "w-full py-3 bg-indigo-600 hover:bg-indigo-500 text-white font-semibold rounded-lg transition mb-6" do %>
@@ -86,7 +91,7 @@
           <span class="text-gray-300">Slack integration</span>
         </div>
         <div class="flex items-start gap-2">
-          <svg class="w-5 h-5 text-indigo-400 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke="linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+          <svg class="w-5 h-5 text-indigo-400 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
           <span class="text-gray-300">Google Meet integration</span>
         </div>
         <div class="flex items-start gap-2">
@@ -97,8 +102,8 @@
     </div>
 
     <!-- Business Plan (Most Popular) -->
-    <div class="bg-gradient-to-b from-indigo-600 to-indigo-700 border-2 border-indigo-500 rounded-2xl p-8 relative">
-      <div class="absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1 bg-indigo-500 text-white text-xs font-bold rounded-full uppercase">
+    <div class="bg-gradient-to-b from-indigo-600 to-indigo-700 border-2 border-indigo-500 rounded-2xl p-8 relative transform scale-105 shadow-2xl z-10">
+      <div class="absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1 bg-indigo-500 text-white text-xs font-bold rounded-full uppercase shadow-lg">
         Most Popular
       </div>
       
@@ -109,13 +114,13 @@
       
       <div class="mb-6">
         <div class="flex items-baseline gap-1">
-          <span class="text-4xl font-black text-white">$29</span>
+          <span class="text-4xl font-black text-white" x-text="billing === 'monthly' ? '$29' : '$19'">$29</span>
           <span class="text-indigo-100">/month</span>
         </div>
-        <p class="text-sm text-indigo-100 mt-1">per seat / month, billed monthly</p>
+        <p class="text-sm text-indigo-100 mt-1">per seat / month, billed <span x-text="billing">monthly</span></p>
       </div>
 
-      <%= button_to subscriptions_path, params: { plan: 'business' }, method: :post, class: "w-full py-3 bg-white hover:bg-gray-100 text-indigo-600 font-semibold rounded-lg transition mb-6" do %>
+      <%= button_to subscriptions_path, params: { plan: 'business' }, method: :post, class: "w-full py-3 bg-white hover:bg-gray-100 text-indigo-600 font-semibold rounded-lg transition mb-6 shadow-lg" do %>
         Get Started
       <% end %>
 
@@ -141,7 +146,7 @@
     </div>
 
     <!-- Enterprise Plan -->
-    <div class="bg-gray-800 border border-gray-700 rounded-2xl p-8">
+    <div class="bg-gray-800 border border-gray-700 rounded-2xl p-8 transform hover:-translate-y-1 transition duration-300">
       <div class="mb-6">
         <h3 class="text-2xl font-bold text-white mb-2">Enterprise</h3>
         <p class="text-sm text-gray-400">For large scale enterprises</p>
@@ -149,10 +154,10 @@
       
       <div class="mb-6">
         <div class="flex items-baseline gap-1">
-          <span class="text-4xl font-black text-white">$39</span>
+          <span class="text-4xl font-black text-white" x-text="billing === 'monthly' ? '$39' : '$29'">$39</span>
           <span class="text-gray-400">/month</span>
         </div>
-        <p class="text-sm text-gray-400 mt-1">per seat / month, billed annually</p>
+        <p class="text-sm text-gray-400 mt-1">per seat / month, billed <span x-text="billing === 'monthly' ? 'annually' : 'annually'">annually</span></p>
       </div>
 
       <button class="w-full py-3 bg-gray-700 hover:bg-gray-600 text-white font-semibold rounded-lg transition mb-6">

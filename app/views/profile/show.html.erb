@@ -104,6 +104,9 @@
           <p class="text-indigo-400 font-semibold mb-4"><%= @user.role.titleize %></p>
           <div class="flex gap-2">
             <%= link_to "Settings", settings_path, class: "flex-1 px-6 py-2.5 bg-gray-700 hover:bg-gray-600 rounded-lg font-semibold text-white transition text-center" %>
+            <% if Current.user&.captain? || Current.user&.email_address == "fernandoleano4@gmail.com" %>
+              <%= link_to "Admin View", admin_path, class: "flex-1 px-6 py-2.5 bg-indigo-600 hover:bg-indigo-500 rounded-lg font-semibold text-white transition text-center" %>
+            <% end %>
           </div>
         </div>
 

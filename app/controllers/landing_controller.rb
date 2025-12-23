@@ -8,4 +8,13 @@ class LandingController < ApplicationController
       redirect_to meetings_path
     end
   end
+
+  def contact
+  end
+
+  def privacy
+  end
+
+  def terms
+  end
 end

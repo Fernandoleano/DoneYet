@@ -14,6 +14,9 @@ class User < ApplicationRecord
 
   has_one_attached :avatar
 
+  has_many :feature_votes, dependent: :destroy
+  has_many :voted_features, through: :feature_votes, source: :feature_request
+
   normalizes :email_address, with: ->(e) { e.strip.downcase }
 
   enum :role, { agent: "agent", captain: "captain" }, default: "agent"

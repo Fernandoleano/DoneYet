@@ -26,9 +26,17 @@ class ChannelsController < ApplicationController
     @channel = Channel.find(params[:id])
     @workspace = @channel.workspace
 
-    # Ensure user is a member of the channel
-    unless @channel.members.include?(Current.user)
-      @channel.add_member(Current.user)
+    # Access Control
+    if @channel.private? || @channel.is_direct_message?
+      unless @channel.members.include?(Current.user)
+        redirect_to channels_path, alert: "You are not authorized to access this channel."
+        return
+      end
+    else
+      # Auto-join public channels
+      unless @channel.members.include?(Current.user)
+        @channel.add_member(Current.user)
+      end
     end
 
     @messages = @channel.chat_messages.includes(:user).order(created_at: :asc)

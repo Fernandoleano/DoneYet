@@ -1,413 +1,569 @@
-<div class="relative bg-gray-900">
+<div class="relative bg-gray-900 min-h-screen overflow-x-hidden selection:bg-indigo-500/30">
   <!-- Navigation -->
-  <nav class="fixed top-0 left-0 right-0 z-50 bg-gray-900/95 backdrop-blur-xl border-b border-gray-800">
+  <nav class="fixed top-0 left-0 right-0 z-50 bg-gray-900/80 backdrop-blur-xl border-b border-gray-800">
     <div class="max-w-7xl mx-auto px-6 py-4">
       <div class="flex items-center justify-between">
         <div class="flex items-center gap-2">
           <%= image_tag "logo.svg", class: "w-10 h-10", alt: "DoneYet Logo" %>
-          <span class="font-black text-2xl">DoneYet</span>
+          <span class="font-black text-2xl tracking-tight text-white">DoneYet</span>
         </div>
-        <div class="hidden md:flex items-center gap-8 text-sm">
-          <a href="#features" class="text-gray-300 hover:text-white transition">Features</a>
-          <a href="#how-it-works" class="text-gray-300 hover:text-white transition">How It Works</a>
-          <a href="#pricing" class="text-gray-300 hover:text-white transition">Pricing</a>
-          <a href="#blog" class="text-gray-300 hover:text-white transition">Blog</a>
+        <div class="hidden md:flex items-center gap-8 text-sm font-medium">
+          <a href="#features" class="text-gray-400 hover:text-white transition">Intel</a>
+          <a href="#pricing" class="text-gray-400 hover:text-white transition">Pricing</a>
+          <%= link_to "Declassified", privacy_path, class: "text-gray-400 hover:text-white transition" %>
         </div>
         <div class="flex items-center gap-4">
-          <%= link_to "Sign In", new_session_path, class: "px-4 py-2 text-gray-300 hover:text-white transition text-sm font-medium" %>
-          <%= link_to "Get Started Free", new_registration_path, class: "px-6 py-2.5 bg-indigo-600 hover:bg-indigo-500 rounded-lg font-semibold transition shadow-lg text-sm" %>
+          <%= link_to "Login", new_session_path, class: "px-4 py-2 text-gray-300 hover:text-white transition text-sm font-medium" %>
+          <%= link_to "Join Agency", new_registration_path, class: "px-5 py-2 bg-indigo-600 hover:bg-indigo-500 rounded-lg text-white text-sm font-bold transition shadow-lg shadow-indigo-900/20" %>
         </div>
       </div>
     </div>
   </nav>
 
-  <!-- Hero Section -->
-  <section class="pt-32 pb-20 px-6">
-    <div class="max-w-7xl mx-auto">
-      <div class="text-center max-w-4xl mx-auto mb-16">
-        <!-- Badge -->
-        <div class="inline-flex items-center gap-2 px-4 py-2 bg-indigo-500/10 border border-indigo-500/20 rounded-full mb-8">
-          <span class="w-2 h-2 bg-indigo-500 rounded-full animate-pulse"></span>
-          <span class="text-indigo-400 text-sm font-semibold">The #1 Mission Control for Elite Teams</span>
+  <!-- Hero & Mobile Showcase -->
+  <section class="pt-32 pb-20 px-6 relative overflow-visible">
+    <!-- Background Effects -->
+    <div class="absolute top-0 right-0 w-[500px] h-[500px] bg-indigo-600/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none"></div>
+    <div class="absolute bottom-0 left-0 w-[500px] h-[500px] bg-purple-600/10 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2 pointer-events-none"></div>
+
+    <div class="max-w-7xl mx-auto flex flex-col lg:flex-row items-center gap-16 lg:gap-24">
+      
+      <!-- Text Content -->
+      <div class="flex-1 text-center lg:text-left z-10">
+        <div class="inline-flex items-center gap-2 px-3 py-1 bg-gray-800/50 border border-gray-700 rounded-full mb-8 backdrop-blur-sm animate-fade-in-up">
+          <span class="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></span>
+          <span class="text-gray-300 text-xs font-bold tracking-wide uppercase">Operational</span>
         </div>
-
-        <!-- Main Headline -->
-        <h1 class="text-6xl md:text-7xl lg:text-8xl font-black mb-8 leading-tight">
-          Mission Control for
-          <span class="block text-indigo-400">Elite Teams</span>
+        
+        <h1 class="text-6xl md:text-7xl lg:text-8xl font-black mb-6 leading-[0.9] text-white tracking-tight">
+          Turn Chaos<br>
+          Into <span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-400">Order.</span>
         </h1>
-
-        <!-- Subheadline -->
-        <p class="text-xl md:text-2xl text-gray-400 mb-12 leading-relaxed max-w-3xl mx-auto">
-          Gamified project management with XP, achievements, real-time chat, calendar views, and time tracking. Your team's secret weapon.
+        
+        <p class="text-xl text-gray-400 mb-10 leading-relaxed max-w-lg mx-auto lg:mx-0">
+          The operating system for elite teams. Stop managing tasks. Start executing missions.
         </p>
-
-        <!-- CTA Buttons -->
-        <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12">
-          <%= link_to new_registration_path, class: "group px-8 py-4 bg-indigo-600 hover:bg-indigo-500 rounded-xl font-bold text-lg transition shadow-2xl flex items-center gap-3 w-full sm:w-auto justify-center" do %>
-            <span>Start Free Mission</span>
-            <svg class="w-5 h-5 group-hover:translate-x-1 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path></svg>
+        
+        <div class="flex flex-col sm:flex-row items-center gap-4 justify-center lg:justify-start">
+          <%= link_to new_registration_path, class: "group px-8 py-4 bg-white text-gray-900 hover:bg-gray-100 rounded-2xl font-black text-lg transition shadow-2xl flex items-center gap-2" do %>
+            <span>Deploy Agent</span>
+            <svg class="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
           <% end %>
-          <a href="#pricing" class="px-8 py-4 bg-gray-800 hover:bg-gray-700 border border-gray-700 rounded-xl font-bold text-lg transition w-full sm:w-auto text-center">
-            View Pricing
+          <a href="#features" class="px-8 py-4 text-gray-400 hover:text-white font-bold transition flex items-center gap-2">
+            View Intel
           </a>
         </div>
-
-        <!-- Trust Indicators -->
-        <div class="flex flex-wrap items-center justify-center gap-8 text-sm text-gray-500">
-          <div class="flex items-center gap-2">
-            <svg class="w-5 h-5 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-            <span>Free forever plan</span>
-          </div>
-          <div class="flex items-center gap-2">
-            <svg class="w-5 h-5 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-            <span>No credit card required</span>
-          </div>
-          <div class="flex items-center gap-2">
-            <svg class="w-5 h-5 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-            <span>Setup in 60 seconds</span>
-          </div>
-        </div>
       </div>
 
-      <!-- Stats -->
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-4xl mx-auto">
-        <div class="text-center">
-          <p class="text-4xl font-black text-indigo-400 mb-2">100+</p>
-          <p class="text-sm text-gray-500">Active Agents</p>
-        </div>
-        <div class="text-center">
-          <p class="text-4xl font-black text-indigo-400 mb-2">1K+</p>
-          <p class="text-sm text-gray-500">Missions Completed</p>
-        </div>
-        <div class="text-center">
-          <p class="text-4xl font-black text-indigo-400 mb-2">99%</p>
-          <p class="text-sm text-gray-500">Success Rate</p>
-        </div>
-        <div class="text-center">
-          <p class="text-4xl font-black text-indigo-400 mb-2">4.9★</p>
-          <p class="text-sm text-gray-500">User Rating</p>
+      <!-- Mobile Showcase (CSS Phone) -->
+      <div class="relative flex-1 w-full max-w-[400px] mx-auto lg:mx-0 perspective-1000 group">
+        <!-- Floating Animation Wrapper -->
+        <div class="relative animate-float transition-all duration-500 transform group-hover:rotate-y-6 group-hover:rotate-x-6 preserve-3d">
+          
+          <!-- iPhone Frame -->
+          <div class="relative bg-gray-900 rounded-[3rem] border-[8px] border-gray-800 shadow-2xl overflow-hidden aspect-[9/19] outline outline-1 outline-gray-700/50">
+            <!-- Notch -->
+            <div class="absolute top-0 left-1/2 -translate-x-1/2 w-1/3 h-7 bg-gray-800 rounded-b-2xl z-20"></div>
+            
+            <!-- Screen Content -->
+            <div class="absolute inset-0 bg-gray-900 text-white overflow-hidden flex flex-col">
+              
+              <!-- Dashboard Header -->
+              <div class="bg-gray-900 p-6 pt-12 pb-4 border-b border-gray-800">
+                <div class="flex items-center justify-between mb-6">
+                  <div>
+                    <h3 class="font-black text-xl text-white">Good evening,</h3>
+                    <h3 class="font-black text-xl text-indigo-400">007</h3>
+                    <p class="text-xs text-gray-500 font-medium mt-1">Here's today's briefing</p>
+                  </div>
+                  <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-500 p-0.5 shadow-lg shadow-indigo-500/20">
+                    <!-- Custom Vector Avatar: Blonde 007 -->
+                    <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIiBmaWxsPSJub25lIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgZmlsbD0iIzFhMWExYSIvPjxyZWN0IHg9IjE1IiB5PSI4MCIgd2lkdGg9IjcwIiBoZWlnaHQ9IjIwIiBmaWxsPSIjMTExIi8+PHBhdGggZD0iTTUwIDgwIEwzMCAxMDAgSDcwIEw1MCA4MCBaIiBmaWxsPSJ3aGl0ZSIvPjxwb2x5Z29uIHBvaW50cz0iNTAsODAgNjAsOTUgNTUsOTUiIGZpbGw9IiMyMjIiLz48cG9seWdvbiBwb2ludHM9IjUwLDgwIDQwLDk1IDQ1LDk1IiBmaWxsPSIjMjIyIi8+PHJlY3QgeD0iNDAiIHk9IjcwIiB3aWR0aD0iMjAiIGhlaWdodD0iMTUiIGZpbGw9IiNmOGQyNWMiLz48ZWxsaXBzZSBjeD0iNTAiIGN5PSI0NSIgcng9IjI1IiByeT0iMzAiIGZpbGw9IiNmOGQyNWMiLz48Y2lyY2xlIGN4PSI0MiIgY3k9IjQyIiByPSIzIiBmaWxsPSIjM2I4MmY2Ii8+PGNpcmNsZSBjeD0iNTgiIGN5PSI0MiIgcj0iMyIgZmlsbD0iIzNiODJmNiIvPjxwYXRoIGQ9Ik01MCAxMCBDMzAgMTAgMjIgMjUgMjIgNDAgTDIyIDQ1IEMyMiA0MCAyNSAzMCAzMCAyNSBDMzUgMjAgNjUgMjAgNzAgMjUgQzc1IDMwIDc4IDQwIDc4IDQ1IEw3OCA0MCBDNzggMjUgNzAgMTAgNTAgMTAgWiIgZmlsbD0iI2Y1ZDA0MiIvPjwvc3ZnPg==" alt="Agent 007" class="w-full h-full rounded-xl bg-gray-900 object-cover" />
+                  </div>
+                </div>
+                
+                <!-- Stats Grid (Simulating the 4 cards) -->
+                <div class="grid grid-cols-2 gap-3">
+                   <div class="bg-indigo-900/20 border border-indigo-500/20 rounded-xl p-3 flex flex-col justify-between h-20">
+                      <div class="flex justify-between items-start">
+                         <div class="p-1.5 rounded-lg bg-indigo-500/20 text-indigo-400">
+                            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path></svg>
+                         </div>
+                         <span class="text-[9px] font-bold text-indigo-300 uppercase">Total</span>
+                      </div>
+                      <div class="text-2xl font-black text-white">7</div>
+                   </div>
+
+                   <div class="bg-emerald-900/20 border border-emerald-500/20 rounded-xl p-3 flex flex-col justify-between h-20">
+                      <div class="flex justify-between items-start">
+                         <div class="p-1.5 rounded-lg bg-emerald-500/20 text-emerald-400">
+                            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                         </div>
+                         <span class="text-[9px] font-bold text-emerald-300 uppercase">Done</span>
+                      </div>
+                      <div class="text-2xl font-black text-white">3</div>
+                   </div>
+
+                   <div class="bg-yellow-900/20 border border-yellow-500/20 rounded-xl p-3 flex flex-col justify-between h-20">
+                      <div class="flex justify-between items-start">
+                         <div class="p-1.5 rounded-lg bg-yellow-500/20 text-yellow-400">
+                            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                         </div>
+                         <span class="text-[9px] font-bold text-yellow-300 uppercase">Active</span>
+                      </div>
+                      <div class="text-2xl font-black text-white">0</div>
+                   </div>
+
+                   <div class="bg-red-900/20 border border-red-500/20 rounded-xl p-3 flex flex-col justify-between h-20">
+                      <div class="flex justify-between items-start">
+                         <div class="p-1.5 rounded-lg bg-red-500/20 text-red-400">
+                            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+                         </div>
+                         <span class="text-[9px] font-bold text-red-300 uppercase">Alert</span>
+                      </div>
+                      <div class="text-2xl font-black text-white">1</div>
+                   </div>
+                </div>
+              </div>
+
+              <!-- Content Scroll -->
+              <div class="flex-1 overflow-y-auto p-4 space-y-4 scrollbar-hide pb-8">
+                
+                <!-- Chart Header (Simulated) -->
+                <div>
+                   <h4 class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">Weekly Completions</h4>
+                   <div class="h-24 bg-gray-800/50 rounded-xl border border-gray-700 p-3 flex items-end justify-between px-4">
+                      <div class="w-2 bg-gray-700 rounded-t h-[30%]"></div>
+                      <div class="w-2 bg-gray-700 rounded-t h-[50%]"></div>
+                      <div class="w-2 bg-gray-700 rounded-t h-[40%]"></div>
+                      <div class="w-2 bg-indigo-500 rounded-t h-[80%] relative shadow-[0_0_10px_rgba(99,102,241,0.5)]"></div>
+                      <div class="w-2 bg-gray-700 rounded-t h-[20%]"></div>
+                      <div class="w-2 bg-gray-700 rounded-t h-[60%]"></div>
+                      <div class="w-2 bg-gray-700 rounded-t h-[45%]"></div>
+                   </div>
+                </div>
+
+                <!-- Recent Briefings -->
+                <div>
+                   <h4 class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">Recent Briefings</h4>
+                   <div class="space-y-2">
+                      <!-- Item 1 -->
+                      <div class="p-3 bg-gray-800/50 rounded-xl border border-gray-700 flex items-center justify-between group/item hover:border-indigo-500/30 transition">
+                         <div class="flex-1 min-w-0">
+                            <div class="font-bold text-sm text-white truncate">Operation Skyfall 3</div>
+                            <div class="flex items-center gap-2 mt-1">
+                               <div class="text-[10px] text-gray-500 flex items-center gap-1">
+                                  <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
+                                  0 missions
+                               </div>
+                               <span class="text-[8px] text-gray-600">• Dec 22, 2025</span>
+                            </div>
+                         </div>
+                         <div class="px-2 py-1 bg-indigo-500/10 text-indigo-400 text-[10px] font-bold rounded-full border border-indigo-500/20">LIVE</div>
+                      </div>
+
+                      <!-- Item 2 -->
+                      <div class="p-3 bg-gray-800/50 rounded-xl border border-gray-700 flex items-center justify-between group/item hover:border-indigo-500/30 transition">
+                         <div class="flex-1 min-w-0">
+                            <div class="font-bold text-sm text-white truncate">QA Test Meeting</div>
+                            <div class="flex items-center gap-2 mt-1">
+                               <div class="text-[10px] text-gray-500 flex items-center gap-1">
+                                  <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
+                                  3 missions
+                               </div>
+                               <span class="text-[8px] text-gray-600">• Dec 22, 2025</span>
+                            </div>
+                         </div>
+                         <div class="px-2 py-1 bg-indigo-500/10 text-indigo-400 text-[10px] font-bold rounded-full border border-indigo-500/20">LIVE</div>
+                      </div>
+                   </div>
+                </div>
+              
+              
+              <!-- Phone Home Bar (Absolute Positioned for Realism) -->
+              <div class="absolute bottom-2 left-1/2 -translate-x-1/2 h-1 w-1/3 bg-gray-600/50 rounded-full z-20 pointer-events-none"></div>
+            </div>
+            
+            <!-- Reflection/Gloss -->
+            <div class="absolute inset-0 bg-gradient-to-tr from-white/5 to-transparent pointer-events-none rounded-[2.5rem] z-30"></div>
+          </div>
+          
+          <!-- Shadow -->
+          <div class="absolute -bottom-10 left-10 right-10 h-10 bg-black/50 blur-xl rounded-[100%] z-[-1]"></div>
+          
+          <!-- Decoration Elements behind phone -->
+          <div class="absolute -right-6 top-52 bg-gray-800/90 backdrop-blur-md p-2 rounded-lg border border-gray-700 shadow-2xl animate-fade-in-right delay-100 z-50 transform rotate-3 whitespace-nowrap lg:right-[-0.5rem]">
+             <div class="text-[9px] text-gray-400 font-bold uppercase mb-0.5">XP Gained</div>
+             <div class="text-lg font-black text-white">+2.5K <span class="text-yellow-400">XP</span></div>
+          </div>
+
+          <div class="absolute -left-6 bottom-32 bg-gray-800/90 backdrop-blur-md p-3 rounded-xl border border-gray-700 shadow-2xl animate-fade-in-left delay-300 z-50 transform -rotate-2 flex items-center gap-3">
+             <div class="w-10 h-10 rounded-full bg-emerald-500/20 flex items-center justify-center text-xl">🏆</div>
+             <div>
+               <div class="text-xs text-emerald-400 font-bold">Achievement</div>
+               <div class="text-sm font-bold text-white">Speed Demon</div>
+             </div>
+          </div>
+
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Features Section -->
-  <section id="features" class="py-24 px-6 bg-gray-800/30">
+  <!-- Problem / Solution (New Section) -->
+  <section class="py-24 px-6 relative z-10">
     <div class="max-w-7xl mx-auto">
       <div class="text-center mb-16">
-        <h2 class="text-5xl md:text-6xl font-black mb-4">Everything You Need</h2>
-        <p class="text-xl text-gray-400 max-w-2xl mx-auto">Transform your team into a covert operations unit</p>
+        <h2 class="text-sm font-bold text-indigo-400 uppercase tracking-widest mb-2">Why You Need This</h2>
+        <h3 class="text-4xl md:text-5xl font-black text-white">Stop playing tasks. Start playing to win.</h3>
       </div>
 
-      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-        <!-- Feature 1 -->
-        <div class="bg-gray-800 border border-gray-700 rounded-2xl p-8 hover:border-indigo-500/50 transition">
-          <div class="w-14 h-14 bg-indigo-500/20 rounded-xl flex items-center justify-center mb-6">
-            <svg class="w-7 h-7 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path></svg>
-          </div>
-          <h3 class="text-2xl font-bold mb-3">Spy Gamification</h3>
-          <p class="text-gray-400 mb-4">Earn XP, unlock achievements, and climb ranks from Recruit to Director.</p>
-        </div>
-
-        <!-- Feature 2 -->
-        <div class="bg-gray-800 border border-gray-700 rounded-2xl p-8 hover:border-indigo-500/50 transition">
-          <div class="w-14 h-14 bg-indigo-500/20 rounded-xl flex items-center justify-center mb-6">
-            <svg class="w-7 h-7 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
-          </div>
-          <h3 class="text-2xl font-bold mb-3">Operations Calendar</h3>
-          <p class="text-gray-400 mb-4">Visualize all missions and meetings on a timeline. Never miss a deadline.</p>
-        </div>
-
-        <!-- Feature 3 -->
-        <div class="bg-gray-800 border border-gray-700 rounded-2xl p-8 hover:border-indigo-500/50 transition">
-          <div class="w-14 h-14 bg-indigo-500/20 rounded-xl flex items-center justify-center mb-6">
-            <svg class="w-7 h-7 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-          </div>
-          <h3 class="text-2xl font-bold mb-3">Time Tracking</h3>
-          <p class="text-gray-400 mb-4">Track operation duration with live timers. Know exactly how long missions take.</p>
-        </div>
-
-        <!-- Feature 4 -->
-        <div class="bg-gray-800 border border-gray-700 rounded-2xl p-8 hover:border-indigo-500/50 transition">
-          <div class="w-14 h-14 bg-indigo-500/20 rounded-xl flex items-center justify-center mb-6">
-            <svg class="w-7 h-7 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>
-          </div>
-          <h3 class="text-2xl font-bold mb-3">Secure Chat</h3>
-          <p class="text-gray-400 mb-4">Encrypted channels, DMs, GIF support, and markdown formatting for rich communication.</p>
-        </div>
-
-        <!-- Feature 5 -->
-        <div class="bg-gray-800 border border-gray-700 rounded-2xl p-8 hover:border-indigo-500/50 transition">
-          <div class="w-14 h-14 bg-indigo-500/20 rounded-xl flex items-center justify-center mb-6">
-            <svg class="w-7 h-7 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
-          </div>
-          <h3 class="text-2xl font-bold mb-3">Analytics Dashboard</h3>
-          <p class="text-gray-400 mb-4">Interactive charts showing completion rates, XP trends, and team performance.</p>
-        </div>
-
-        <!-- Feature 6 -->
-        <div class="bg-gray-800 border border-gray-700 rounded-2xl p-8 hover:border-indigo-500/50 transition">
-          <div class="w-14 h-14 bg-indigo-500/20 rounded-xl flex items-center justify-center mb-6">
-            <svg class="w-7 h-7 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
-          </div>
-          <h3 class="text-2xl font-bold mb-3">Enterprise Security</h3>
-          <p class="text-gray-400 mb-4">Bank-level encryption. Your missions stay classified.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- How It Works -->
-  <section id="how-it-works" class="py-24 px-6">
-    <div class="max-w-5xl mx-auto">
-      <div class="text-center mb-16">
-        <h2 class="text-5xl md:text-6xl font-black mb-4">How It Works</h2>
-        <p class="text-xl text-gray-400">Three simple steps to operational excellence</p>
-      </div>
-
-      <div class="space-y-16">
-        <div class="flex flex-col md:flex-row items-center gap-8">
-          <div class="flex-shrink-0 w-20 h-20 bg-indigo-600 rounded-2xl flex items-center justify-center text-3xl font-black">1</div>
-          <div class="flex-1 text-center md:text-left">
-            <h3 class="text-3xl font-bold mb-3">Create Your Briefing</h3>
-            <p class="text-gray-400 text-lg">Set up mission parameters, assign agents, and define objectives.</p>
+      <div class="grid md:grid-cols-3 gap-8">
+        <!-- Problem 1 -->
+        <div class="group relative bg-gray-800/20 border border-gray-800 hover:border-gray-600 rounded-2xl p-8 transition-colors">
+          <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition text-6xl">🌪️</div>
+          <h4 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+            <span class="text-red-400">Problem:</span> Chaos
+          </h4>
+          <p class="text-gray-400 mb-6 min-h-[3rem]">Your tasks are scattered across sticky notes, random apps, and mental mental notes.</p>
+          <div class="pt-6 border-t border-gray-700/50">
+             <h4 class="text-xl font-bold text-white mb-2 flex items-center gap-2">
+               <span class="text-emerald-400">Solution:</span> Intel
+             </h4>
+             <p class="text-gray-400 text-sm">Centralized Mission Control. Every asset, briefing, and objective in one encrypted vault.</p>
           </div>
         </div>
 
-        <div class="flex flex-col md:flex-row-reverse items-center gap-8">
-          <div class="flex-shrink-0 w-20 h-20 bg-indigo-600 rounded-2xl flex items-center justify-center text-3xl font-black">2</div>
-          <div class="flex-1 text-center md:text-right">
-            <h3 class="text-3xl font-bold mb-3">Execute the Mission</h3>
-            <p class="text-gray-400 text-lg">Track progress, collaborate, and earn XP for every objective.</p>
+        <!-- Problem 2 -->
+        <div class="group relative bg-gray-800/20 border border-gray-800 hover:border-gray-600 rounded-2xl p-8 transition-colors">
+          <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition text-6xl">💤</div>
+          <h4 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+            <span class="text-red-400">Problem:</span> Boredom
+          </h4>
+          <p class="text-gray-400 mb-6 min-h-[3rem]">Checking off checkboxes feels like a chore. Motivation drops to zero.</p>
+          <div class="pt-6 border-t border-gray-700/50">
+             <h4 class="text-xl font-bold text-white mb-2 flex items-center gap-2">
+               <span class="text-emerald-400">Solution:</span> Gamification
+             </h4>
+             <p class="text-gray-400 text-sm">Earn XP. Unlock achievements. Climb the ranks. Dopamine for doing the work.</p>
           </div>
         </div>
 
-        <div class="flex flex-col md:flex-row items-center gap-8">
-          <div class="flex-shrink-0 w-20 h-20 bg-indigo-600 rounded-2xl flex items-center justify-center text-3xl font-black">3</div>
-          <div class="flex-1 text-center md:text-left">
-            <h3 class="text-3xl font-bold mb-3">Achieve Victory</h3>
-            <p class="text-gray-400 text-lg">Complete missions, unlock achievements, and climb the ranks.</p>
+        <!-- Problem 3 -->
+        <div class="group relative bg-gray-800/20 border border-gray-800 hover:border-gray-600 rounded-2xl p-8 transition-colors">
+          <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition text-6xl">👻</div>
+          <h4 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+            <span class="text-red-400">Problem:</span> Isolation
+          </h4>
+          <p class="text-gray-400 mb-6 min-h-[3rem]">Working alone is tough. No one sees your wins.</p>
+          <div class="pt-6 border-t border-gray-700/50">
+             <h4 class="text-xl font-bold text-white mb-2 flex items-center gap-2">
+               <span class="text-emerald-400">Solution:</span> Squads
+             </h4>
+             <p class="text-gray-400 text-sm">Team channels, live mission updates, and leaderboards. Win together.</p>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Pricing Section -->
-  <section id="pricing" class="py-24 px-6 bg-gray-800/30">
+  <!-- The Arsenal (Bento Grid Features) -->
+  <section id="features" class="py-24 px-6 bg-gray-900 border-t border-gray-800">
     <div class="max-w-7xl mx-auto">
-      <div class="text-center mb-16">
-        <h2 class="text-5xl md:text-6xl font-black mb-4">Simple Pricing</h2>
-        <p class="text-xl text-gray-400">Choose the plan that fits your team</p>
-      </div>
+       <div class="text-center mb-20">
+         <div class="inline-flex items-center gap-2 px-3 py-1 bg-indigo-500/10 border border-indigo-500/20 rounded-full mb-4">
+            <span class="text-indigo-400 text-xs font-bold tracking-wide uppercase">Classified Tech Specs</span>
+         </div>
+         <h2 class="text-5xl md:text-6xl font-black text-white mb-6">The Arsenal</h2>
+         <p class="text-xl text-gray-400 max-w-2xl mx-auto">Advanced weaponry for the modern operator.</p>
+       </div>
 
-      <div class="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-        <!-- Free Plan -->
-        <div class="bg-gray-800 border border-gray-700 rounded-2xl p-8">
-          <h3 class="text-2xl font-bold mb-2">Free</h3>
-          <p class="text-gray-400 mb-6">Perfect for small teams</p>
-          <div class="mb-6">
-            <span class="text-5xl font-black">$0</span>
-            <span class="text-gray-400">/month</span>
+       <div class="grid grid-cols-1 md:grid-cols-3 gap-6 auto-rows-[minmax(180px,auto)]">
+          
+          <!-- Card 1: Gamification (Large) -->
+          <div class="md:col-span-2 bg-gray-800 rounded-3xl p-8 border border-gray-700 hover:border-indigo-500/50 transition duration-300 relative overflow-hidden group">
+             <div class="absolute inset-0 bg-gradient-to-br from-indigo-900/20 to-transparent opacity-0 group-hover:opacity-100 transition duration-500"></div>
+             <div class="relative z-10 flex flex-col md:flex-row gap-8 items-center h-full">
+                <div class="flex-1 text-center md:text-left">
+                   <div class="w-12 h-12 bg-indigo-600 rounded-xl flex items-center justify-center text-2xl mb-4 mx-auto md:mx-0">🎖️</div>
+                   <h3 class="text-2xl font-bold text-white mb-2">Rank Progression</h3>
+                   <p class="text-gray-400">Earn XP for every mission. Level up from <span class="text-indigo-400 font-bold">Recruit</span> to <span class="text-purple-400 font-bold">Director</span>.</p>
+                </div>
+                <!-- Visual -->
+                <div class="flex-1 w-full bg-gray-900/50 rounded-2xl p-4 border border-gray-700/50 backdrop-blur-sm">
+                   <div class="flex items-center justify-between mb-2">
+                      <span class="text-xs font-bold text-gray-400">Current Rank</span>
+                      <span class="text-xs font-bold text-indigo-400">Lvl 42</span>
+                   </div>
+                   <div class="h-3 bg-gray-700 rounded-full overflow-hidden mb-2">
+                      <div class="h-full w-[75%] bg-gradient-to-r from-indigo-500 to-purple-500 relative overflow-hidden">
+                         <div class="absolute inset-0 bg-white/20 animate-[shimmer_2s_infinite]"></div>
+                      </div>
+                   </div>
+                   <div class="flex justify-between text-[10px] text-gray-500 uppercase font-bold tracking-wider">
+                      <span>Agent</span>
+                      <span>Next: Special Agent</span>
+                   </div>
+                </div>
+             </div>
           </div>
-          <%= link_to "Get Started", new_registration_path, class: "block w-full py-3 bg-gray-700 hover:bg-gray-600 rounded-lg font-semibold text-center transition mb-6" %>
-          <ul class="space-y-3 text-sm">
-            <li class="flex items-center gap-2">
-              <svg class="w-5 h-5 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-              <span>Up to 5 team members</span>
-            </li>
-            <li class="flex items-center gap-2">
-              <svg class="w-5 h-5 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-              <span>Unlimited missions</span>
-            </li>
-            <li class="flex items-center gap-2">
-              <svg class="w-5 h-5 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-              <span>Basic gamification</span>
-            </li>
-            <li class="flex items-center gap-2">
-              <svg class="w-5 h-5 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-              <span>1GB storage</span>
-            </li>
-          </ul>
-        </div>
 
-        <!-- Pro Plan -->
-        <div class="bg-indigo-600 border-2 border-indigo-500 rounded-2xl p-8 relative">
-          <div class="absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1 bg-indigo-500 rounded-full text-sm font-bold">
-            Most Popular
+          <!-- Card 2: Achievements (Small) -->
+          <div class="bg-gray-800 rounded-3xl p-8 border border-gray-700 hover:border-yellow-500/30 transition duration-300 relative overflow-hidden group">
+             <div class="relative z-10 h-full flex flex-col justify-between">
+                <div>
+                   <h3 class="text-xl font-bold text-white mb-2">Badges</h3>
+                   <p class="text-sm text-gray-400">Prove your worth.</p>
+                </div>
+                <div class="grid grid-cols-4 gap-2 mt-4">
+                   <div class="aspect-square rounded-lg bg-gray-700/50 flex items-center justify-center text-xl hover:scale-110 transition cursor-help" title="Mission Complete">🎯</div>
+                   <div class="aspect-square rounded-lg bg-yellow-500/20 flex items-center justify-center text-xl ring-1 ring-yellow-500/50 hover:scale-110 transition cursor-help" title="Speed Demon">⚡</div>
+                   <div class="aspect-square rounded-lg bg-gray-700/50 flex items-center justify-center text-xl hover:scale-110 transition cursor-help" title="Veteran">💀</div>
+                   <div class="aspect-square rounded-lg bg-purple-500/20 flex items-center justify-center text-xl ring-1 ring-purple-500/50 hover:scale-110 transition cursor-help" title="Elite">👑</div>
+                </div>
+             </div>
           </div>
-          <h3 class="text-2xl font-bold mb-2">Pro</h3>
-          <p class="text-indigo-100 mb-6">For growing teams</p>
-          <div class="mb-6">
-            <span class="text-5xl font-black">$12</span>
-            <span class="text-indigo-100">/month</span>
-          </div>
-          <%= link_to "Start Free Trial", new_registration_path, class: "block w-full py-3 bg-white text-indigo-600 hover:bg-gray-100 rounded-lg font-semibold text-center transition mb-6" %>
-          <ul class="space-y-3 text-sm text-indigo-50">
-            <li class="flex items-center gap-2">
-              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-              <span>Up to 25 team members</span>
-            </li>
-            <li class="flex items-center gap-2">
-              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-              <span>Everything in Free</span>
-            </li>
-            <li class="flex items-center gap-2">
-              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-              <span>Advanced analytics</span>
-            </li>
-            <li class="flex items-center gap-2">
-              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-              <span>50GB storage</span>
-            </li>
-            <li class="flex items-center gap-2">
-              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-              <span>Priority support</span>
-            </li>
-          </ul>
-        </div>
 
-        <!-- Enterprise Plan -->
-        <div class="bg-gray-800 border border-gray-700 rounded-2xl p-8">
-          <h3 class="text-2xl font-bold mb-2">Enterprise</h3>
-          <p class="text-gray-400 mb-6">For large organizations</p>
-          <div class="mb-6">
-            <span class="text-5xl font-black">Custom</span>
+          <!-- Card 3: Chronometers (Small) -->
+          <div class="bg-gray-800 rounded-3xl p-8 border border-gray-700 hover:border-emerald-500/30 transition duration-300 relative overflow-hidden group flex flex-col">
+             <h3 class="text-xl font-bold text-white mb-2">Chronometers</h3>
+             <p class="text-sm text-gray-400 mb-6">Track every second.</p>
+             <div class="flex-1 flex items-center justify-center">
+                <div class="text-4xl font-mono font-black text-emerald-400 tracking-widest bg-gray-900 px-4 py-2 rounded-lg border border-gray-700 shadow-[0_0_15px_rgba(16,185,129,0.3)]">
+                   01:24:59
+                </div>
+             </div>
           </div>
-          <%= link_to "Contact Sales", "#", class: "block w-full py-3 bg-gray-700 hover:bg-gray-600 rounded-lg font-semibold text-center transition mb-6" %>
-          <ul class="space-y-3 text-sm">
-            <li class="flex items-center gap-2">
-              <svg class="w-5 h-5 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-              <span>Unlimited team members</span>
-            </li>
-            <li class="flex items-center gap-2">
-              <svg class="w-5 h-5 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-              <span>Everything in Pro</span>
-            </li>
-            <li class="flex items-center gap-2">
-              <svg class="w-5 h-5 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-              <span>Custom integrations</span>
-            </li>
-            <li class="flex items-center gap-2">
-              <svg class="w-5 h-5 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-              <span>Unlimited storage</span>
-            </li>
-            <li class="flex items-center gap-2">
-              <svg class="w-5 h-5 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-              <span>Dedicated support</span>
-            </li>
-          </ul>
-        </div>
-      </div>
+
+          <!-- Card 4: Mission Command (Large) -->
+          <div class="md:col-span-2 bg-gray-800 rounded-3xl p-8 border border-gray-700 hover:border-indigo-500/50 transition duration-300 relative overflow-hidden group">
+             <div class="absolute inset-0 bg-gradient-to-tr from-indigo-900/20 to-transparent opacity-0 group-hover:opacity-100 transition duration-500"></div>
+             <div class="relative z-10 flex flex-col h-full">
+                <div class="flex items-center justify-between mb-6">
+                   <div>
+                      <h3 class="text-2xl font-bold text-white">Mission Command</h3>
+                      <p class="text-gray-400">Kanban boards for global operations.</p>
+                   </div>
+                   <div class="flex -space-x-2">
+                      <div class="w-8 h-8 rounded-full bg-indigo-500 border-2 border-gray-800 flex items-center justify-center text-xs font-bold">A</div>
+                      <div class="w-8 h-8 rounded-full bg-purple-500 border-2 border-gray-800 flex items-center justify-center text-xs font-bold">B</div>
+                      <div class="w-8 h-8 rounded-full bg-gray-700 border-2 border-gray-800 flex items-center justify-center text-xs font-bold">+3</div>
+                   </div>
+                </div>
+                
+                <!-- Mock Kanban -->
+                <div class="grid grid-cols-3 gap-4 flex-1">
+                   <!-- Col 1 -->
+                   <div class="bg-gray-900/50 rounded-xl p-3 border border-gray-700/50">
+                      <div class="flex items-center gap-2 mb-3">
+                         <div class="w-2 h-2 rounded-full bg-gray-500"></div>
+                         <span class="text-xs font-bold text-gray-400 uppercase">Pending</span>
+                      </div>
+                      <div class="bg-gray-800 p-2 rounded-lg border border-gray-700 mb-2 shadow-sm">
+                         <div class="h-1.5 w-12 bg-orange-400 rounded-full mb-2"></div>
+                         <div class="h-2 w-full bg-gray-600 rounded mb-1"></div>
+                         <div class="h-2 w-2/3 bg-gray-600 rounded"></div>
+                      </div>
+                      <div class="bg-gray-800 p-2 rounded-lg border border-gray-700 opacity-50">
+                         <div class="h-2 w-full bg-gray-600 rounded"></div>
+                      </div>
+                   </div>
+                   <!-- Col 2 -->
+                   <div class="bg-gray-900/50 rounded-xl p-3 border border-gray-700/50">
+                      <div class="flex items-center gap-2 mb-3">
+                         <div class="w-2 h-2 rounded-full bg-indigo-500 animate-pulse"></div>
+                         <span class="text-xs font-bold text-indigo-400 uppercase">Active</span>
+                      </div>
+                      <div class="bg-gray-800 p-2 rounded-lg border border-indigo-500/30 shadow-lg shadow-indigo-500/10">
+                         <div class="flex justify-between mb-2">
+                            <div class="h-1.5 w-8 bg-red-500 rounded-full"></div>
+                            <div class="text-[8px] text-gray-400">2h left</div>
+                         </div>
+                         <div class="h-2 w-full bg-gray-500 rounded mb-1"></div>
+                         <div class="h-2 w-3/4 bg-gray-500 rounded mb-2"></div>
+                         <div class="flex items-center gap-1">
+                            <div class="w-4 h-4 rounded-full bg-purple-500"></div>
+                         </div>
+                      </div>
+                   </div>
+                   <!-- Col 3 -->
+                   <div class="bg-gray-900/50 rounded-xl p-3 border border-gray-700/50 hidden sm:block">
+                      <div class="flex items-center gap-2 mb-3">
+                         <div class="w-2 h-2 rounded-full bg-emerald-500"></div>
+                         <span class="text-xs font-bold text-emerald-400 uppercase">Done</span>
+                      </div>
+                      <div class="bg-gray-800 p-2 rounded-lg border border-emerald-500/20 opacity-75">
+                         <div class="h-2 w-full bg-gray-600 rounded mb-1"></div>
+                         <div class="h-2 w-1/2 bg-gray-600 rounded"></div>
+                      </div>
+                   </div>
+                </div>
+             </div>
+          </div>
+
+          <!-- Card 5: Secure Comms (Full Width) -->
+          <div class="md:col-span-3 bg-gray-800 rounded-3xl p-8 border border-gray-700 hover:border-purple-500/50 transition duration-300 relative overflow-hidden group">
+             <div class="absolute inset-0 bg-gradient-to-r from-purple-900/10 to-transparent opacity-0 group-hover:opacity-100 transition duration-500"></div>
+             <div class="relative z-10 flex flex-col md:flex-row items-center gap-12">
+                <div class="flex-1 min-w-[300px]">
+                   <h3 class="text-3xl font-bold text-white mb-4">Secure Comms</h3>
+                   <ul class="space-y-4">
+                      <li class="flex items-center gap-3 text-gray-400">
+                         <div class="w-8 h-8 rounded-full bg-gray-700 flex items-center justify-center text-lg">🔒</div>
+                         <span>End-to-end encrypted channels</span>
+                      </li>
+                      <li class="flex items-center gap-3 text-gray-400">
+                         <div class="w-8 h-8 rounded-full bg-gray-700 flex items-center justify-center text-lg">👻</div>
+                         <span>GIF & Reaction support</span>
+                      </li>
+                      <li class="flex items-center gap-3 text-gray-400">
+                         <div class="w-8 h-8 rounded-full bg-gray-700 flex items-center justify-center text-lg">📝</div>
+                         <span>Markdown formatted briefings</span>
+                      </li>
+                   </ul>
+                </div>
+
+                <!-- Chat UI Mockup -->
+                <div class="flex-1 w-full max-w-lg bg-gray-900 rounded-2xl border border-gray-800 overflow-hidden shadow-2xl">
+                   <!-- Header -->
+                   <div class="px-4 py-3 bg-gray-800 border-b border-gray-700 flex items-center gap-3">
+                      <div class="w-3 h-3 rounded-full bg-red-500"></div>
+                      <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+                      <div class="w-3 h-3 rounded-full bg-green-500"></div>
+                      <div class="ml-2 text-xs font-bold text-gray-400"># general-operations</div>
+                   </div>
+                   <!-- Messages -->
+                   <div class="p-4 space-y-4 font-mono text-sm leading-relaxed">
+                      <div class="flex gap-3">
+                         <div class="w-8 h-8 rounded bg-indigo-600 flex-shrink-0"></div>
+                         <div>
+                            <div class="flex items-baseline gap-2">
+                               <span class="font-bold text-indigo-400">Agent Smith</span>
+                               <span class="text-[10px] text-gray-600">10:42 AM</span>
+                            </div>
+                            <p class="text-gray-300">Briefing documents uploaded. Awaiting confirmation.</p>
+                         </div>
+                      </div>
+                      <div class="flex gap-3">
+                         <div class="w-8 h-8 rounded bg-purple-600 flex-shrink-0"></div>
+                         <div>
+                            <div class="flex items-baseline gap-2">
+                               <span class="font-bold text-purple-400">Director Fury</span>
+                               <span class="text-[10px] text-gray-600">10:45 AM</span>
+                            </div>
+                            <p class="text-gray-300">Copy that. Proceed with <span class="bg-gray-800 px-1 rounded text-red-400">Phase 2</span>.</p>
+                            <!-- Fake GIF -->
+                            <div class="mt-2 rounded-lg overflow-hidden relative w-32 h-20 bg-gray-800 flex items-center justify-center group/gif cursor-pointer">
+                               <div class="absolute inset-0 bg-gradient-to-r from-purple-500/20 to-indigo-500/20"></div>
+                               <span class="font-black text-white/50 text-xs">GIF</span>
+                               <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover/gif:opacity-100 transition bg-black/40">
+                                 <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                               </div>
+                            </div>
+                         </div>
+                      </div>
+                   </div>
+                </div>
+             </div>
+          </div>
+
+       </div>
     </div>
   </section>
 
-  <!-- Blog Section -->
-  <section id="blog" class="py-24 px-6">
-    <div class="max-w-7xl mx-auto">
-      <div class="text-center mb-16">
-        <h2 class="text-5xl md:text-6xl font-black mb-4">Latest Intel</h2>
-        <p class="text-xl text-gray-400">Mission briefings, tactics, and operational insights</p>
-      </div>
+  <!-- Pricing (Compact) -->
+  <section id="pricing" class="py-20 px-6 bg-gray-900 border-t border-gray-800">
+    <div class="max-w-7xl mx-auto text-center" x-data="{ plan: 'agent' }">
+       <!-- Toggle (Sliding Segmented Control) -->
+       <div class="relative inline-flex bg-gray-900 border border-gray-800 p-1 rounded-xl mb-12 shadow-inner group select-none">
+          <!-- Sliding Background Pill -->
+          <div class="absolute top-1 bottom-1 w-[calc(50%-4px)] bg-indigo-600 rounded-lg shadow-lg shadow-indigo-500/20 transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)]"
+               :class="plan === 'agent' ? 'left-1' : 'left-[calc(50%+4px)]'"></div>
+          
+          <!-- Agent Button -->
+          <button @click="plan = 'agent'" 
+               class="relative z-10 w-40 py-3 rounded-lg font-bold text-sm transition-colors duration-300 focus:outline-none cursor-pointer"
+               :class="plan === 'agent' ? 'text-white' : 'text-gray-400 hover:text-white'">
+            Agent (Free)
+          </button>
+          
+          <!-- Agency Button -->
+          <button @click="plan = 'agency'" 
+               class="relative z-10 w-40 py-3 rounded-lg font-bold text-sm transition-colors duration-300 focus:outline-none cursor-pointer"
+               :class="plan === 'agency' ? 'text-white' : 'text-gray-400 hover:text-white'">
+            Agency (Pro)
+          </button>
+       </div>
 
-      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-        <!-- Blog Post 1 -->
-        <article class="group bg-gray-800/50 border border-gray-700 rounded-2xl overflow-hidden hover:border-indigo-500/50 transition">
-          <div class="aspect-video bg-gradient-to-br from-indigo-600 to-purple-600 relative overflow-hidden">
-            <div class="absolute inset-0 flex items-center justify-center text-6xl">📊</div>
-          </div>
-          <div class="p-6">
-            <div class="flex items-center gap-3 mb-3">
-              <span class="px-3 py-1 bg-indigo-500/20 text-indigo-400 rounded-full text-xs font-semibold">PRODUCTIVITY</span>
-              <span class="text-sm text-gray-500">5 min read</span>
-            </div>
-            <h3 class="text-2xl font-bold mb-3 group-hover:text-indigo-400 transition">How Gamification Boosts Team Productivity by 40%</h3>
-            <p class="text-gray-400 mb-4">Discover how XP systems and achievements transform mundane tasks into engaging missions.</p>
-            <a href="#" class="inline-flex items-center gap-2 text-indigo-400 font-semibold hover:gap-3 transition-all">
-              Read More
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
-            </a>
-          </div>
-        </article>
+       <!-- Agent Plan (Free) -->
+       <div x-show="plan === 'agent'" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 transform scale-95" x-transition:enter-end="opacity-100 transform scale-100">
+         <h2 class="text-3xl md:text-5xl font-black text-white mb-6">Deploy for $0</h2>
+         <p class="text-gray-400 max-w-xl mx-auto mb-10 text-lg">Start your first mission today. Upgrade only when you conquer the world.</p>
+         
+         <%= link_to new_registration_path, class: "inline-flex items-center gap-3 px-10 py-4 bg-white text-gray-900 hover:bg-gray-100 rounded-xl font-bold text-lg transition shadow-xl hover:shadow-2xl hover:-translate-y-1" do %>
+          <span>Initialize Profile</span>
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+         <% end %>
+         
+         <div class="mt-8 flex flex-wrap justify-center gap-6 text-sm text-gray-500 font-medium">
+            <span class="flex items-center gap-2"><svg class="w-4 h-4 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Up to 5 Agents</span>
+            <span class="flex items-center gap-2"><svg class="w-4 h-4 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> 1GB Storage</span>
+         </div>
+       </div>
 
-        <!-- Blog Post 2 -->
-        <article class="group bg-gray-800/50 border border-gray-700 rounded-2xl overflow-hidden hover:border-indigo-500/50 transition">
-          <div class="aspect-video bg-gradient-to-br from-emerald-600 to-teal-600 relative overflow-hidden">
-            <div class="absolute inset-0 flex items-center justify-center text-6xl">🎯</div>
-          </div>
-          <div class="p-6">
-            <div class="flex items-center gap-3 mb-3">
-              <span class="px-3 py-1 bg-emerald-500/20 text-emerald-400 rounded-full text-xs font-semibold">STRATEGY</span>
-              <span class="text-sm text-gray-500">8 min read</span>
-            </div>
-            <h3 class="text-2xl font-bold mb-3 group-hover:text-indigo-400 transition">Mission-Based Workflow: The Future of Project Management</h3>
-            <p class="text-gray-400 mb-4">Why elite teams are ditching traditional task lists for spy-themed mission control.</p>
-            <a href="#" class="inline-flex items-center gap-2 text-indigo-400 font-semibold hover:gap-3 transition-all">
-              Read More
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
-            </a>
-          </div>
-        </article>
+       <!-- Agency Plan (Pro) -->
+       <div x-show="plan === 'agency'" style="display: none;" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 transform scale-95" x-transition:enter-end="opacity-100 transform scale-100">
+         <h2 class="text-3xl md:text-5xl font-black text-white mb-6">Scale for $12<span class="text-2xl text-gray-500">/mo</span></h2>
+         <p class="text-gray-400 max-w-xl mx-auto mb-10 text-lg">For growing squads needing advanced analytics and unlimited archives.</p>
+         
+         <%= link_to new_registration_path, class: "inline-flex items-center gap-3 px-10 py-4 bg-indigo-600 text-white hover:bg-indigo-500 rounded-xl font-bold text-lg transition shadow-xl hover:shadow-indigo-500/25 hover:-translate-y-1" do %>
+          <span>Start 14-Day Trial</span>
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+         <% end %>
 
-        <!-- Blog Post 3 -->
-        <article class="group bg-gray-800/50 border border-gray-700 rounded-2xl overflow-hidden hover:border-indigo-500/50 transition">
-          <div class="aspect-video bg-gradient-to-br from-orange-600 to-red-600 relative overflow-hidden">
-            <div class="absolute inset-0 flex items-center justify-center text-6xl">🏆</div>
-          </div>
-          <div class="p-6">
-            <div class="flex items-center gap-3 mb-3">
-              <span class="px-3 py-1 bg-orange-500/20 text-orange-400 rounded-full text-xs font-semibold">CASE STUDY</span>
-              <span class="text-sm text-gray-500">6 min read</span>
-            </div>
-            <h3 class="text-2xl font-bold mb-3 group-hover:text-indigo-400 transition">How TechCorp Increased Completion Rates by 65%</h3>
-            <p class="text-gray-400 mb-4">Real results from teams using DoneYet's gamified mission system.</p>
-            <a href="#" class="inline-flex items-center gap-2 text-indigo-400 font-semibold hover:gap-3 transition-all">
-              Read More
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
-            </a>
-          </div>
-        </article>
-      </div>
-
-      <!-- View All Blog Link -->
-      <div class="text-center mt-12">
-        <a href="#" class="inline-flex items-center gap-2 px-6 py-3 bg-gray-800 hover:bg-gray-700 border border-gray-700 rounded-lg font-semibold transition">
-          View All Articles
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path></svg>
-        </a>
-      </div>
-    </div>
-  </section>
-
-  <!-- Final CTA -->
-  <section class="py-24 px-6">
-    <div class="max-w-4xl mx-auto text-center">
-      <h2 class="text-5xl md:text-6xl font-black mb-6">Ready to Deploy?</h2>
-      <p class="text-xl text-gray-400 mb-12">Join elite teams using DoneYet to gamify their workflow.</p>
-      <%= link_to new_registration_path, class: "inline-flex items-center gap-3 px-10 py-5 bg-indigo-600 hover:bg-indigo-500 rounded-xl font-bold text-xl transition shadow-2xl" do %>
-        <span>Start Your First Mission</span>
-        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path></svg>
-      <% end %>
-      <p class="text-sm text-gray-500 mt-6">Free forever • No credit card • Setup in 60 seconds</p>
+         <div class="mt-8 flex flex-wrap justify-center gap-6 text-sm text-gray-500 font-medium">
+            <span class="flex items-center gap-2"><svg class="w-4 h-4 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Up to 25 Agents</span>
+            <span class="flex items-center gap-2"><svg class="w-4 h-4 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> 50GB Storage</span>
+            <span class="flex items-center gap-2"><svg class="w-4 h-4 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Advanced Analytics</span>
+         </div>
+       </div>
     </div>
   </section>
 
   <!-- Footer -->
-  <footer class="border-t border-gray-800 py-12 px-6">
-    <div class="max-w-7xl mx-auto">
-      <div class="flex flex-col md:flex-row items-center justify-between gap-6">
-        <div class="flex items-center gap-2">
-          <%= image_tag "logo.svg", class: "w-8 h-8", alt: "DoneYet Logo" %>
-          <span class="font-bold text-xl">DoneYet</span>
-        </div>
-        <p class="text-gray-500 text-sm">© 2025 DoneYet. All missions classified.</p>
-        <div class="flex gap-6 text-sm text-gray-500">
-          <a href="#" class="hover:text-white transition">Privacy</a>
-          <a href="#" class="hover:text-white transition">Terms</a>
-          <a href="#" class="hover:text-white transition">Contact</a>
-        </div>
+  <footer class="py-12 px-6 border-t border-gray-800 text-center text-gray-500 text-sm">
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
+      <div class="flex items-center gap-2 opacity-50 grayscale hover:grayscale-0 transition">
+        <%= image_tag "logo.svg", class: "w-6 h-6", alt: "Logo" %>
+        <span class="font-bold text-white">DoneYet</span>
       </div>
+      
+      <div class="flex gap-6 font-medium">
+        <a href="#features" class="hover:text-white transition">Intel</a>
+        <a href="#pricing" class="hover:text-white transition">Pricing</a>
+        <%= link_to "Contact HQ", contact_path, class: "hover:text-white transition" %>
+        <%= link_to "Privacy Protocol", privacy_path, class: "hover:text-white transition" %>
+        <%= link_to "Mission Directive", terms_path, class: "hover:text-white transition" %>
+      </div>
+
+      <p>© 2025 Agency Operations. All rights reserved.</p>
     </div>
   </footer>
 </div>
+
+<style>
+  @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-20px); }
+  }
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+      display: none;
+  }
+  .scrollbar-hide {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+  }
+</style>
