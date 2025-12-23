@@ -1,326 +1,129 @@
-# DoneYet 🚀
+# 🕵️‍♂️ DoneYet: The Agency Operating System
 
-> **A modern mission control system for teams** - Transform your meetings into actionable missions with real-time tracking, automation, and seamless integrations.
+**DoneYet** is not just a project management tool; it's a covert operating system for elite agencies. Built with a sophisticated spy-themed UI, it empowers teams (Squards) to execute Missions, dispatch Briefings, and gather Intelligence with precision and style.
 
-![Command Center](/.github/images/command_center.png)
+![DoneYet Banner](app/assets/images/logo.svg)
 
-## 🎯 About This Startup
+## 🚀 Mission Status: ACTIVE
 
-DoneYet is a next-generation task management and meeting coordination platform designed for high-performing teams. It transforms traditional meetings into "briefings" where missions are created, assigned, and tracked in real-time - think of it as your team's command center.
-
-### The Problem We're Solving
-
-- **Meeting fatigue**: Too many meetings, not enough action
-- **Lost tasks**: Action items get forgotten after meetings end
-- **Poor accountability**: No clear ownership or tracking
-- **Manual follow-ups**: Constant reminders and check-ins
-
-### Our Solution
-
-DoneYet provides a **military-inspired mission control interface** where:
-
-- 📋 Meetings become "briefings"
-- 🎯 Tasks become "missions"
-- 👥 Team members are "agents"
-- 🚀 Everything is tracked in your personal "Command Center"
+DoneYet has evolved into a full-scale agency management platform. Below is the classified dossier of its capabilities.
 
 ---
 
-## ✨ Key Features
+## 🔐 Core Intelligence (New Features)
 
-### 🎮 Command Center Dashboard
+### 1. 📊 Operations Analytics (Ahoy Integrated)
 
-Your personalized mission control hub showing:
+A state-of-the-art intelligence dashboard for Admin eyes only.
 
-- **Live Operations** - Active briefings in progress
-- **Escalations** - Overdue missions requiring attention
-- **Activity Overview** - Real-time statistics (briefings, dispatched, in progress, overdue)
-- **Recent Briefings** - Quick access to all meetings
+- **Traffic Intel:** Real-time visualization of agent logins and traffic sources.
+- **Event Logistics:** Track every Mission created, Briefing dispatched, and Message intercepted.
+- **Agent Profiling:** Identification of top-performing operatives based on session activity.
+- **Deep Logs:** Full forensic history of system events with metadata.
 
-![Dashboard](/.github/images/dashboard.png)
+### 2. 🎭 Identity Masquerade (Impersonation)
 
-### 📝 Smart Meeting Management
+The ultimate spy tool for Administrators.
 
-- Create briefings with custom titles
-- Real-time mission capture during meetings
-- Assign missions to team members on-the-fly
-- Set due dates and priorities
-- Dispatch all missions with one click
+- **Ghost Mode:** Admins can "possess" any user account to view the system through their eyes.
+- **Safe Extraction:** A persistent "Impersonation Active" banner ensures you never forget who you are.
+- **Instant Reversion:** One-click extraction back to Admin clearance.
 
-### 🤖 Visual Automation Builder
+### 3. ⏱️ Chrono-Tracking (Mission Timers)
 
-**Drag-and-drop workflow automation** - No code required!
+Time is the most valuable asset in the field.
 
-![Automation Builder](/.github/images/automation_builder.png)
+- **Active Timers:** Agents can Start, Pause, and Stop timers on their active missions.
+- **Visual Feedback:** Live ticking clocks and dynamic status updates.
+- **Efficiency Reports:** Time data is logged for performance review.
 
-Build automations by dragging blocks:
+### 4. 💬 Secure Comms (Chat 2.0)
 
-- **Triggers**: Schedule (daily/weekly/monthly), Events
-- **Actions**: Create Meeting, Send Email, Send Slack, Send Reminder
-- **Configure** each block with custom parameters
-- **Save** workflows as JSON automatically
+Communication channels upgrading to high-bandwidth protocols.
 
-### 🔔 Smart Notifications
-
-- Real-time notification bell with badge counts
-- Pending missions overview
-- Overdue mission alerts
-- Clickable notifications to view details
-
-### 👥 Team Management
-
-- Invite team members via email
-- Role-based access (Captain/Agent)
-- Workspace management
-- Profile customization with avatars
-
-### ⚙️ Settings & Customization
-
-- **Profile Settings**: Update name, email, profile picture
-- **Workspace Settings**: Customize workspace name
-- **Account Management**: Password reset, sign out
-- **Avatar Upload**: Active Storage integration for profile pictures
-
-### 🔐 Authentication & Security
-
-- Secure sign up/sign in with password encryption
-- "Remember me" functionality with persistent cookies
-- Session management
-- Rate limiting on login attempts
+- **Rich Media:** Full support for embedding intelligence (GIFs) directly into the stream.
+- **Giphy Integration:** Access the global archive of reaction assets.
+- **Markdown Encryption:** Format your briefings with headers, lists, and code blocks.
 
 ---
 
-## 🛠️ Tech Stack
+## 🛠️ The Agency Tech Stack
 
-### Backend
+Built on the latest **Rails 8.0** framework for maximum speed and stealth.
 
-- **Ruby on Rails 8.1** - Modern web framework
-- **PostgreSQL** - Robust database
-- **Active Storage** - File uploads (avatars)
-- **Active Record** - ORM with associations
-
-### Frontend
-
-- **Hotwire (Turbo + Stimulus)** - Reactive UI without heavy JavaScript
-- **Tailwind CSS** - Utility-first styling
-- **Vanilla JavaScript** - Drag-and-drop automation builder
-- **ERB Templates** - Server-side rendering
-
-### Key Gems & Libraries
-
-- `bcrypt` - Password encryption
-- `authentication-zero` - Modern Rails authentication
-- `tailwindcss-rails` - CSS framework integration
+- **Backend:** Ruby on Rails 8.1.1 (Solid Cache, Solid Queue)
+- **Frontend:** TailwindCSS v4 (Spy-Themed Dark Mode)
+- **Database:** PostgreSQL
+- **Intelligence:** Ahoy Gem (Analytics), Chart.js (Visuals)
+- **Real-time:** Turbo & Stimulus
+- **Storage:** Active Storage
 
 ---
 
-## 📊 Database Schema
+## 📂 Classified Modules
 
-### Core Models
+### 👑 The Admin Console (`/admin`)
 
-```ruby
-# User (Agents & Captains)
-- name, email_address, password_digest
-- role (enum: agent, captain)
-- workspace_id
-- avatar (Active Storage attachment)
+A restricted-access command center.
 
-# Workspace
-- name
-- subscription_status (enum: trial, active, past_due, canceled)
-- has_many :users, :meetings, :missions, :automations
+- **Global Overview:** High-level metrics on Users, Workspaces, and Missions.
+- **User Management:** Promote agents, manage access, and review dossiers.
+- **Workspace Control:** Oversee all active cells (workspaces) and their performance.
 
-# Meeting (Briefings)
-- title, status (enum: briefing, dispatched)
-- captain_id (User)
-- workspace_id
-- has_many :missions
+### 📝 Mission Control
 
-# Mission
-- title, due_at
-- status (enum: pending, done, canceled)
-- agent_id (User)
-- meeting_id
+The heart of the operation.
 
-# Automation
-- name, automation_type (enum: recurring_meeting, reminder_schedule, integration_trigger)
-- config (JSON)
-- enabled (boolean)
-- next_run_at, last_run_at
-```
+- **Briefings (Meetings):** Create and dispatch mission objectives.
+- **Missions (Tasks):** Assign tasks to specific agents with deadlines and threat levels.
+- **Statuses:** Pending -> In Progress -> Done.
+
+### 💬 The Wire (Channels)
+
+- **Encrypted Channels:** Team-based communication.
+- **Direct Lines:** Private 1-on-1 secure comms.
 
 ---
 
-## 🎨 UI/UX Highlights
+## ⚡ Deployment Instructions
 
-### Design Philosophy
-
-- **Dark theme** with vibrant accent colors (indigo, purple, emerald)
-- **Glassmorphism** effects with backdrop blur
-- **Micro-animations** for enhanced user experience
-- **Responsive design** - Works on all devices
-- **Accessibility** - Semantic HTML, proper ARIA labels
-
-### Color Palette
-
-- Background: `#0f172a` (slate-900)
-- Cards: `#1e293b` (slate-800)
-- Primary: `#6366f1` (indigo-600)
-- Success: `#10b981` (emerald-500)
-- Warning: `#f59e0b` (amber-500)
-- Danger: `#ef4444` (red-500)
-
----
-
-## 🚀 Getting Started
-
-### Prerequisites
-
-- Ruby 3.2+
-- Rails 8.1+
-- PostgreSQL
-- Node.js (for asset compilation)
-
-### Installation
-
-1. **Clone the repository**
+### 1. Clone the Repository
 
 ```bash
 git clone https://github.com/Fernandoleano/DoneYet.git
 cd DoneYet
 ```
 
-2. **Install dependencies**
+### 2. Install Dependencies
 
 ```bash
 bundle install
-npm install
 ```
 
-3. **Setup database**
+### 3. Initialize Database
 
 ```bash
-rails db:create
-rails db:migrate
+rails db:create db:migrate
 ```
 
-4. **Start the server**
+### 4. Launch the System
 
 ```bash
 bin/dev
 ```
 
-5. **Visit** `http://localhost:3000`
+---
+
+## 🤝 Contributing
+
+We are always recruiting new talent. If you have the skills to enhance our systems:
+
+1. Fork the repo.
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`).
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`).
+4. Push to the branch (`git push origin feature/AmazingFeature`).
+5. Open a Pull Request.
 
 ---
 
-## 📸 Screenshots
-
-### Sign Up / Sign In
-
-Beautiful authentication pages with custom workspace creation
-
-### Command Center
-
-![Command Center](/.github/images/command_center.png)
-
-### Meeting Briefing
-
-Real-time mission capture with live status indicators
-
-### Automation Builder
-
-![Automation Builder](/.github/images/automation_builder.png)
-
-### Notifications
-
-Smart notification system with pending/overdue mission tracking
-
----
-
-## 🗺️ Roadmap
-
-### Phase 1 (Current) ✅
-
-- [x] Core authentication system
-- [x] Meeting/mission management
-- [x] Command center dashboard
-- [x] Team management
-- [x] Visual automation builder
-- [x] Notifications system
-
-### Phase 2 (In Progress) 🚧
-
-- [ ] Slack integration
-- [ ] Email notifications
-- [ ] Automation execution engine
-- [ ] Analytics dashboard
-- [ ] Mobile app
-
-### Phase 3 (Planned) 📋
-
-- [ ] AI-powered mission suggestions
-- [ ] Voice-to-mission transcription
-- [ ] Calendar integrations (Google, Outlook)
-- [ ] Advanced reporting
-- [ ] API for third-party integrations
-
----
-
-## 👨‍💻 Development
-
-### Running Tests
-
-```bash
-bundle exec rspec
-```
-
-### Code Style
-
-- Follow Ruby Style Guide
-- Use Rubocop for linting
-- Write descriptive commit messages
-
-### Contributing
-
-This is a startup project, but contributions are welcome! Please:
-
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Submit a pull request
-
----
-
-## 📝 License
-
-This project is proprietary software. All rights reserved.
-
----
-
-## 🙏 Acknowledgments
-
-Built with ❤️ by **Fernando Leano**
-
-Special thanks to:
-
-- Ruby on Rails community
-- Tailwind CSS team
-- Hotwire/Stimulus creators
-
----
-
-## 📧 Contact
-
-**Fernando Leano**
-
-- GitHub: [@Fernandoleano](https://github.com/Fernandoleano)
-- Email: fernandoleano4@gmail.com
-
----
-
-<div align="center">
-  <strong>DoneYet - Get It Done, Track It Better</strong>
-  <br>
-  <sub>Built with Ruby on Rails 🚀</sub>
-</div>
+**DoneYet Agency** | _Completing the impossible._
