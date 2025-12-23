@@ -78,4 +78,7 @@ end
 
 gem "stripe", "~> 18.1"
 
+# Slack Integration
+gem "slack-ruby-client"
+
 gem "google-api-client", "~> 0.53.0"

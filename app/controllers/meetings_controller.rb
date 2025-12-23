@@ -47,7 +47,7 @@ class MeetingsController < ApplicationController
   def dispatch_meeting
     @meeting = Current.user.workspace.meetings.find(params[:id])
 
-    unless Current.user.workspace.active_subscription?
+    unless Current.user.has_full_access?
        redirect_to subscriptions_path, alert: "You must upgrade to dispatch missions."
        return
     end

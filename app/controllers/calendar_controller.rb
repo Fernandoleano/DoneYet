@@ -1,4 +1,6 @@
 class CalendarController < ApplicationController
+  before_action :require_pro_access!
+
   def index
     @date = params[:date] ? Date.parse(params[:date]) : Date.today
     @start_date = @date.beginning_of_month.beginning_of_week(:sunday)

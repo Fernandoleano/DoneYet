@@ -90,11 +90,24 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :subscriptions, only: [ :index, :create ] do
+  resources :subscriptions, only: [ :index ] do
     collection do
+      post :create_checkout_session
       get :success
+      delete :cancel
     end
   end
+
+  # Slack Integration
+  resource :slack_integration, only: [ :show ] do
+    post :connect
+    get :callback
+    delete :disconnect
+  end
+
+  # Stripe webhook endpoint
+  post "webhooks/stripe" => "webhooks#stripe"
+
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

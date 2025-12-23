@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2025_12_23_162423) do
+ActiveRecord::Schema[8.1].define(version: 2025_12_23_200610) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -283,6 +283,7 @@ ActiveRecord::Schema[8.1].define(version: 2025_12_23_162423) do
   end
 
   create_table "users", force: :cascade do |t|
+    t.boolean "beta_user", default: false
     t.datetime "created_at", null: false
     t.string "email_address", null: false
     t.string "name"
@@ -321,11 +322,19 @@ ActiveRecord::Schema[8.1].define(version: 2025_12_23_162423) do
   create_table "workspaces", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.string "name"
+    t.string "plan_type"
     t.jsonb "settings"
+    t.string "slack_access_token"
+    t.string "slack_bot_token"
+    t.datetime "slack_connected_at"
+    t.string "slack_team_id"
+    t.string "slack_team_name"
+    t.string "slack_webhook_url"
     t.string "stripe_customer_id"
     t.string "stripe_subscription_id"
     t.integer "subscription_status"
     t.datetime "updated_at", null: false
+    t.index ["slack_team_id"], name: "index_workspaces_on_slack_team_id"
     t.index ["stripe_customer_id"], name: "index_workspaces_on_stripe_customer_id"
     t.index ["stripe_subscription_id"], name: "index_workspaces_on_stripe_subscription_id"
   end

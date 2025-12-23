@@ -1,0 +1,49 @@
+<div class="max-w-3xl mx-auto text-center py-20">
+  <div class="mb-8">
+    <div class="w-20 h-20 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg">
+      <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+      </svg>
+    </div>
+    <h1 class="text-4xl font-black text-white mb-4">Welcome to DoneYet Pro! 🚀</h1>
+    <p class="text-xl text-gray-400">Your subscription is now active and ready to use.</p>
+  </div>
+
+  <div class="bg-gray-800 border border-gray-700 rounded-2xl p-8 mb-8">
+    <h2 class="text-2xl font-bold text-white mb-4">What's Next?</h2>
+    <div class="space-y-4 text-left">
+      <div class="flex items-start gap-3">
+        <div class="w-8 h-8 bg-indigo-600 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+          <span class="text-white font-bold">1</span>
+        </div>
+        <div>
+          <h3 class="text-lg font-semibold text-white">Invite Your Team</h3>
+          <p class="text-gray-400">You now have unlimited team members. Head to the Team page to start inviting collaborators.</p>
+        </div>
+      </div>
+      <div class="flex items-start gap-3">
+        <div class="w-8 h-8 bg-indigo-600 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+          <span class="text-white font-bold">2</span>
+        </div>
+        <div>
+          <h3 class="text-lg font-semibold text-white">Explore Advanced Analytics</h3>
+          <p class="text-gray-400">Check out your new analytics dashboard to track team performance and mission completion rates.</p>
+        </div>
+      </div>
+      <div class="flex items-start gap-3">
+        <div class="w-8 h-8 bg-indigo-600 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+          <span class="text-white font-bold">3</span>
+        </div>
+        <div>
+          <h3 class="text-lg font-semibold text-white">Set Up Integrations</h3>
+          <p class="text-gray-400">Connect Slack and Google Meet to streamline your workflow and automate notifications.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="flex gap-4 justify-center">
+    <%= link_to "Go to Dashboard", root_path, class: "px-8 py-3 bg-indigo-600 hover:bg-indigo-500 text-white font-semibold rounded-lg transition shadow-lg" %>
+    <%= link_to "Invite Team Members", team_index_path, class: "px-8 py-3 bg-gray-700 hover:bg-gray-600 text-white font-semibold rounded-lg transition" %>
+  </div>
+</div>

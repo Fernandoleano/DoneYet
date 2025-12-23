@@ -8,3 +8,4 @@ pin_all_from "app/javascript/controllers", under: "controllers"
 pin "meet_addon", to: "meet_addon.js"
 
 pin "alpinejs", to: "https://ga.jspm.io/npm:alpinejs@3.14.8/dist/module.esm.js"
+pin "canvas-confetti", to: "https://cdn.skypack.dev/canvas-confetti"

@@ -1,4 +1,5 @@
 class AutomationsController < ApplicationController
+  before_action :require_pro_access!
   before_action :set_automation, only: [ :edit, :update, :destroy, :toggle ]
 
   def index

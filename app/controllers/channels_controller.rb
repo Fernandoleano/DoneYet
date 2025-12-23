@@ -1,4 +1,5 @@
 class ChannelsController < ApplicationController
+  before_action :require_pro_access!
   layout "chat"
 
   def index

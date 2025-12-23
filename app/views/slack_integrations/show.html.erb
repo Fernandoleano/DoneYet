@@ -1,0 +1,98 @@
+<div class="max-w-4xl mx-auto">
+  <h1 class="text-4xl font-black text-white mb-2">Slack Integration</h1>
+  <p class="text-gray-400 mb-8">Connect your Slack workspace to DoneYet</p>
+
+  <% if @workspace.slack_connected? %>
+    <!-- Connected State -->
+    <div class="bg-gradient-to-br from-emerald-500/10 to-emerald-600/10 border border-emerald-500/30 rounded-2xl p-8">
+      <div class="flex items-start justify-between">
+        <div>
+          <div class="flex items-center gap-3 mb-4">
+            <div class="w-12 h-12 bg-emerald-600/20 rounded-xl flex items-center justify-center">
+              <svg class="w-6 h-6 text-emerald-400" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M5.042 15.165a2.528 2.528 0 0 1-2.52 2.523A2.528 2.528 0 0 1 0 15.165a2.527 2.527 0 0 1 2.522-2.52h2.52v2.52zM6.313 15.165a2.527 2.527 0 0 1 2.521-2.52 2.527 2.527 0 0 1 2.521 2.52v6.313A2.528 2.528 0 0 1 8.834 24a2.528 2.528 0 0 1-2.521-2.522v-6.313zM8.834 5.042a2.528 2.528 0 0 1-2.521-2.52A2.528 2.528 0 0 1 8.834 0a2.528 2.528 0 0 1 2.521 2.522v2.52H8.834zM8.834 6.313a2.528 2.528 0 0 1 2.521 2.521 2.528 2.528 0 0 1-2.521 2.521H2.522A2.528 2.528 0 0 1 0 8.834a2.528 2.528 0 0 1 2.522-2.521h6.312zM18.956 8.834a2.528 2.528 0 0 1 2.522-2.521A2.528 2.528 0 0 1 24 8.834a2.528 2.528 0 0 1-2.522 2.521h-2.522V8.834zM17.688 8.834a2.528 2.528 0 0 1-2.523 2.521 2.527 2.527 0 0 1-2.52-2.521V2.522A2.527 2.527 0 0 1 15.165 0a2.528 2.528 0 0 1 2.523 2.522v6.312zM15.165 18.956a2.528 2.528 0 0 1 2.523 2.522A2.528 2.528 0 0 1 15.165 24a2.527 2.527 0 0 1-2.52-2.522v-2.522h2.52zM15.165 17.688a2.527 2.527 0 0 1-2.52-2.523 2.526 2.526 0 0 1 2.52-2.52h6.313A2.527 2.527 0 0 1 24 15.165a2.528 2.528 0 0 1-2.522 2.523h-6.313z"/>
+              </svg>
+            </div>
+            <div>
+              <h3 class="text-xl font-bold text-white"><%= @workspace.slack_team_name %></h3>
+              <p class="text-sm text-emerald-400">Connected</p>
+            </div>
+          </div>
+          <p class="text-gray-400 text-sm">
+            Connected <%= time_ago_in_words(@workspace.slack_connected_at) %> ago
+          </p>
+        </div>
+        <%= button_to "Disconnect", disconnect_slack_integration_path, 
+            method: :delete,
+            data: { confirm: "Are you sure you want to disconnect Slack?" },
+            class: "px-6 py-3 bg-red-600/20 hover:bg-red-600/30 text-red-400 rounded-lg transition border border-red-500/30 font-semibold" %>
+      </div>
+    </div>
+  <% else %>
+    <!-- Not Connected State -->
+    <div class="bg-gray-800 border border-gray-700 rounded-2xl p-8 text-center">
+      <div class="w-16 h-16 bg-gray-700 rounded-full flex items-center justify-center mx-auto mb-4">
+        <svg class="w-8 h-8 text-gray-500" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M5.042 15.165a2.528 2.528 0 0 1-2.52 2.523A2.528 2.528 0 0 1 0 15.165a2.527 2.527 0 0 1 2.522-2.52h2.52v2.52zM6.313 15.165a2.527 2.527 0 0 1 2.521-2.52 2.527 2.527 0 0 1 2.521 2.52v6.313A2.528 2.528 0 0 1 8.834 24a2.528 2.528 0 0 1-2.521-2.522v-6.313zM8.834 5.042a2.528 2.528 0 0 1-2.521-2.52A2.528 2.528 0 0 1 8.834 0a2.528 2.528 0 0 1 2.521 2.522v2.52H8.834zM8.834 6.313a2.528 2.528 0 0 1 2.521 2.521 2.528 2.528 0 0 1-2.521 2.521H2.522A2.528 2.528 0 0 1 0 8.834a2.528 2.528 0 0 1 2.522-2.521h6.312zM18.956 8.834a2.528 2.528 0 0 1 2.522-2.521A2.528 2.528 0 0 1 24 8.834a2.528 2.528 0 0 1-2.522 2.521h-2.522V8.834zM17.688 8.834a2.528 2.528 0 0 1-2.523 2.521 2.527 2.527 0 0 1-2.52-2.521V2.522A2.527 2.527 0 0 1 15.165 0a2.528 2.528 0 0 1 2.523 2.522v6.312zM15.165 18.956a2.528 2.528 0 0 1 2.523 2.522A2.528 2.528 0 0 1 15.165 24a2.527 2.527 0 0 1-2.52-2.522v-2.522h2.52zM15.165 17.688a2.527 2.527 0 0 1-2.52-2.523 2.526 2.526 0 0 1 2.52-2.52h6.313A2.527 2.527 0 0 1 24 15.165a2.528 2.528 0 0 1-2.522 2.523h-6.313z"/>
+        </svg>
+      </div>
+      <h3 class="text-2xl font-bold text-white mb-2">Connect to Slack</h3>
+      <p class="text-gray-400 mb-6 max-w-md mx-auto">
+        Integrate your Slack workspace to receive notifications and sync messages with DoneYet.
+      </p>
+      <%= button_to "Connect with Slack", connect_slack_integration_path, 
+          class: "inline-flex items-center gap-2 px-6 py-3 bg-indigo-600 hover:bg-indigo-500 text-white font-semibold rounded-lg transition" %>
+    </div>
+  <% end %>
+
+  <!-- Features List -->
+  <div class="mt-8 bg-gray-800 border border-gray-700 rounded-2xl p-6">
+    <h3 class="text-lg font-bold text-white mb-4">What you can do with Slack integration:</h3>
+    <ul class="space-y-3">
+      <li class="flex items-start gap-3">
+        <svg class="w-5 h-5 text-emerald-400 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+        </svg>
+        <span class="text-gray-300">Send mission notifications to Slack channels</span>
+      </li>
+      <li class="flex items-start gap-3">
+        <svg class="w-5 h-5 text-emerald-400 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+        </svg>
+        <span class="text-gray-300">Get meeting updates in Slack</span>
+      </li>
+      <li class="flex items-start gap-3">
+        <svg class="w-5 h-5 text-emerald-400 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+        </svg>
+        <span class="text-gray-300">Sync team activity across platforms</span>
+      </li>
+    </ul>
+  </div>
+
+  <!-- Setup Instructions -->
+  <% unless @workspace.slack_connected? %>
+    <div class="mt-8 bg-indigo-500/10 border border-indigo-500/30 rounded-2xl p-6">
+      <h3 class="text-lg font-bold text-white mb-4 flex items-center gap-2">
+        <svg class="w-5 h-5 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+        </svg>
+        Getting Started
+      </h3>
+      <ol class="space-y-2 text-gray-300 text-sm">
+        <li class="flex gap-2">
+          <span class="font-bold text-indigo-400">1.</span>
+          <span>Click "Connect with Slack" above</span>
+        </li>
+        <li class="flex gap-2">
+          <span class="font-bold text-indigo-400">2.</span>
+          <span>Authorize DoneYet to access your Slack workspace</span>
+        </li>
+        <li class="flex gap-2">
+          <span class="font-bold text-indigo-400">3.</span>
+          <span>Start receiving notifications in Slack!</span>
+        </li>
+      </ol>
+    </div>
+  <% end %>
+</div>

@@ -1,5 +1,5 @@
 import { Controller } from "@hotwired/stimulus"
-import confetti from "canvas-confetti"
+import { confetti } from "canvas-confetti"
 
 export default class extends Controller {
   connect() {

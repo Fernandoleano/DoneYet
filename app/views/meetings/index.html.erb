@@ -67,54 +67,68 @@
     </div>
   </div>
 
-  <!-- Charts Row -->
-  <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-    <!-- Mission Status Chart -->
-    <div class="bg-gray-800 border border-gray-700 rounded-2xl p-6">
-      <h3 class="text-lg font-bold text-white mb-4 flex items-center gap-2">
-        <span class="w-2 h-2 bg-indigo-500 rounded-full animate-pulse"></span>
-        Mission Status Distribution
-      </h3>
-      <div class="h-64" 
-           data-controller="chart"
-           data-chart-type-value="doughnut"
-           data-chart-data-value='<%= {
-             labels: ["Completed", "In Progress", "Pending"],
-             datasets: [{
-               data: [@completed_missions, @in_progress_missions, @pending_missions],
-               backgroundColor: ["#10B981", "#FBBF24", "#6366F1"],
-               borderColor: "#1F2937",
-               borderWidth: 2
-             }]
-           }.to_json %>'>
-        <canvas data-chart-target="canvas"></canvas>
+  <% if current_user_has_full_access? %>
+    <!-- Charts Row -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <!-- Mission Status Chart -->
+      <div class="bg-gray-800 border border-gray-700 rounded-2xl p-6">
+        <h3 class="text-lg font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-2 h-2 bg-indigo-500 rounded-full animate-pulse"></span>
+          Mission Status Distribution
+        </h3>
+        <div class="h-64" 
+             data-controller="chart"
+             data-chart-type-value="doughnut"
+             data-chart-data-value='<%= {
+               labels: ["Completed", "In Progress", "Pending"],
+               datasets: [{
+                 data: [@completed_missions, @in_progress_missions, @pending_missions],
+                 backgroundColor: ["#10B981", "#FBBF24", "#6366F1"],
+                 borderColor: "#1F2937",
+                 borderWidth: 2
+               }]
+             }.to_json %>'>
+          <canvas data-chart-target="canvas"></canvas>
+        </div>
       </div>
-    </div>
 
-    <!-- Weekly Activity Chart -->
-    <div class="bg-gray-800 border border-gray-700 rounded-2xl p-6">
-      <h3 class="text-lg font-bold text-white mb-4 flex items-center gap-2">
-        <span class="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></span>
-        Weekly Completions
-      </h3>
-      <div class="h-64"
-           data-controller="chart"
-           data-chart-type-value="bar"
-           data-chart-data-value='<%= {
-             labels: @weekly_data.map { |d| d[:date] },
-             datasets: [{
-               label: "Missions Completed",
-               data: @weekly_data.map { |d| d[:completed] },
-               backgroundColor: "#6366F1",
-               borderColor: "#818CF8",
-               borderWidth: 1,
-               borderRadius: 8
-             }]
-           }.to_json %>'>
-        <canvas data-chart-target="canvas"></canvas>
+      <!-- Weekly Activity Chart -->
+      <div class="bg-gray-800 border border-gray-700 rounded-2xl p-6">
+        <h3 class="text-lg font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></span>
+          Weekly Completions
+        </h3>
+        <div class="h-64"
+             data-controller="chart"
+             data-chart-type-value="bar"
+             data-chart-data-value='<%= {
+               labels: @weekly_data.map { |d| d[:date] },
+               datasets: [{
+                 label: "Missions Completed",
+                 data: @weekly_data.map { |d| d[:completed] },
+                 backgroundColor: "#6366F1",
+                 borderColor: "#818CF8",
+                 borderWidth: 1,
+                 borderRadius: 8
+               }]
+             }.to_json %>'>
+          <canvas data-chart-target="canvas"></canvas>
+        </div>
       </div>
     </div>
-  </div>
+  <% else %>
+    <!-- Free Tier Upgrade Prompt -->
+    <div class="bg-gradient-to-br from-indigo-500/10 to-purple-600/10 border border-indigo-500/30 rounded-2xl p-8 text-center">
+      <div class="max-w-md mx-auto">
+        <div class="w-16 h-16 bg-indigo-600/20 rounded-full flex items-center justify-center mx-auto mb-4">
+          <svg class="w-8 h-8 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
+        </div>
+        <h3 class="text-2xl font-bold text-white mb-2">Unlock Advanced Analytics</h3>
+        <p class="text-gray-400 mb-6">Upgrade to Pro to access detailed charts, insights, and advanced mission tracking features.</p>
+        <%= link_to "Upgrade to Pro", subscriptions_path, class: "inline-flex items-center gap-2 px-6 py-3 bg-indigo-600 hover:bg-indigo-500 text-white font-semibold rounded-lg transition" %>
+      </div>
+    </div>
+  <% end %>
 
   <!-- Manager Notes & Recent Briefings Row -->
   <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">

@@ -25,6 +25,29 @@ class User < ApplicationRecord
 
   after_create :create_user_stat
 
+  # Access Control for Feature Gating
+  def has_full_access?
+    # Admin, beta users, or Pro workspace
+    email_address == "fernandoleano4@gmail.com" ||
+    beta_user? ||
+    workspace&.pro?
+  end
+
+  def can_access_feature?(feature)
+    return true if has_full_access?
+
+    case feature
+    when :analytics then false
+    when :automations then false
+    when :calendar then false
+    when :chat then false
+    when :advanced_channels then false
+    when :feature_voting then false
+    when :file_attachments then false
+    else true
+    end
+  end
+
   private
 
   def create_user_stat
