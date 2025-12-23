@@ -85,7 +85,7 @@ Rails.application.configure do
     "www.doneyet.ai",
     "104.131.92.251"
   ]
-  #
+
   # Skip DNS rebinding protection for the default health check endpoint.
-  # config.host_authorization = { exclude: ->(request) { request.path == "/up" } }
+  config.host_authorization = { exclude: ->(request) { request.path == "/up" } }
 end
