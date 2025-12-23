@@ -26,7 +26,6 @@ env:
     - RAILS_MASTER_KEY
     - DATABASE_URL
   clear:
-    SOLID_QUEUE_IN_PUMA: true
     RAILS_ENV: production
     RAILS_SERVE_STATIC_FILES: true
     RAILS_LOG_TO_STDOUT: true
