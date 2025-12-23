@@ -38,6 +38,42 @@
     </div>
   </div>
 
+  <!-- Time Tracking Section -->
+  <div class="bg-gradient-to-br from-gray-800/60 to-gray-800/40 backdrop-blur-sm border border-gray-700/50 rounded-2xl p-6 mb-6">
+    <div class="flex items-center justify-between">
+      <div class="flex items-center gap-4">
+        <div class="w-12 h-12 bg-indigo-600/20 rounded-full flex items-center justify-center">
+          <svg class="w-6 h-6 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+        </div>
+        <div>
+          <h3 class="text-sm font-semibold text-gray-400 uppercase mb-1">Operation Duration</h3>
+          <div class="text-3xl font-black text-white" id="timer-display" data-is-running="<%= @mission.is_timer_running %>" data-started-at="<%= @mission.timer_started_at&.iso8601 %>" data-tracked-seconds="<%= @mission.time_tracked_seconds %>">
+            <%= @mission.formatted_time_tracked %>
+          </div>
+        </div>
+      </div>
+
+      <!-- Timer Controls -->
+      <div class="flex items-center gap-2">
+        <% if @mission.is_timer_running %>
+          <%= button_to pause_timer_mission_path(@mission), method: :post, class: "px-6 py-3 bg-yellow-600/20 hover:bg-yellow-600/30 border border-yellow-500/30 text-yellow-400 font-semibold rounded-lg transition flex items-center gap-2" do %>
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z"></path></svg>
+            Pause
+          <% end %>
+          <%= button_to stop_timer_mission_path(@mission), method: :post, data: { confirm: "Stop timer and mark mission complete?" }, class: "px-6 py-3 bg-emerald-600 hover:bg-emerald-500 text-white font-semibold rounded-lg transition flex items-center gap-2" do %>
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M6 6h12v12H6z"></path></svg>
+            Stop & Complete
+          <% end %>
+        <% else %>
+          <%= button_to start_timer_mission_path(@mission), method: :post, class: "px-6 py-3 bg-emerald-600/20 hover:bg-emerald-600/30 border border-emerald-500/30 text-emerald-400 font-semibold rounded-lg transition flex items-center gap-2" do %>
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"></path></svg>
+            <%= @mission.time_tracked_seconds > 0 ? "Resume" : "Start Timer" %>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
   <!-- Assignees Section -->
   <div class="bg-gray-800 border border-gray-700 rounded-2xl p-6 mb-6">
     <h3 class="text-sm font-semibold text-gray-400 mb-4 uppercase">Assigned To</h3>
@@ -178,3 +214,64 @@
     <% end %>
   </div>
 </div>
+
+<script>
+// Live Timer for Mission Time Tracking
+let missionTimerInterval = null;
+
+function initMissionTimer() {
+  // Clear any existing interval
+  if (missionTimerInterval) {
+    clearInterval(missionTimerInterval);
+    missionTimerInterval = null;
+  }
+
+  const timerDisplay = document.getElementById('timer-display');
+  if (!timerDisplay) return;
+
+  const isRunning = timerDisplay.dataset.isRunning === 'true';
+  const startedAt = timerDisplay.dataset.startedAt;
+  const trackedSeconds = parseInt(timerDisplay.dataset.trackedSeconds) || 0;
+
+  if (isRunning && startedAt) {
+    // Update timer every second
+    missionTimerInterval = setInterval(() => {
+      const started = new Date(startedAt);
+      const now = new Date();
+      const currentSessionSeconds = Math.floor((now - started) / 1000);
+      const totalSeconds = trackedSeconds + currentSessionSeconds;
+
+      timerDisplay.textContent = formatTime(totalSeconds);
+    }, 1000);
+  }
+}
+
+function formatTime(totalSeconds) {
+  const hours = Math.floor(totalSeconds / 3600);
+  const minutes = Math.floor((totalSeconds % 3600) / 60);
+  const seconds = totalSeconds % 60;
+
+  if (hours > 0) {
+    return `${hours}h ${minutes}m`;
+  } else if (minutes > 0) {
+    return `${minutes}m ${seconds}s`;
+  } else {
+    return `${seconds}s`;
+  }
+}
+
+// Initialize on page load (for non-Turbo navigation)
+document.addEventListener('DOMContentLoaded', initMissionTimer);
+
+// Initialize on Turbo navigation
+document.addEventListener('turbo:load', initMissionTimer);
+
+// Cleanup on Turbo before cache
+document.addEventListener('turbo:before-cache', () => {
+  if (missionTimerInterval) {
+    clearInterval(missionTimerInterval);
+    missionTimerInterval = null;
+  }
+});
+</script>
+

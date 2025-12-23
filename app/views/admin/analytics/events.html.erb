@@ -1,0 +1,52 @@
+<div class="min-h-screen bg-gradient-to-br from-gray-900 via-gray-900 to-indigo-950 py-10 px-6">
+  <div class="max-w-7xl mx-auto">
+    <!-- Header -->
+    <div class="mb-10 flex items-center justify-between">
+      <div class="flex items-center gap-4">
+        <div class="w-16 h-16 bg-gradient-to-br from-indigo-600 to-indigo-700 rounded-2xl flex items-center justify-center shadow-lg shadow-indigo-900/50">
+          <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+        </div>
+        <div>
+          <h1 class="text-5xl font-black text-white mb-1 bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">Event Log</h1>
+          <p class="text-gray-400 text-lg">Detailed system event tracking</p>
+        </div>
+      </div>
+      <%= link_to admin_analytics_path, class: "group px-6 py-3 bg-gray-800/50 hover:bg-gray-700/50 border border-gray-700 hover:border-gray-600 rounded-xl font-semibold transition-all flex items-center gap-2" do %>
+        <svg class="w-5 h-5 group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+        Back to Analytics
+      <% end %>
+    </div>
+
+    <!-- Events Table -->
+    <div class="bg-gray-800/30 backdrop-blur-sm border border-gray-700 rounded-2xl overflow-hidden shadow-2xl">
+      <div class="overflow-x-auto">
+        <table class="w-full">
+          <thead class="bg-gray-800/70">
+            <tr class="border-b border-gray-700 text-left">
+              <th class="py-4 px-6 text-gray-400 font-bold text-xs uppercase tracking-wider">Event Name</th>
+              <th class="py-4 px-6 text-gray-400 font-bold text-xs uppercase tracking-wider">User</th>
+              <th class="py-4 px-6 text-gray-400 font-bold text-xs uppercase tracking-wider">Properties</th>
+              <th class="py-4 px-6 text-gray-400 font-bold text-xs uppercase tracking-wider">Time</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-gray-700/50">
+            <% @events.each do |event| %>
+              <tr class="hover:bg-gray-700/30 transition-colors">
+                <td class="py-4 px-6 font-bold text-indigo-400"><%= event.name %></td>
+                <td class="py-4 px-6 text-gray-300">
+                  <%= event.visit&.user&.name || "Anonymous" %>
+                </td>
+                <td class="py-4 px-6">
+                  <pre class="text-[10px] text-gray-500 font-mono overflow-x-auto max-w-md"><%= JSON.pretty_generate(event.properties) rescue "{}" %></pre>
+                </td>
+                <td class="py-4 px-6 text-gray-400 text-sm">
+                  <%= time_ago_in_words(event.time) %> ago
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

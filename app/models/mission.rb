@@ -49,6 +49,57 @@ class Mission < ApplicationRecord
     end
   end
 
+  # Time tracking methods
+  def start_timer!
+    update(
+      is_timer_running: true,
+      timer_started_at: Time.current
+    )
+    # Set started_at only if it's the first time
+    update(started_at: Time.current) unless started_at
+  end
+
+  def pause_timer!
+    return unless is_timer_running && timer_started_at
+
+    elapsed = Time.current - timer_started_at
+    update(
+      time_tracked_seconds: time_tracked_seconds + elapsed.to_i,
+      is_timer_running: false,
+      timer_started_at: nil
+    )
+  end
+
+  def stop_timer!
+    pause_timer! if is_timer_running
+    update(status: :done, completed_at: Time.current)
+  end
+
+  def current_timer_duration
+    return 0 unless is_timer_running && timer_started_at
+    Time.current - timer_started_at
+  end
+
+  def total_time_tracked
+    base = time_tracked_seconds || 0
+    base + current_timer_duration.to_i
+  end
+
+  def formatted_time_tracked
+    total = total_time_tracked
+    hours = total / 3600
+    minutes = (total % 3600) / 60
+    seconds = total % 60
+
+    if hours > 0
+      "#{hours}h #{minutes}m"
+    elsif minutes > 0
+      "#{minutes}m #{seconds}s"
+    else
+      "#{seconds}s"
+    end
+  end
+
   private
 
   def award_completion_xp

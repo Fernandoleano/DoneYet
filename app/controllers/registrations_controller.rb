@@ -15,6 +15,7 @@ class RegistrationsController < ApplicationController
 
     if @user.save
       start_new_session_for @user
+      ahoy.authenticate(@user)
       redirect_to root_path, notice: "Welcome to DoneYet!"
     else
       render :new, status: :unprocessable_entity

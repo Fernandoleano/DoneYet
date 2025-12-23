@@ -1,0 +1,122 @@
+<div class="min-h-screen bg-gradient-to-br from-gray-900 via-gray-900 to-indigo-950">
+  <div class="max-w-6xl mx-auto px-6 py-8">
+    <!-- Header -->
+    <div class="mb-8">
+      <h1 class="text-4xl font-black text-white mb-2">Agent Profile</h1>
+      <p class="text-gray-400">Track your progress, achievements, and stats</p>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <!-- Left: Stats Overview -->
+      <div class="lg:col-span-2 space-y-6">
+        <!-- XP and Level Card -->
+        <div class="bg-gradient-to-br from-indigo-600/20 to-purple-600/20 backdrop-blur-sm border border-indigo-500/30 rounded-2xl p-8">
+          <div class="flex items-start justify-between mb-6">
+            <div>
+              <h2 class="text-3xl font-black text-white mb-2">Level <%= @user_stat.level %></h2>
+              <p class="text-indigo-300 font-semibold"><%= number_with_delimiter(@user_stat.total_xp) %> XP</p>
+            </div>
+            <div class="px-4 py-2 bg-indigo-500/20 border border-indigo-500/30 rounded-full">
+              <span class="text-indigo-300 font-bold text-sm"><%= @user_stat.rank.titleize %></span>
+            </div>
+          </div>
+          
+          <!-- Progress Bar -->
+          <div class="space-y-2">
+            <div class="flex items-center justify-between text-sm">
+              <span class="text-gray-400">Progress to Level <%= @user_stat.level + 1 %></span>
+              <span class="text-indigo-300 font-bold"><%= @user_stat.progress_to_next_level %>%</span>
+            </div>
+            <div class="h-3 bg-gray-800/50 rounded-full overflow-hidden">
+              <div class="h-full bg-gradient-to-r from-indigo-500 to-purple-500 rounded-full transition-all duration-500" style="width: <%= @user_stat.progress_to_next_level %>%"></div>
+            </div>
+            <p class="text-xs text-gray-500"><%= number_with_delimiter(@user_stat.xp_for_next_level) %> XP to next level</p>
+          </div>
+        </div>
+
+        <!-- Stats Grid -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div class="bg-gradient-to-br from-gray-800/40 to-gray-800/20 backdrop-blur-sm border border-gray-700/50 rounded-xl p-5 text-center">
+            <div class="text-3xl font-black text-white mb-1"><%= @user_stat.missions_completed %></div>
+            <div class="text-xs text-gray-400 uppercase tracking-wider">Missions</div>
+          </div>
+          
+          <div class="bg-gradient-to-br from-gray-800/40 to-gray-800/20 backdrop-blur-sm border border-gray-700/50 rounded-xl p-5 text-center">
+            <div class="text-3xl font-black text-emerald-400 mb-1"><%= @user.achievements.count %></div>
+            <div class="text-xs text-gray-400 uppercase tracking-wider">Achievements</div>
+          </div>
+          
+          <div class="bg-gradient-to-br from-gray-800/40 to-gray-800/20 backdrop-blur-sm border border-gray-700/50 rounded-xl p-5 text-center">
+            <div class="text-3xl font-black text-indigo-400 mb-1"><%= @user_stat.current_streak %></div>
+            <div class="text-xs text-gray-400 uppercase tracking-wider">Day Streak</div>
+          </div>
+          
+          <div class="bg-gradient-to-br from-gray-800/40 to-gray-800/20 backdrop-blur-sm border border-gray-700/50 rounded-xl p-5 text-center">
+            <div class="text-3xl font-black text-purple-400 mb-1"><%= @user_stat.longest_streak %></div>
+            <div class="text-xs text-gray-400 uppercase tracking-wider">Best Streak</div>
+          </div>
+        </div>
+
+        <!-- Recent Achievements -->
+        <div>
+          <h3 class="text-2xl font-bold text-white mb-4">Recent Achievements</h3>
+          <% if @achievements.any? %>
+            <div class="space-y-3">
+              <% @achievements.limit(5).each do |user_achievement| %>
+                <div class="bg-gradient-to-br from-gray-800/40 to-gray-800/20 backdrop-blur-sm border border-gray-700/50 rounded-xl p-5 flex items-center gap-4">
+                  <div class="w-16 h-16 bg-gradient-to-br from-yellow-600 to-orange-600 rounded-xl flex items-center justify-center text-3xl shrink-0 shadow-lg">
+                    🏆
+                  </div>
+                  <div class="flex-1">
+                    <h4 class="font-bold text-white text-lg"><%= user_achievement.achievement.name %></h4>
+                    <p class="text-sm text-gray-400"><%= user_achievement.achievement.description %></p>
+                    <div class="flex items-center gap-3 mt-2">
+                      <span class="px-3 py-1 bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 rounded-full text-xs font-bold">+<%= user_achievement.achievement.xp_reward %> XP</span>
+                      <span class="text-xs text-gray-500"><%= time_ago_in_words(user_achievement.unlocked_at) %> ago</span>
+                    </div>
+                  </div>
+                </div>
+              <% end %>
+            </div>
+          <% else %>
+            <div class="text-center py-12 border-2 border-dashed border-gray-800/50 rounded-2xl">
+              <div class="inline-flex items-center justify-center w-16 h-16 bg-gray-800/50 rounded-full mb-4">
+                <svg class="w-8 h-8 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path></svg>
+              </div>
+              <p class="text-gray-500 font-medium">No achievements yet. Complete missions to unlock them!</p>
+            </div>
+          <% end %>
+        </div>
+      </div>
+
+      <!-- Right: Profile Info -->
+      <div class="space-y-6">
+        <!-- Profile Card -->
+        <div class="bg-gradient-to-br from-gray-800/40 to-gray-800/20 backdrop-blur-sm border border-gray-700/50 rounded-2xl p-6 text-center">
+          <% if @user.avatar.attached? %>
+            <%= image_tag @user.avatar, class: "w-24 h-24 rounded-full mx-auto mb-4 ring-4 ring-indigo-500/30 object-cover" %>
+          <% else %>
+            <div class="w-24 h-24 rounded-full mx-auto mb-4 bg-gradient-to-br from-indigo-600 to-purple-600 flex items-center justify-center text-4xl font-black text-white ring-4 ring-indigo-500/30">
+              <%= @user.name.first.upcase %>
+            </div>
+          <% end %>
+          <h3 class="text-2xl font-black text-white mb-1"><%= @user.name %></h3>
+          <p class="text-indigo-400 font-semibold mb-4"><%= @user.role.titleize %></p>
+          <div class="flex gap-2">
+            <%= link_to "Settings", settings_path, class: "flex-1 px-6 py-2.5 bg-gray-700 hover:bg-gray-600 rounded-lg font-semibold text-white transition text-center" %>
+          </div>
+        </div>
+
+        <!-- Rank Progress -->
+        <div class="bg-gradient-to-br from-gray-800/40 to-gray-800/20 backdrop-blur-sm border border-gray-700/50 rounded-2xl p-6">
+          <h4 class="font-bold text-white mb-4">Current Rank</h4>
+          <div class="text-center py-6">
+            <div class="text-5xl mb-3"><%= @user_stat.rank.split.first %></div>
+            <p class="text-xl font-bold text-white"><%= @user_stat.rank.split[1..-1].join(' ') %></p>
+            <p class="text-sm text-gray-400 mt-2">Level <%= @user_stat.level %></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -21,8 +21,10 @@ class MissionsController < ApplicationController
       when "done"
         @mission.update(completed_at: Time.current) unless @mission.completed_at
         @mission.update(started_at: Time.current) unless @mission.started_at
+        ahoy.track "Completed Mission", mission_id: @mission.id, title: @mission.title
       end
 
+      ahoy.track "Updated Mission", mission_id: @mission.id, status: @mission.status
       redirect_to @mission, notice: "Mission updated!"
     else
       render :edit, alert: "Could not update mission."
@@ -34,6 +36,7 @@ class MissionsController < ApplicationController
     ensure_agent_access!
 
     @mission.update(started_at: Time.current) unless @mission.started_at
+    ahoy.track "Started Mission", mission_id: @mission.id
     redirect_to @mission, notice: "Mission started!"
   end
 
@@ -41,6 +44,7 @@ class MissionsController < ApplicationController
     @mission = @meeting.missions.new(mission_params)
 
     if @mission.save
+      ahoy.track "Created Mission", mission_id: @mission.id, title: @mission.title, meeting_id: @meeting.id
       redirect_to @meeting
     else
       redirect_to @meeting, alert: "Failed to create mission: #{@mission.errors.full_messages.join(', ')}"
@@ -51,6 +55,33 @@ class MissionsController < ApplicationController
     @mission = @meeting.missions.find(params[:id])
     @mission.destroy
     redirect_to @meeting
+  end
+
+  def start_timer
+    @mission = Mission.find(params[:id])
+    ensure_agent_access!
+
+    @mission.start_timer!
+    ahoy.track "Started Timer", mission_id: @mission.id
+    redirect_to @mission, notice: "Timer started!"
+  end
+
+  def pause_timer
+    @mission = Mission.find(params[:id])
+    ensure_agent_access!
+
+    @mission.pause_timer!
+    ahoy.track "Paused Timer", mission_id: @mission.id, duration: @mission.time_tracked_seconds
+    redirect_to @mission, notice: "Timer paused!"
+  end
+
+  def stop_timer
+    @mission = Mission.find(params[:id])
+    ensure_agent_access!
+
+    @mission.stop_timer!
+    ahoy.track "Stopped Timer", mission_id: @mission.id, total_time: @mission.time_tracked_seconds
+    redirect_to @mission, notice: "Mission completed! Timer stopped."
   end
 
   private

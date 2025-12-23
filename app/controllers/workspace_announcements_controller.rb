@@ -43,6 +43,18 @@ class WorkspaceAnnouncementsController < ApplicationController
     redirect_to workspace_announcements_path, notice: @announcement.pinned? ? "Announcement pinned" : "Announcement unpinned"
   end
 
+  def destroy
+    unless Current.user.captain?
+      redirect_to workspace_announcements_path, alert: "Only captains can delete announcements"
+      return
+    end
+
+    @announcement = Current.user.workspace.workspace_announcements.find(params[:id])
+    @announcement.destroy
+
+    redirect_to workspace_announcements_path, notice: "Announcement deleted"
+  end
+
   private
 
   def announcement_params

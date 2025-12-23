@@ -34,9 +34,13 @@
           <div class="flex items-start justify-between mb-4">
             <div class="flex items-start gap-4 flex-1">
               <!-- Author Avatar -->
-              <div class="w-12 h-12 bg-indigo-600 rounded-full flex items-center justify-center font-bold text-lg flex-shrink-0">
-                <%= announcement.user.name.first %>
-              </div>
+              <% if announcement.user.avatar.attached? %>
+                <%= image_tag announcement.user.avatar, class: "w-12 h-12 rounded-full object-cover flex-shrink-0 ring-2 ring-gray-700" %>
+              <% else %>
+                <div class="w-12 h-12 bg-indigo-600 rounded-full flex items-center justify-center font-bold text-lg flex-shrink-0">
+                  <%= announcement.user.name.first %>
+                </div>
+              <% end %>
               
               <div class="flex-1">
                 <!-- Title & Badges -->
@@ -82,11 +86,17 @@
                 
                 <!-- Attachments -->
                 <% if announcement.attachments.attached? %>
-                  <div class="mt-4 flex flex-wrap gap-2">
+                  <div class="mt-4 space-y-3">
                     <% announcement.attachments.each do |attachment| %>
-                      <%= link_to rails_blob_path(attachment, disposition: "attachment"), class: "inline-flex items-center gap-2 px-3 py-2 bg-gray-700 hover:bg-gray-600 rounded-lg text-sm transition" do %>
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13"></path></svg>
-                        <%= attachment.filename %>
+                      <% if attachment.content_type.start_with?('image/') %>
+                        <%= link_to rails_blob_path(attachment), target: "_blank", class: "block" do %>
+                          <%= image_tag rails_blob_path(attachment), class: "max-w-2xl rounded-lg border border-gray-700 hover:border-indigo-500 transition cursor-pointer" %>
+                        <% end %>
+                      <% else %>
+                        <%= link_to rails_blob_path(attachment, disposition: "attachment"), class: "inline-flex items-center gap-2 px-3 py-2 bg-gray-700 hover:bg-gray-600 rounded-lg text-sm transition" do %>
+                          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13"></path></svg>
+                          <%= attachment.filename %>
+                        <% end %>
                       <% end %>
                     <% end %>
                   </div>
@@ -103,8 +113,12 @@
               <% end %>
               
               <% if Current.user.captain? %>
-                <%= button_to toggle_pin_workspace_announcement_path(announcement), method: :post, class: "p-2 bg-gray-700 hover:bg-gray-600 text-gray-300 rounded-lg transition" do %>
-                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"></path></svg>
+                <%= button_to toggle_pin_workspace_announcement_path(announcement), method: :post, class: "p-2 bg-gray-700 hover:bg-gray-600 text-gray-300 rounded-lg transition", title: announcement.pinned? ? "Unpin" : "Pin" do %>
+                  <svg class="w-5 h-5" fill="<%= announcement.pinned? ? 'currentColor' : 'none' %>" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"></path></svg>
+                <% end %>
+                
+                <%= button_to workspace_announcement_path(announcement), method: :delete, data: { confirm: "Are you sure you want to delete this announcement?" }, class: "p-2 bg-red-500/10 hover:bg-red-500/20 text-red-400 rounded-lg transition", title: "Delete" do %>
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
                 <% end %>
               <% end %>
             </div>

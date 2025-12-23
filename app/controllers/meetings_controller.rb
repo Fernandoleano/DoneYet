@@ -32,6 +32,7 @@ class MeetingsController < ApplicationController
     @meeting.captain = Current.user
 
     if @meeting.save
+      ahoy.track "Created Briefing", meeting_id: @meeting.id, title: @meeting.title
       redirect_to @meeting
     else
       render :new, status: :unprocessable_entity
@@ -52,6 +53,7 @@ class MeetingsController < ApplicationController
     end
 
     if MeetingDispatcher.new(@meeting).call
+      ahoy.track "Dispatched Briefing", meeting_id: @meeting.id
       redirect_to @meeting, notice: "Briefing dispatched! Agents are being notified."
     else
       redirect_to @meeting, alert: "Could not dispatch: #{@meeting.errors.full_messages.to_sentence}"
@@ -74,6 +76,7 @@ class MeetingsController < ApplicationController
 
   def simulator
     @meeting = Current.user.workspace.meetings.find(params[:id])
+    ahoy.track "Opened Simulator", meeting_id: @meeting.id
   end
 
   private

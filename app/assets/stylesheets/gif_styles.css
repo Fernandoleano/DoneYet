@@ -1,0 +1,9 @@
+/* GIF and Image Styles */
+.markdown-content img {
+  @apply max-w-md rounded-lg my-2;
+}
+
+.markdown-content img[src*="giphy.com"],
+.markdown-content img[src*=".gif"] {
+  @apply max-w-sm rounded-lg my-2 border border-gray-700;
+}

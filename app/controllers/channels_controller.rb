@@ -2,45 +2,56 @@ class ChannelsController < ApplicationController
   layout "chat"
 
   def index
-    @channels = Current.user.workspace.channels.order(created_at: :asc)
+    @workspace = Current.user.workspace
+    ensure_default_channels
 
-    # Create default channels if none exist
-    if @channels.empty?
-      general = Current.user.workspace.channels.create!(
-        name: "general",
-        description: "General team discussion",
-        private: false,
-        created_by: Current.user
-      )
+    # Separate regular channels and DMs
+    @channels = @workspace.channels.public_channels.order(:name)
+    @direct_messages = @workspace.channels.direct_messages
+                                 .joins(:channel_memberships)
+                                 .where(channel_memberships: { user_id: Current.user.id })
+                                 .distinct
+                                 .order(updated_at: :desc)
+    @workspace_members = @workspace.users.where.not(id: Current.user.id)
 
-      random = Current.user.workspace.channels.create!(
-        name: "random",
-        description: "Random chatter",
-        private: false,
-        created_by: Current.user
-      )
-
-      # Auto-join all workspace users to default channels
-      Current.user.workspace.users.each do |user|
-        general.add_member(user)
-        random.add_member(user)
-      end
-
-      @channels = Current.user.workspace.channels.order(created_at: :asc)
+    # Redirect to first available channel or DM
+    if @channels.any?
+      redirect_to channel_path(@channels.first)
+    elsif @direct_messages.any?
+      redirect_to channel_path(@direct_messages.first)
     end
-
-    # Redirect to first channel
-    redirect_to channel_path(@channels.first) if @channels.any?
   end
 
   def show
-    @channel = Current.user.workspace.channels.find(params[:id])
-    @channels = Current.user.workspace.channels.order(created_at: :asc)
-    @messages = @channel.chat_messages.includes(:user).recent
-    @new_message = ChatMessage.new
+    @channel = Channel.find(params[:id])
+    @workspace = @channel.workspace
 
-    # Auto-join user if not a member
-    @channel.add_member(Current.user) unless @channel.members.include?(Current.user)
+    # Ensure user is a member of the channel
+    unless @channel.members.include?(Current.user)
+      @channel.add_member(Current.user)
+    end
+
+    @messages = @channel.chat_messages.includes(:user).order(created_at: :asc)
+    @new_message = @channel.chat_messages.build
+
+    # Load all channels and DMs for sidebar
+    @channels = @workspace.channels.public_channels.order(:name)
+    @direct_messages = @workspace.channels.direct_messages
+                                 .joins(:channel_memberships)
+                                 .where(channel_memberships: { user_id: Current.user.id })
+                                 .distinct
+                                 .order(updated_at: :desc)
+    @workspace_members = @workspace.users.where.not(id: Current.user.id)
+  end
+
+  def start_dm
+    other_user = User.find(params[:user_id])
+    @workspace = Current.user.workspace
+
+    # Find or create DM channel
+    dm_channel = Channel.find_or_create_dm(Current.user, other_user, @workspace)
+
+    redirect_to channel_path(dm_channel)
   end
 
   def create
@@ -56,6 +67,30 @@ class ChannelsController < ApplicationController
   end
 
   private
+
+  def ensure_default_channels
+    return if @workspace.channels.public_channels.any?
+
+    general = @workspace.channels.create!(
+      name: "general",
+      description: "General team discussion",
+      private: false,
+      created_by: Current.user
+    )
+
+    random = @workspace.channels.create!(
+      name: "random",
+      description: "Random chatter",
+      private: false,
+      created_by: Current.user
+    )
+
+    # Auto-join all workspace users to default channels
+    @workspace.users.each do |user|
+      general.add_member(user)
+      random.add_member(user)
+    end
+  end
 
   def channel_params
     params.require(:channel).permit(:name, :description, :private)

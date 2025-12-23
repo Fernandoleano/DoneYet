@@ -20,18 +20,34 @@ Rails.application.routes.draw do
   resources :notifications, only: [ :index ]
   get "settings" => "settings#index", as: :settings
   patch "settings" => "settings#update"
+  get "profile" => "profile#show", as: :profile
+  get "calendar" => "calendar#index", as: :calendar
+
+  # Admin routes
+  get "admin" => "admin#index", as: :admin
+  get "admin/users" => "admin#users", as: :admin_users
+  get "admin/workspaces" => "admin#workspaces", as: :admin_workspaces
+  post "admin/impersonate/:id" => "admin#impersonate", as: :admin_impersonate
+  delete "admin/stop_impersonating" => "admin#stop_impersonating", as: :admin_stop_impersonating
+
+  namespace :admin do
+    get "analytics" => "analytics#index", as: :analytics
+    get "analytics/events" => "analytics#events", as: :analytics_events
+    get "analytics/visits" => "analytics#visits", as: :analytics_visits
+  end
 
   resources :workspace_notes, only: [ :create, :destroy ]
 
-  resources :workspace_announcements, only: [ :index, :create ] do
+  resources :workspace_announcements, only: [ :index, :create, :destroy ] do
     member do
       post :mark_as_read
       post :toggle_pin
     end
   end
 
+  post "start_dm/:user_id", to: "channels#start_dm", as: :start_dm
   resources :channels, only: [ :index, :show, :create ] do
-    resources :chat_messages, only: [ :create ], path: "messages"
+    resources :chat_messages, only: [ :create, :update, :destroy ], path: "messages"
   end
 
   resources :automations do
@@ -52,6 +68,9 @@ Rails.application.routes.draw do
   resources :missions, only: [ :show, :edit, :update ] do
     member do
       patch :mark_in_progress
+      post :start_timer
+      post :pause_timer
+      post :stop_timer
     end
     resources :mission_comments, only: [ :create ], path: "comments"
   end

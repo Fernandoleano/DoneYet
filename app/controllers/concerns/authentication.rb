@@ -4,6 +4,7 @@ module Authentication
   included do
     before_action :require_authentication
     helper_method :authenticated?
+    helper_method :current_user
   end
 
   class_methods do
@@ -14,14 +15,29 @@ module Authentication
 
   private
     def authenticated?
-      resume_session
+      current_session
+    end
+
+    def current_user
+      Current.user
     end
 
     def require_authentication
-      resume_session || request_authentication
+      current_session || request_authentication
     end
 
-    def resume_session
+    def current_session
+      # Support impersonation for admins
+      if session[:impersonating_user_id].present?
+        impersonated_user = User.find_by(id: session[:impersonating_user_id])
+        if impersonated_user
+          # Create a temporary session for the impersonated user
+          temp_session = Session.new(user: impersonated_user)
+          Current.session = temp_session
+          return temp_session
+        end
+      end
+
       Current.session ||= find_session_by_cookie
     end
 

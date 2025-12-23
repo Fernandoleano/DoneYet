@@ -9,6 +9,7 @@ class SessionsController < ApplicationController
   def create
     if user = User.authenticate_by(params.permit(:email_address, :password))
       start_new_session_for user
+      ahoy.authenticate(user)
 
       # Handle remember me
       if params[:remember_me] == "1"

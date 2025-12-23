@@ -8,6 +8,10 @@ class User < ApplicationRecord
   has_many :user_achievements, dependent: :destroy
   has_many :achievements, through: :user_achievements
 
+  # Ahoy Analytics
+  has_many :ahoy_visits, class_name: "Ahoy::Visit"
+  has_many :ahoy_events, class_name: "Ahoy::Event"
+
   has_one_attached :avatar
 
   normalizes :email_address, with: ->(e) { e.strip.downcase }

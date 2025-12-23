@@ -1,0 +1,97 @@
+/* Markdown Rendered Content Styles */
+.markdown-content {
+  @apply text-gray-300;
+}
+
+.markdown-content p {
+  @apply mb-2;
+}
+
+.markdown-content strong {
+  @apply font-bold text-white;
+}
+
+.markdown-content em {
+  @apply italic;
+}
+
+.markdown-content del {
+  @apply line-through text-gray-500;
+}
+
+.markdown-content code {
+  @apply bg-gray-800 text-indigo-400 px-1.5 py-0.5 rounded text-sm font-mono;
+}
+
+.markdown-content .code-block {
+  @apply my-2 rounded-lg overflow-hidden bg-gray-900 border border-gray-700;
+}
+
+.markdown-content .code-block pre {
+  @apply p-4 overflow-x-auto;
+}
+
+.markdown-content .code-block code {
+  @apply bg-transparent p-0 text-sm;
+}
+
+.markdown-content a {
+  @apply text-indigo-400 hover:text-indigo-300 underline;
+}
+
+.markdown-content ul {
+  @apply list-disc list-inside mb-2 space-y-1;
+}
+
+.markdown-content ol {
+  @apply list-decimal list-inside mb-2 space-y-1;
+}
+
+.markdown-content blockquote {
+  @apply border-l-4 border-gray-600 pl-4 italic text-gray-400 my-2;
+}
+
+.markdown-content h1,
+.markdown-content h2,
+.markdown-content h3 {
+  @apply font-bold text-white mt-4 mb-2;
+}
+
+.markdown-content h1 {
+  @apply text-2xl;
+}
+.markdown-content h2 {
+  @apply text-xl;
+}
+.markdown-content h3 {
+  @apply text-lg;
+}
+
+/* Rouge Syntax Highlighting */
+.highlight {
+  @apply bg-gray-900;
+}
+.highlight .c {
+  @apply text-gray-500;
+} /* Comment */
+.highlight .k {
+  @apply text-purple-400;
+} /* Keyword */
+.highlight .s {
+  @apply text-green-400;
+} /* String */
+.highlight .n {
+  @apply text-blue-300;
+} /* Name */
+.highlight .o {
+  @apply text-pink-400;
+} /* Operator */
+.highlight .m {
+  @apply text-orange-400;
+} /* Number */
+.highlight .nf {
+  @apply text-yellow-300;
+} /* Function */
+.highlight .nc {
+  @apply text-cyan-400;
+} /* Class */

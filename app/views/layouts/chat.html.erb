@@ -9,6 +9,9 @@
 
     <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
+    <script src="<%= asset_path('message_formatter.js') %>"></script>
+    <script src="<%= asset_path('giphy_picker.js') %>"></script>
+    <script src="<%= asset_path('message_actions.js') %>"></script>
   </head>
 
   <body class="bg-gray-900 text-white h-screen overflow-hidden flex flex-col">

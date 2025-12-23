@@ -1,0 +1,216 @@
+<div class="min-h-screen bg-gradient-to-br from-gray-900 via-gray-900 to-indigo-950 py-10 px-6">
+  <div class="max-w-7xl mx-auto">
+    <!-- Header -->
+    <div class="mb-10 flex items-center gap-4">
+      <div class="w-16 h-16 bg-gradient-to-br from-indigo-600 to-indigo-700 rounded-2xl flex items-center justify-center shadow-lg shadow-indigo-900/50">
+        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+      </div>
+      <div>
+        <h1 class="text-5xl font-black text-white mb-1 bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">Admin Dashboard</h1>
+        <p class="text-gray-400 text-lg">System overview and management</p>
+      </div>
+    </div>
+
+    <!-- Stats Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
+      <!-- Total Users -->
+      <div class="group bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-2xl p-6 hover:border-indigo-500/50 hover:shadow-xl hover:shadow-indigo-900/20 transition-all duration-300">
+        <div class="flex items-start justify-between mb-4">
+          <div class="w-12 h-12 bg-indigo-600/20 rounded-xl flex items-center justify-center group-hover:bg-indigo-600/30 group-hover:scale-110 transition-all">
+            <svg class="w-6 h-6 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+          </div>
+          <span class="px-2.5 py-1 bg-indigo-500/10 text-indigo-400 text-xs font-bold rounded-md border border-indigo-500/20">+<%= @users_this_week %> this week</span>
+        </div>
+        <div>
+          <p class="text-gray-400 text-xs font-bold uppercase tracking-wider mb-2">Total Users</p>
+          <p class="text-4xl font-black text-white tabular-nums"><%= @total_users %></p>
+        </div>
+      </div>
+
+      <!-- Total Workspaces -->
+      <div class="group bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-2xl p-6 hover:border-emerald-500/50 hover:shadow-xl hover:shadow-emerald-900/20 transition-all duration-300">
+        <div class="flex items-start justify-between mb-4">
+          <div class="w-12 h-12 bg-emerald-600/20 rounded-xl flex items-center justify-center group-hover:bg-emerald-600/30 group-hover:scale-110 transition-all">
+            <svg class="w-6 h-6 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg>
+          </div>
+          <span class="px-2.5 py-1 bg-emerald-500/10 text-emerald-400 text-xs font-bold rounded-md border border-emerald-500/20">ACTIVE</span>
+        </div>
+        <div>
+          <p class="text-gray-400 text-xs font-bold uppercase tracking-wider mb-2">Workspaces</p>
+          <p class="text-4xl font-black text-white tabular-nums"><%= @total_workspaces %></p>
+        </div>
+      </div>
+
+      <!-- Total Missions -->
+      <div class="group bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-2xl p-6 hover:border-purple-500/50 hover:shadow-xl hover:shadow-purple-900/20 transition-all duration-300">
+        <div class="flex items-start justify-between mb-4">
+          <div class="w-12 h-12 bg-purple-600/20 rounded-xl flex items-center justify-center group-hover:bg-purple-600/30 group-hover:scale-110 transition-all">
+            <svg class="w-6 h-6 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path></svg>
+          </div>
+          <span class="px-2.5 py-1 bg-purple-500/10 text-purple-400 text-xs font-bold rounded-md border border-purple-500/20">+<%= @missions_this_week %> this week</span>
+        </div>
+        <div>
+          <p class="text-gray-400 text-xs font-bold uppercase tracking-wider mb-2">Total Missions</p>
+          <p class="text-4xl font-black text-white tabular-nums"><%= @total_missions %></p>
+          <p class="text-sm text-gray-500 mt-2 font-medium"><%= @active_missions %> active • <%= @completed_missions %> done</p>
+        </div>
+      </div>
+
+      <!-- Total Messages -->
+      <div class="group bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-2xl p-6 hover:border-orange-500/50 hover:shadow-xl hover:shadow-orange-900/20 transition-all duration-300">
+        <div class="flex items-start justify-between mb-4">
+          <div class="w-12 h-12 bg-orange-600/20 rounded-xl flex items-center justify-center group-hover:bg-orange-600/30 group-hover:scale-110 transition-all">
+            <svg class="w-6 h-6 text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>
+          </div>
+          <span class="px-2.5 py-1 bg-orange-500/10 text-orange-400 text-xs font-bold rounded-md border border-orange-500/20">CHAT</span>
+        </div>
+        <div>
+          <p class="text-gray-400 text-xs font-bold uppercase tracking-wider mb-2">Messages Sent</p>
+          <p class="text-4xl font-black text-white tabular-nums"><%= @total_messages %></p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+      <%= link_to admin_users_path, class: "group bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-2xl p-6 hover:border-indigo-500/50 hover:shadow-xl hover:shadow-indigo-900/20 transition-all duration-300" do %>
+        <div class="flex items-center gap-4">
+          <div class="w-14 h-14 bg-indigo-600/20 rounded-xl flex items-center justify-center group-hover:bg-indigo-600/30 group-hover:scale-110 transition-all">
+            <svg class="w-7 h-7 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+          </div>
+          <div class="flex-1">
+            <h3 class="text-xl font-bold text-white mb-1 group-hover:text-indigo-400 transition">Manage Users</h3>
+            <p class="text-gray-400 text-sm">View and manage all users</p>
+          </div>
+          <svg class="w-5 h-5 text-gray-600 group-hover:text-indigo-400 group-hover:translate-x-1 transition-all" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+        </div>
+      <% end %>
+
+      <%= link_to admin_workspaces_path, class: "group bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-2xl p-6 hover:border-emerald-500/50 hover:shadow-xl hover:shadow-emerald-900/20 transition-all duration-300" do %>
+        <div class="flex items-center gap-4">
+          <div class="w-14 h-14 bg-emerald-600/20 rounded-xl flex items-center justify-center group-hover:bg-emerald-600/30 group-hover:scale-110 transition-all">
+            <svg class="w-7 h-7 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg>
+          </div>
+          <div class="flex-1">
+            <h3 class="text-xl font-bold text-white mb-1 group-hover:text-emerald-400 transition">Manage Workspaces</h3>
+            <p class="text-gray-400 text-sm">View all workspaces</p>
+          </div>
+          <svg class="w-5 h-5 text-gray-600 group-hover:text-emerald-400 group-hover:translate-x-1 transition-all" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+        </div>
+      <% end %>
+
+      <%= link_to admin_analytics_path, class: "group bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-2xl p-6 hover:border-purple-500/50 hover:shadow-xl hover:shadow-purple-900/20 transition-all duration-300" do %>
+        <div class="flex items-center gap-4">
+          <div class="w-14 h-14 bg-purple-600/20 rounded-xl flex items-center justify-center group-hover:bg-purple-600/30 group-hover:scale-110 transition-all">
+            <svg class="w-7 h-7 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
+          </div>
+          <div class="flex-1">
+            <h3 class="text-xl font-bold text-white mb-1 group-hover:text-purple-400 transition">Operations Analytics</h3>
+            <p class="text-gray-400 text-sm">System-wide behavior tracking</p>
+          </div>
+          <svg class="w-5 h-5 text-gray-600 group-hover:text-purple-400 group-hover:translate-x-1 transition-all" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+        </div>
+      <% end %>
+    </div>
+
+    <!-- Additional Quick Actions -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
+      <%= link_to root_path, class: "group bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-2xl p-6 hover:border-gray-500/50 hover:shadow-xl hover:shadow-gray-900/20 transition-all duration-300" do %>
+        <div class="flex items-center gap-4">
+          <div class="w-14 h-14 bg-gray-600/20 rounded-xl flex items-center justify-center group-hover:bg-gray-600/30 group-hover:scale-110 transition-all">
+            <svg class="w-7 h-7 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
+          </div>
+          <div class="flex-1">
+            <h3 class="text-xl font-bold text-white mb-1 group-hover:text-gray-400 transition">Back to App</h3>
+            <p class="text-gray-400 text-sm">Return to main dashboard</p>
+          </div>
+          <svg class="w-5 h-5 text-gray-600 group-hover:text-gray-400 group-hover:translate-x-1 transition-all" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+        </div>
+      <% end %>
+
+      <div class="bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-2xl p-6">
+        <div class="flex items-center gap-4">
+          <div class="w-14 h-14 bg-orange-600/20 rounded-xl flex items-center justify-center">
+            <svg class="w-7 h-7 text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+          </div>
+          <div>
+            <h3 class="text-xl font-bold text-white mb-1">System Health</h3>
+            <p class="text-emerald-400 text-sm font-bold flex items-center gap-1">
+              <span class="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></span>
+              ALL SYSTEMS OPERATIONAL
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Recent Users -->
+    <div class="bg-gray-800/30 backdrop-blur-sm border border-gray-700 rounded-2xl overflow-hidden mb-8">
+      <div class="px-6 py-4 border-b border-gray-700 bg-gray-800/50">
+        <h2 class="text-2xl font-black text-white">Recent Users</h2>
+      </div>
+      <div class="overflow-x-auto">
+        <table class="w-full">
+          <thead class="bg-gray-800/70">
+            <tr class="border-b border-gray-700">
+              <th class="text-left py-4 px-6 text-gray-400 font-bold text-xs uppercase tracking-wider">User</th>
+              <th class="text-left py-4 px-6 text-gray-400 font-bold text-xs uppercase tracking-wider">Email</th>
+              <th class="text-left py-4 px-6 text-gray-400 font-bold text-xs uppercase tracking-wider">Workspace</th>
+              <th class="text-left py-4 px-6 text-gray-400 font-bold text-xs uppercase tracking-wider">Joined</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-gray-700/50">
+            <% @recent_users.each do |user| %>
+              <tr class="hover:bg-gray-700/30 transition">
+                <td class="py-4 px-6">
+                  <div class="flex items-center gap-3">
+                    <% if user.avatar.attached? %>
+                      <%= image_tag user.avatar, class: "w-10 h-10 rounded-full object-cover border-2 border-gray-700" %>
+                    <% else %>
+                      <div class="w-10 h-10 bg-gradient-to-br from-indigo-600 to-indigo-700 rounded-full flex items-center justify-center text-sm font-bold border-2 border-gray-700">
+                        <%= user.name.first %>
+                      </div>
+                    <% end %>
+                    <span class="text-white font-semibold"><%= user.name %></span>
+                  </div>
+                </td>
+                <td class="py-4 px-6 text-gray-300 font-mono text-sm"><%= user.email_address %></td>
+                <td class="py-4 px-6 text-gray-300"><%= user.workspace&.name || "N/A" %></td>
+                <td class="py-4 px-6 text-gray-400 text-sm"><%= time_ago_in_words(user.created_at) %> ago</td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Recent Workspaces -->
+    <div class="bg-gray-800/30 backdrop-blur-sm border border-gray-700 rounded-2xl overflow-hidden">
+      <div class="px-6 py-4 border-b border-gray-700 bg-gray-800/50">
+        <h2 class="text-2xl font-black text-white">Recent Workspaces</h2>
+      </div>
+      <div class="overflow-x-auto">
+        <table class="w-full">
+          <thead class="bg-gray-800/70">
+            <tr class="border-b border-gray-700">
+              <th class="text-left py-4 px-6 text-gray-400 font-bold text-xs uppercase tracking-wider">Workspace</th>
+              <th class="text-left py-4 px-6 text-gray-400 font-bold text-xs uppercase tracking-wider">Users</th>
+              <th class="text-left py-4 px-6 text-gray-400 font-bold text-xs uppercase tracking-wider">Missions</th>
+              <th class="text-left py-4 px-6 text-gray-400 font-bold text-xs uppercase tracking-wider">Created</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-gray-700/50">
+            <% @recent_workspaces.each do |workspace| %>
+              <tr class="hover:bg-gray-700/30 transition">
+                <td class="py-4 px-6 text-white font-bold"><%= workspace.name %></td>
+                <td class="py-4 px-6 text-gray-300 tabular-nums"><%= workspace.users.count %></td>
+                <td class="py-4 px-6 text-gray-300 tabular-nums"><%= workspace.missions.count %></td>
+                <td class="py-4 px-6 text-gray-400 text-sm"><%= time_ago_in_words(workspace.created_at) %> ago</td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

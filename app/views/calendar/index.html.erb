@@ -1,0 +1,104 @@
+<div class="min-h-screen bg-gradient-to-br from-gray-900 via-gray-900 to-indigo-950">
+  <div class="max-w-7xl mx-auto px-6 py-8">
+    <!-- Header -->
+    <div class="flex items-center justify-between mb-8">
+      <div>
+        <h1 class="text-4xl font-black text-white mb-2">Operations Calendar</h1>
+        <p class="text-gray-400">Mission timeline and briefing schedule</p>
+      </div>
+      
+      <!-- Month Navigation -->
+      <div class="flex items-center gap-4">
+        <%= link_to calendar_path(date: (@date - 1.month).to_s), class: "p-2 bg-gray-800 hover:bg-gray-700 rounded-lg transition" do %>
+          <svg class="w-6 h-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+        <% end %>
+        
+        <div class="text-center">
+          <h2 class="text-2xl font-bold text-white"><%= @date.strftime("%B %Y") %></h2>
+          <%= link_to "Today", calendar_path, class: "text-sm text-indigo-400 hover:text-indigo-300" if @date.month != Date.today.month || @date.year != Date.today.year %>
+        </div>
+        
+        <%= link_to calendar_path(date: (@date + 1.month).to_s), class: "p-2 bg-gray-800 hover:bg-gray-700 rounded-lg transition" do %>
+          <svg class="w-6 h-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+        <% end %>
+      </div>
+    </div>
+
+    <!-- Calendar Grid -->
+    <div class="bg-gradient-to-br from-gray-800/40 to-gray-800/20 backdrop-blur-sm border border-gray-700/50 rounded-2xl overflow-hidden">
+      <!-- Day Headers -->
+      <div class="grid grid-cols-7 border-b border-gray-700/50">
+        <% %w[Sun Mon Tue Wed Thu Fri Sat].each do |day| %>
+          <div class="p-4 text-center font-bold text-gray-400 text-sm uppercase tracking-wider">
+            <%= day %>
+          </div>
+        <% end %>
+      </div>
+
+      <!-- Calendar Days -->
+      <div class="grid grid-cols-7">
+        <% (@start_date..@end_date).each do |date| %>
+          <% is_today = date == Date.today %>
+          <% is_current_month = date.month == @date.month %>
+          
+          <div class="min-h-[120px] border-r border-b border-gray-700/30 p-3 <%= is_today ? 'bg-indigo-500/10 ring-2 ring-indigo-500/30' : '' %> <%= is_current_month ? '' : 'bg-gray-900/50' %>">
+            <!-- Date Number -->
+            <div class="flex items-center justify-between mb-2">
+              <span class="<%= is_today ? 'w-7 h-7 bg-indigo-500 rounded-full flex items-center justify-center text-white font-bold text-sm' : "text-sm font-semibold #{is_current_month ? 'text-gray-300' : 'text-gray-600'}" %>">
+                <%= date.day %>
+              </span>
+            </div>
+
+            <!-- Events -->
+            <div class="space-y-1">
+              <!-- Missions -->
+              <% if @missions_by_date[date].present? %>
+                <% @missions_by_date[date].take(3).each do |mission| %>
+                  <%= link_to mission, class: "block" do %>
+                    <div class="text-xs px-2 py-1 rounded <%= mission.done? ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30' : (mission.due_at < Time.current ? 'bg-red-500/20 text-red-400 border border-red-500/30' : 'bg-indigo-500/20 text-indigo-400 border border-indigo-500/30') %> truncate hover:opacity-80 transition">
+                      🎯 <%= mission.title %>
+                    </div>
+                  <% end %>
+                <% end %>
+                <% if @missions_by_date[date].count > 3 %>
+                  <div class="text-xs text-gray-500 px-2">+<%= @missions_by_date[date].count - 3 %> more</div>
+                <% end %>
+              <% end %>
+
+              <!-- Meetings -->
+              <% if @meetings_by_date[date].present? %>
+                <% @meetings_by_date[date].take(2).each do |meeting| %>
+                  <%= link_to meeting, class: "block" do %>
+                    <div class="text-xs px-2 py-1 rounded bg-purple-500/20 text-purple-400 border border-purple-500/30 truncate hover:opacity-80 transition">
+                      📅 <%= meeting.title %>
+                    </div>
+                  <% end %>
+                <% end %>
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+    <!-- Legend -->
+    <div class="mt-6 flex items-center justify-center gap-6 text-sm">
+      <div class="flex items-center gap-2">
+        <div class="w-3 h-3 bg-indigo-500/20 border border-indigo-500/30 rounded"></div>
+        <span class="text-gray-400">Pending Mission</span>
+      </div>
+      <div class="flex items-center gap-2">
+        <div class="w-3 h-3 bg-emerald-500/20 border border-emerald-500/30 rounded"></div>
+        <span class="text-gray-400">Completed</span>
+      </div>
+      <div class="flex items-center gap-2">
+        <div class="w-3 h-3 bg-red-500/20 border border-red-500/30 rounded"></div>
+        <span class="text-gray-400">Overdue</span>
+      </div>
+      <div class="flex items-center gap-2">
+        <div class="w-3 h-3 bg-purple-500/20 border border-purple-500/30 rounded"></div>
+        <span class="text-gray-400">Meeting</span>
+      </div>
+    </div>
+  </div>
+</div>
