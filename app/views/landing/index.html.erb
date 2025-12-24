@@ -1,27 +1,27 @@
 <div class="relative bg-gray-900 min-h-screen overflow-x-hidden selection:bg-indigo-500/30">
   <!-- Navigation -->
   <nav class="fixed top-0 left-0 right-0 z-50 bg-gray-900/80 backdrop-blur-xl border-b border-gray-800">
-    <div class="max-w-7xl mx-auto px-6 py-4">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-4">
       <div class="flex items-center justify-between">
         <div class="flex items-center gap-2">
-          <%= image_tag "logo.svg", class: "w-10 h-10", alt: "DoneYet Logo" %>
-          <span class="font-black text-2xl tracking-tight text-white">DoneYet</span>
+          <%= image_tag "logo.svg", class: "w-8 h-8 sm:w-10 sm:h-10", alt: "DoneYet Logo" %>
+          <span class="font-black text-xl sm:text-2xl tracking-tight text-white">DoneYet</span>
         </div>
         <div class="hidden md:flex items-center gap-8 text-base font-medium">
+          <a href="#what-is-it" class="text-gray-400 hover:text-white transition">About</a>
           <a href="#features" class="text-gray-400 hover:text-white transition">Intel</a>
           <a href="#pricing" class="text-gray-400 hover:text-white transition">Pricing</a>
-          <%= link_to "Declassified", privacy_path, class: "text-gray-400 hover:text-white transition" %>
         </div>
-        <div class="flex items-center gap-4">
-          <%= link_to "Login", new_session_path, class: "px-5 py-2.5 text-gray-300 hover:text-white transition text-base font-medium" %>
-          <%= link_to "Join Agency", new_registration_path, class: "px-6 py-3 bg-indigo-600 hover:bg-indigo-500 rounded-lg text-white text-base font-bold transition shadow-lg shadow-indigo-900/20" %>
+        <div class="flex items-center gap-2 sm:gap-4">
+          <%= link_to "Login", new_session_path, class: "hidden sm:inline-block px-5 py-2.5 text-gray-300 hover:text-white transition text-sm sm:text-base font-medium" %>
+          <%= link_to "Join", new_registration_path, class: "px-4 sm:px-6 py-2.5 sm:py-3 bg-indigo-600 hover:bg-indigo-500 rounded-lg text-white text-sm sm:text-base font-bold transition shadow-lg shadow-indigo-900/20" %>
         </div>
       </div>
     </div>
   </nav>
 
   <!-- Hero & Mobile Showcase -->
-  <section class="pt-32 pb-20 px-6 relative overflow-visible">
+  <section class="pt-24 sm:pt-32 pb-12 sm:pb-20 px-4 sm:px-6 relative overflow-visible">
     <!-- Background Effects -->
     <div class="absolute top-0 right-0 w-[500px] h-[500px] bg-indigo-600/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none"></div>
     <div class="absolute bottom-0 left-0 w-[500px] h-[500px] bg-purple-600/10 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2 pointer-events-none"></div>
@@ -35,22 +35,22 @@
           <span class="text-gray-300 text-xs font-bold tracking-wide uppercase">Operational</span>
         </div>
         
-        <h1 class="text-6xl md:text-7xl lg:text-8xl font-black mb-6 leading-[0.9] text-white tracking-tight">
+        <h1 class="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-black mb-6 leading-[0.9] text-white tracking-tight">
           Turn Chaos<br>
           Into <span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-400">Order.</span>
         </h1>
         
-        <p class="text-xl text-gray-400 mb-10 leading-relaxed max-w-lg mx-auto lg:mx-0">
+        <p class="text-base sm:text-lg md:text-xl text-gray-400 mb-8 sm:mb-10 leading-relaxed max-w-lg mx-auto lg:mx-0">
           The operating system for elite teams. Stop managing tasks. Start executing missions.
         </p>
         
-        <div class="flex flex-col sm:flex-row items-center gap-4 justify-center lg:justify-start">
-          <%= link_to new_registration_path, class: "group px-8 py-4 bg-white text-gray-900 hover:bg-gray-100 rounded-2xl font-black text-lg transition shadow-2xl flex items-center gap-2" do %>
+        <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4 justify-center lg:justify-start w-full sm:w-auto">
+          <%= link_to new_registration_path, class: "group px-6 sm:px-8 py-3 sm:py-4 bg-white text-gray-900 hover:bg-gray-100 rounded-2xl font-black text-base sm:text-lg transition shadow-2xl flex items-center justify-center gap-2 min-h-[48px]" do %>
             <span>Deploy Agent</span>
             <svg class="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
           <% end %>
-          <a href="#features" class="px-8 py-4 text-gray-400 hover:text-white font-bold transition flex items-center gap-2">
-            View Intel
+          <a href="#what-is-it" class="px-6 sm:px-8 py-3 sm:py-4 text-gray-400 hover:text-white font-bold transition flex items-center justify-center gap-2 min-h-[48px]">
+            Learn More
           </a>
         </div>
       </div>
@@ -217,15 +217,80 @@
     </a>
   </section>
 
-  <!-- Problem / Solution (New Section) -->
-  <section class="py-24 px-6 relative z-10">
-    <div class="max-w-7xl mx-auto">
-      <div class="text-center mb-16">
-        <h2 class="text-sm font-bold text-indigo-400 uppercase tracking-widest mb-2">Why You Need This</h2>
-        <h3 class="text-4xl md:text-5xl font-black text-white">Stop playing tasks. Start playing to win.</h3>
+  <!-- What is DoneYet? (New Clarity Section) -->
+  <section id="what-is-it" class="py-16 sm:py-24 px-4 sm:px-6 bg-gray-800/30 border-y border-gray-800">
+    <div class="max-w-5xl mx-auto">
+      <div class="text-center mb-12 sm:mb-16">
+        <div class="inline-flex items-center gap-2 px-3 py-1 bg-indigo-500/10 border border-indigo-500/20 rounded-full mb-4">
+          <span class="text-indigo-400 text-xs font-bold tracking-wide uppercase">Mission Brief</span>
+        </div>
+        <h2 class="text-3xl sm:text-4xl md:text-5xl font-black text-white mb-4 sm:mb-6">What is DoneYet?</h2>
+        <p class="text-lg sm:text-xl text-gray-400 max-w-3xl mx-auto leading-relaxed">
+          Think of it as <span class="text-white font-bold">Google Meet + Trello + Gamification</span> — but way cooler.
+        </p>
       </div>
 
-      <div class="grid md:grid-cols-3 gap-8">
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 mb-12">
+        <!-- Step 1 -->
+        <div class="bg-gray-800/50 border border-gray-700 rounded-2xl p-6 sm:p-8 hover:border-indigo-500/30 transition">
+          <div class="w-12 h-12 sm:w-14 sm:h-14 bg-indigo-600/20 rounded-xl flex items-center justify-center text-2xl sm:text-3xl mb-4">
+            📹
+          </div>
+          <h3 class="text-lg sm:text-xl font-bold text-white mb-3">1. Run Your Meeting</h3>
+          <p class="text-sm sm:text-base text-gray-400 leading-relaxed">
+            Start a "briefing" (meeting) in Google Meet. Your team joins like normal.
+          </p>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="bg-gray-800/50 border border-gray-700 rounded-2xl p-6 sm:p-8 hover:border-purple-500/30 transition">
+          <div class="w-12 h-12 sm:w-14 sm:h-14 bg-purple-600/20 rounded-xl flex items-center justify-center text-2xl sm:text-3xl mb-4">
+            ✅
+          </div>
+          <h3 class="text-lg sm:text-xl font-bold text-white mb-3">2. Track Tasks Live</h3>
+          <p class="text-sm sm:text-base text-gray-400 leading-relaxed">
+            Create "missions" (tasks) during the call. Everyone sees them update in real-time.
+          </p>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="bg-gray-800/50 border border-gray-700 rounded-2xl p-6 sm:p-8 hover:border-emerald-500/30 transition sm:col-span-2 lg:col-span-1">
+          <div class="w-12 h-12 sm:w-14 sm:h-14 bg-emerald-600/20 rounded-xl flex items-center justify-center text-2xl sm:text-3xl mb-4">
+            🎮
+          </div>
+          <h3 class="text-lg sm:text-xl font-bold text-white mb-3">3. Earn XP & Level Up</h3>
+          <p class="text-sm sm:text-base text-gray-400 leading-relaxed">
+            Complete missions, earn XP, unlock achievements. Work feels like a game.
+          </p>
+        </div>
+      </div>
+
+      <!-- Simple Comparison -->
+      <div class="bg-gradient-to-br from-indigo-900/20 to-purple-900/20 border border-indigo-500/20 rounded-2xl p-6 sm:p-10 text-center">
+        <p class="text-base sm:text-lg text-gray-300 mb-4">
+          <span class="text-red-400 font-bold line-through">Boring task managers</span> make work feel like a chore.
+        </p>
+        <div class="flex items-center justify-center gap-3 sm:gap-4 mb-4">
+          <div class="h-px flex-1 bg-gradient-to-r from-transparent via-gray-600 to-transparent"></div>
+          <span class="text-indigo-400 font-black text-sm sm:text-base">VS</span>
+          <div class="h-px flex-1 bg-gradient-to-r from-transparent via-gray-600 to-transparent"></div>
+        </div>
+        <p class="text-lg sm:text-xl md:text-2xl font-bold text-white">
+          DoneYet makes work feel like <span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-400">leveling up</span> 🚀
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Problem / Solution (New Section) -->
+  <section class="py-16 sm:py-24 px-4 sm:px-6 relative z-10">
+    <div class="max-w-7xl mx-auto">
+      <div class="text-center mb-12 sm:mb-16">
+        <h2 class="text-sm font-bold text-indigo-400 uppercase tracking-widest mb-2">Why You Need This</h2>
+        <h3 class="text-3xl sm:text-4xl md:text-5xl font-black text-white">Stop playing tasks. Start playing to win.</h3>
+      </div>
+
+      <div class="grid sm:grid-cols-2 md:grid-cols-3 gap-6 sm:gap-8">
         <!-- Problem 1 -->
         <div class="group relative bg-gray-800/20 border border-gray-800 hover:border-gray-600 rounded-2xl p-8 transition-colors">
           <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition text-6xl">🌪️</div>
@@ -277,15 +342,15 @@
   <!-- The Arsenal (Bento Grid Features) -->
   <section id="features" class="py-24 px-6 bg-gray-900 border-t border-gray-800">
     <div class="max-w-7xl mx-auto">
-       <div class="text-center mb-20">
+       <div class="text-center mb-16 sm:mb-20">
          <div class="inline-flex items-center gap-2 px-3 py-1 bg-indigo-500/10 border border-indigo-500/20 rounded-full mb-4">
             <span class="text-indigo-400 text-xs font-bold tracking-wide uppercase">Classified Tech Specs</span>
          </div>
-         <h2 class="text-5xl md:text-6xl font-black text-white mb-6">The Arsenal</h2>
-         <p class="text-xl text-gray-400 max-w-2xl mx-auto">Advanced weaponry for the modern operator.</p>
+         <h2 class="text-4xl sm:text-5xl md:text-6xl font-black text-white mb-4 sm:mb-6">The Arsenal</h2>
+         <p class="text-lg sm:text-xl text-gray-400 max-w-2xl mx-auto">Advanced weaponry for the modern operator.</p>
        </div>
 
-       <div class="grid grid-cols-1 md:grid-cols-3 gap-6 auto-rows-[minmax(180px,auto)]">
+       <div class="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 auto-rows-[minmax(180px,auto)]">
           
           <!-- Card 1: Gamification (Large) -->
           <div class="md:col-span-2 bg-gray-800 rounded-3xl p-8 border border-gray-700 hover:border-indigo-500/50 transition duration-300 relative overflow-hidden group">
@@ -504,8 +569,8 @@
 
        <!-- Agent Plan (Free) -->
        <div x-show="plan === 'agent'" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 transform scale-95" x-transition:enter-end="opacity-100 transform scale-100">
-         <h2 class="text-3xl md:text-5xl font-black text-white mb-6">Deploy for $0</h2>
-         <p class="text-gray-400 max-w-xl mx-auto mb-10 text-lg">Start your first mission today. Upgrade only when you conquer the world.</p>
+         <h2 class="text-3xl sm:text-4xl md:text-5xl font-black text-white mb-4 sm:mb-6">Deploy for $0</h2>
+         <p class="text-base sm:text-lg text-gray-400 max-w-xl mx-auto mb-8 sm:mb-10">Start your first mission today. Upgrade only when you conquer the world.</p>
          
          <%= link_to new_registration_path, class: "inline-flex items-center gap-3 px-10 py-4 bg-white text-gray-900 hover:bg-gray-100 rounded-xl font-bold text-lg transition shadow-xl hover:shadow-2xl hover:-translate-y-1" do %>
           <span>Initialize Profile</span>
@@ -520,8 +585,8 @@
 
        <!-- Agency Plan (Pro) -->
        <div x-show="plan === 'agency'" style="display: none;" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 transform scale-95" x-transition:enter-end="opacity-100 transform scale-100">
-         <h2 class="text-3xl md:text-5xl font-black text-white mb-6">Scale for $12<span class="text-2xl text-gray-500">/mo</span></h2>
-         <p class="text-gray-400 max-w-xl mx-auto mb-10 text-lg">For growing squads needing advanced analytics and unlimited archives.</p>
+         <h2 class="text-3xl sm:text-4xl md:text-5xl font-black text-white mb-4 sm:mb-6">Scale for $12<span class="text-xl sm:text-2xl text-gray-500">/mo</span></h2>
+         <p class="text-base sm:text-lg text-gray-400 max-w-xl mx-auto mb-8 sm:mb-10">For growing squads needing advanced analytics and unlimited archives.</p>
          
          <%= link_to new_registration_path, class: "inline-flex items-center gap-3 px-10 py-4 bg-indigo-600 text-white hover:bg-indigo-500 rounded-xl font-bold text-lg transition shadow-xl hover:shadow-indigo-500/25 hover:-translate-y-1" do %>
           <span>Start 14-Day Trial</span>
