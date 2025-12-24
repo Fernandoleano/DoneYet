@@ -49,3 +49,4 @@ yarn-debug.log*
 # Ignore uploaded files
 /public/uploads
 .kamal/secrets
+.kamal/secrets
