@@ -554,24 +554,26 @@
   <section id="pricing" class="py-20 px-6 bg-gray-900 border-t border-gray-800">
     <div class="max-w-7xl mx-auto text-center" x-data="{ plan: 'agent' }">
        <!-- Toggle (Sliding Segmented Control) -->
-       <div class="relative inline-flex bg-gray-900 border border-gray-800 p-1 rounded-xl mb-12 shadow-inner group select-none">
-          <!-- Sliding Background Pill -->
-          <div class="absolute top-1 bottom-1 w-[calc(50%-4px)] bg-indigo-600 rounded-lg shadow-lg shadow-indigo-500/20 transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)]"
-               :class="plan === 'agent' ? 'left-1' : 'left-[calc(50%+4px)]'"></div>
-          
-          <!-- Agent Button -->
-          <button @click="plan = 'agent'" 
-               class="relative z-10 w-40 py-3 rounded-lg font-bold text-sm transition-colors duration-300 focus:outline-none cursor-pointer"
-               :class="plan === 'agent' ? 'text-white' : 'text-gray-400 hover:text-white'">
-            Agent (Free)
-          </button>
-          
-          <!-- Agency Button -->
-          <button @click="plan = 'agency'" 
-               class="relative z-10 w-40 py-3 rounded-lg font-bold text-sm transition-colors duration-300 focus:outline-none cursor-pointer"
-               :class="plan === 'agency' ? 'text-white' : 'text-gray-400 hover:text-white'">
-            Agency (Pro)
-          </button>
+       <div class="flex justify-center mb-12">
+         <div class="relative inline-flex bg-gray-900 border border-gray-800 p-1 rounded-xl shadow-inner group select-none">
+            <!-- Sliding Background Pill -->
+            <div class="absolute top-1 bottom-1 w-[calc(50%-4px)] bg-indigo-600 rounded-lg shadow-lg shadow-indigo-500/20 transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)]"
+                 :class="plan === 'agent' ? 'left-1' : 'left-[calc(50%+4px)]'"></div>
+           
+            <!-- Agent Button -->
+            <button @click="plan = 'agent'" 
+                 class="relative z-10 w-40 py-3 rounded-lg font-bold text-sm transition-colors duration-300 focus:outline-none cursor-pointer"
+                 :class="plan === 'agent' ? 'text-white' : 'text-gray-400 hover:text-white'">
+              Agent (Free)
+            </button>
+           
+            <!-- Agency Button -->
+            <button @click="plan = 'agency'" 
+                 class="relative z-10 w-40 py-3 rounded-lg font-bold text-sm transition-colors duration-300 focus:outline-none cursor-pointer"
+                 :class="plan === 'agency' ? 'text-white' : 'text-gray-400 hover:text-white'">
+              Agency (Pro)
+            </button>
+         </div>
        </div>
 
        <!-- Agent Plan (Free) -->
