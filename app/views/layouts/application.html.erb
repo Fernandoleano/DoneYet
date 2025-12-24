@@ -18,7 +18,7 @@
     <script src="<%= asset_path('mission_timer.js') %>"></script>
   </head>
 
-  <body class="bg-gray-900 min-h-screen text-white font-sans antialiased">
+  <body class="bg-gray-900 min-h-screen text-white font-sans antialiased" x-data="{ mobileMenuOpen: false }">
     <% if session[:impersonating_user_id].present? %>
       <div class="fixed top-0 left-0 right-0 z-50 bg-gradient-to-r from-purple-600 to-purple-700 border-b-2 border-purple-500 shadow-lg">
         <div class="max-w-7xl mx-auto px-6 py-3 flex items-center justify-between">
@@ -32,9 +32,39 @@
       <div class="h-12"></div>
     <% end %>
     
-    <div class="flex h-screen overflow-hidden">
+    <!-- Mobile Header with Hamburger -->
+    <div class="md:hidden fixed top-0 left-0 right-0 z-50 bg-gray-800 border-b border-gray-700 h-16 flex items-center justify-between px-4">
+      <div class="flex items-center gap-2">
+        <%= image_tag "logo.svg", class: "h-8 w-8" %>
+        <span class="font-bold text-xl">DoneYet</span>
+      </div>
+      <button @click="mobileMenuOpen = !mobileMenuOpen" class="p-2 hover:bg-gray-700 rounded-lg transition">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path x-show="!mobileMenuOpen" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+          <path x-show="mobileMenuOpen" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Mobile Overlay -->
+    <div 
+      x-show="mobileMenuOpen" 
+      @click="mobileMenuOpen = false"
+      x-transition:enter="transition-opacity ease-linear duration-300"
+      x-transition:enter-start="opacity-0"
+      x-transition:enter-end="opacity-100"
+      x-transition:leave="transition-opacity ease-linear duration-300"
+      x-transition:leave-start="opacity-100"
+      x-transition:leave-end="opacity-0"
+      class="fixed inset-0 bg-black/50 z-30 md:hidden"
+      style="display: none;"
+    ></div>
+
+    <div class="flex h-screen overflow-hidden pt-16 md:pt-0">
       <!-- Sidebar -->
-      <aside class="w-64 bg-gray-800 border-r border-gray-700 flex flex-col">
+      <aside 
+        :class="mobileMenuOpen ? 'translate-x-0' : '-translate-x-full'"
+        class="w-64 bg-gray-800 border-r border-gray-700 flex flex-col fixed md:relative h-full transition-transform duration-300 ease-in-out md:translate-x-0 z-40">
         <!-- Logo -->
         <div class="h-16 flex items-center px-6 border-b border-gray-700">
           <%= link_to root_path, class: "flex items-center gap-2" do %>
@@ -45,28 +75,28 @@
 
         <!-- Navigation -->
         <nav class="flex-1 px-4 py-6 space-y-1">
-          <%= link_to meetings_path, class: "flex items-center gap-3 px-4 py-3 rounded-lg text-gray-300 hover:bg-gray-700 hover:text-white transition group" do %>
+          <%= link_to meetings_path, class: "flex items-center gap-3 px-4 py-4 min-h-[48px] rounded-lg text-gray-300 hover:bg-gray-700 hover:text-white transition group" do %>
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
             <span class="font-medium">Meetings</span>
           <% end %>
 
-          <%= link_to team_index_path, class: "flex items-center gap-3 px-4 py-3 rounded-lg text-gray-300 hover:bg-gray-700 hover:text-white transition group" do %>
+          <%= link_to team_index_path, class: "flex items-center gap-3 px-4 py-4 min-h-[48px] rounded-lg text-gray-300 hover:bg-gray-700 hover:text-white transition group" do %>
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
             <span class="font-medium">Team</span>
           <% end %>
 
-          <%= link_to workspace_announcements_path, class: "flex items-center gap-3 px-4 py-3 rounded-lg text-gray-300 hover:bg-gray-700 hover:text-white transition group" do %>
+          <%= link_to workspace_announcements_path, class: "flex items-center gap-3 px-4 py-4 min-h-[48px] rounded-lg text-gray-300 hover:bg-gray-700 hover:text-white transition group" do %>
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z"></path></svg>
             <span class="font-medium">Announcements</span>
           <% end %>
 
           <% if feature_available?(:chat) %>
-            <%= link_to channels_path, class: "flex items-center gap-3 px-4 py-3 rounded-lg text-gray-300 hover:bg-gray-700 hover:text-white transition group" do %>
+            <%= link_to channels_path, class: "flex items-center gap-3 px-4 py-4 min-h-[48px] rounded-lg text-gray-300 hover:bg-gray-700 hover:text-white transition group" do %>
               <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>
               <span class="font-medium">Chat</span>
             <% end %>
           <% else %>
-            <div class="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-500 cursor-not-allowed relative">
+            <div class="flex items-center gap-3 px-4 py-4 min-h-[48px] rounded-lg text-gray-500 cursor-not-allowed relative">
               <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>
               <span class="font-medium">Chat</span>
               <span class="ml-auto px-2 py-0.5 bg-indigo-600 text-white text-xs rounded-full font-bold">Pro</span>
