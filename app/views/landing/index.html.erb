@@ -415,13 +415,13 @@
           </div>
 
           <!-- Card 4: Mission Command (Large) -->
-          <div class="md:col-span-2 bg-gray-800 rounded-3xl p-8 border border-gray-700 hover:border-indigo-500/50 transition duration-300 relative overflow-hidden group">
+          <div class="md:col-span-2 bg-gray-800 rounded-3xl p-4 sm:p-8 border border-gray-700 hover:border-indigo-500/50 transition duration-300 relative overflow-hidden group">
              <div class="absolute inset-0 bg-gradient-to-tr from-indigo-900/20 to-transparent opacity-0 group-hover:opacity-100 transition duration-500"></div>
              <div class="relative z-10 flex flex-col h-full">
-                <div class="flex items-center justify-between mb-6">
+                <div class="flex items-center justify-between mb-4 sm:mb-6">
                    <div>
-                      <h3 class="text-2xl font-bold text-white">Mission Command</h3>
-                      <p class="text-gray-400">Kanban boards for global operations.</p>
+                      <h3 class="text-lg sm:text-2xl font-bold text-white">Mission Command</h3>
+                      <p class="text-sm sm:text-base text-gray-400">Kanban boards for global operations.</p>
                    </div>
                    <div class="flex -space-x-2">
                       <div class="w-8 h-8 rounded-full bg-indigo-500 border-2 border-gray-800 flex items-center justify-center text-xs font-bold">A</div>
@@ -431,12 +431,12 @@
                 </div>
                 
                 <!-- Mock Kanban -->
-                <div class="grid grid-cols-3 gap-4 flex-1">
+                <div class="grid grid-cols-2 sm:grid-cols-3 gap-2 sm:gap-4 flex-1">
                    <!-- Col 1 -->
-                   <div class="bg-gray-900/50 rounded-xl p-3 border border-gray-700/50">
-                      <div class="flex items-center gap-2 mb-3">
-                         <div class="w-2 h-2 rounded-full bg-gray-500"></div>
-                         <span class="text-xs font-bold text-gray-400 uppercase">Pending</span>
+                   <div class="bg-gray-900/50 rounded-xl p-2 sm:p-3 border border-gray-700/50">
+                      <div class="flex items-center gap-1 sm:gap-2 mb-2 sm:mb-3">
+                         <div class="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-gray-500"></div>
+                         <span class="text-[10px] sm:text-xs font-bold text-gray-400 uppercase">Pending</span>
                       </div>
                       <div class="bg-gray-800 p-2 rounded-lg border border-gray-700 mb-2 shadow-sm">
                          <div class="h-1.5 w-12 bg-orange-400 rounded-full mb-2"></div>
@@ -481,11 +481,11 @@
           </div>
 
           <!-- Card 5: Secure Comms (Full Width) -->
-          <div class="md:col-span-3 bg-gray-800 rounded-3xl p-8 border border-gray-700 hover:border-purple-500/50 transition duration-300 relative overflow-hidden group">
+          <div class="md:col-span-3 bg-gray-800 rounded-3xl p-4 sm:p-8 border border-gray-700 hover:border-purple-500/50 transition duration-300 relative overflow-hidden group">
              <div class="absolute inset-0 bg-gradient-to-r from-purple-900/10 to-transparent opacity-0 group-hover:opacity-100 transition duration-500"></div>
-             <div class="relative z-10 flex flex-col md:flex-row items-center gap-12">
-                <div class="flex-1 min-w-[300px]">
-                   <h3 class="text-3xl font-bold text-white mb-4">Secure Comms</h3>
+             <div class="relative z-10 flex flex-col md:flex-row items-center gap-6 sm:gap-12">
+                <div class="flex-1 w-full">
+                   <h3 class="text-2xl sm:text-3xl font-bold text-white mb-4">Secure Comms</h3>
                    <ul class="space-y-4">
                       <li class="flex items-center gap-3 text-gray-400">
                          <div class="w-8 h-8 rounded-full bg-gray-700 flex items-center justify-center text-lg">🔒</div>
@@ -512,25 +512,25 @@
                       <div class="ml-2 text-xs font-bold text-gray-400"># general-operations</div>
                    </div>
                    <!-- Messages -->
-                   <div class="p-4 space-y-4 font-mono text-sm leading-relaxed">
-                      <div class="flex gap-3">
-                         <div class="w-8 h-8 rounded bg-indigo-600 flex-shrink-0"></div>
-                         <div>
+                   <div class="p-3 sm:p-4 space-y-3 sm:space-y-4 font-mono text-xs sm:text-sm leading-relaxed">
+                      <div class="flex gap-2 sm:gap-3">
+                         <div class="w-6 h-6 sm:w-8 sm:h-8 rounded bg-indigo-600 flex-shrink-0"></div>
+                         <div class="min-w-0 flex-1">
                             <div class="flex items-baseline gap-2">
-                               <span class="font-bold text-indigo-400">Agent Smith</span>
-                               <span class="text-[10px] text-gray-600">10:42 AM</span>
+                               <span class="font-bold text-indigo-400 text-xs sm:text-sm">Agent Smith</span>
+                               <span class="text-[9px] sm:text-[10px] text-gray-600">10:42 AM</span>
                             </div>
-                            <p class="text-gray-300">Briefing documents uploaded. Awaiting confirmation.</p>
+                            <p class="text-gray-300 text-xs sm:text-sm break-words">Briefing documents uploaded. Awaiting confirmation.</p>
                          </div>
                       </div>
-                      <div class="flex gap-3">
-                         <div class="w-8 h-8 rounded bg-purple-600 flex-shrink-0"></div>
-                         <div>
+                      <div class="flex gap-2 sm:gap-3">
+                         <div class="w-6 h-6 sm:w-8 sm:h-8 rounded bg-purple-600 flex-shrink-0"></div>
+                         <div class="min-w-0 flex-1">
                             <div class="flex items-baseline gap-2">
-                               <span class="font-bold text-purple-400">Director Fury</span>
-                               <span class="text-[10px] text-gray-600">10:45 AM</span>
+                               <span class="font-bold text-purple-400 text-xs sm:text-sm">Director Fury</span>
+                               <span class="text-[9px] sm:text-[10px] text-gray-600">10:45 AM</span>
                             </div>
-                            <p class="text-gray-300">Copy that. Proceed with <span class="bg-gray-800 px-1 rounded text-red-400">Phase 2</span>.</p>
+                            <p class="text-gray-300 text-xs sm:text-sm break-words">Copy that. Proceed with <span class="bg-gray-800 px-1 rounded text-red-400">Phase 2</span>.</p>
                             <!-- Fake GIF -->
                             <div class="mt-2 rounded-lg overflow-hidden relative w-32 h-20 bg-gray-800 flex items-center justify-center group/gif cursor-pointer">
                                <div class="absolute inset-0 bg-gradient-to-r from-purple-500/20 to-indigo-500/20"></div>
