@@ -191,13 +191,13 @@
           <!-- Shadow -->
           <div class="absolute -bottom-10 left-10 right-10 h-10 bg-black/50 blur-xl rounded-[100%] z-[-1]"></div>
           
-          <!-- Decoration Elements behind phone -->
-          <div class="absolute -right-6 top-52 bg-gray-800/90 backdrop-blur-md p-2 rounded-lg border border-gray-700 shadow-2xl animate-fade-in-right delay-100 z-50 transform rotate-3 whitespace-nowrap lg:right-[-0.5rem]">
+          <!-- Decoration Elements behind phone (Hidden on mobile to prevent overlap) -->
+          <div class="hidden sm:block absolute -right-6 top-52 bg-gray-800/90 backdrop-blur-md p-2 rounded-lg border border-gray-700 shadow-2xl animate-fade-in-right delay-100 z-50 transform rotate-3 whitespace-nowrap lg:right-[-0.5rem]">
              <div class="text-[9px] text-gray-400 font-bold uppercase mb-0.5">XP Gained</div>
              <div class="text-lg font-black text-white">+2.5K <span class="text-yellow-400">XP</span></div>
           </div>
 
-          <div class="absolute -left-6 bottom-32 bg-gray-800/90 backdrop-blur-md p-3 rounded-xl border border-gray-700 shadow-2xl animate-fade-in-left delay-300 z-50 transform -rotate-2 flex items-center gap-3">
+          <div class="hidden sm:block absolute -left-6 bottom-32 bg-gray-800/90 backdrop-blur-md p-3 rounded-xl border border-gray-700 shadow-2xl animate-fade-in-left delay-300 z-50 transform -rotate-2 flex items-center gap-3">
              <div class="w-10 h-10 rounded-full bg-emerald-500/20 flex items-center justify-center text-xl">🏆</div>
              <div>
                <div class="text-xs text-emerald-400 font-bold">Achievement</div>
