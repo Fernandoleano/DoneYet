@@ -1,5 +1,5 @@
 class FeatureRequestsController < ApplicationController
-  before_action :require_pro_access!, except: [ :index ]
+  before_action :authenticate_user!, except: [ :index ]
   allow_unauthenticated_access only: [ :index ]
 
   def index
