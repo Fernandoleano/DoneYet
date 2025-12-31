@@ -1,6 +1,57 @@
-<p>
-  You can reset your password on
-  <%= link_to "this password reset page", edit_password_url(@user.password_reset_token) %>.
+<div class="max-w-[500px] mx-auto bg-[#1E1E1E] rounded-lg shadow-xl overflow-hidden border border-gray-800">
+  <div class="p-8">
+    <!-- Header -->
+    <div class="mb-4">
+      <span class="text-xs uppercase tracking-widest text-[#d97706] font-bold">DoneYet Intelligence</span>
+    </div>
+    
+    <h1 class="text-2xl font-bold text-white mb-2">Security Breach Protocol</h1>
+    
+    <p class="text-gray-400 text-sm mb-8">
+      We received a request to override security clearance for your account.
+    </p>
 
-  This link will expire in <%= distance_of_time_in_words(0, @user.password_reset_token_expires_in) %>.
-</p>
+    <!-- Details Box -->
+    <div class="space-y-3 mb-8 text-sm">
+      <div class="flex items-start">
+        <span class="text-[#d97706] mr-2 text-xl leading-none">&bull;</span>
+        <span class="text-gray-400 w-24">Agent:</span>
+        <span class="text-white font-medium"><%= @user.name %></span>
+      </div>
+      <div class="flex items-start">
+        <span class="text-[#d97706] mr-2 text-xl leading-none">&bull;</span>
+        <span class="text-gray-400 w-24">Action:</span>
+        <span class="text-white font-medium">Password Reset</span>
+      </div>
+      <div class="flex items-start">
+        <span class="text-[#d97706] mr-2 text-xl leading-none">&bull;</span>
+        <span class="text-gray-400 w-24">Time:</span>
+        <span class="text-white font-medium"><%= Time.now.utc.strftime("%Y-%m-%d %H:%M UT") %></span>
+      </div>
+    </div>
+
+    <!-- Instructions -->
+    <p class="text-gray-400 text-sm mb-6">
+      To restore secure access, verify your identity by clicking the button below. This link expires in 20 minutes.
+    </p>
+
+    <!-- Button -->
+    <div class="mb-8">
+      <%= link_to "Reset Security Credentials", edit_password_url(token: @user.password_reset_token), class: "block w-full bg-[#2a2a2a] hover:bg-[#333] text-white text-center font-bold py-4 rounded border border-gray-700 uppercase tracking-wider text-sm transition-colors decoration-0 no-underline" %>
+    </div>
+
+    <!-- Footer Warning -->
+    <div class="border-t border-gray-800 pt-6">
+      <h3 class="text-white font-bold text-sm mb-2">False Flag?</h3>
+      <p class="text-gray-500 text-xs leading-relaxed">
+        If you did not initiate this protocol, enable "Stealth Mode" immediately by ignoring this transmission. Your account remains secure under current encryption standards.
+      </p>
+    </div>
+  </div>
+</div>
+
+<div class="text-center mt-6">
+  <p class="text-xs text-gray-600">
+    Encrypted via DoneYet HQ // <a href="#" class="text-[#d97706] no-underline">Secure Channel</a>
+  </p>
+</div>

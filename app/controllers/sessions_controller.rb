@@ -7,7 +7,13 @@ class SessionsController < ApplicationController
   end
 
   def create
-    if user = User.authenticate_by(params.permit(:email_address, :password))
+    Rails.logger.info "LOGIN ATTEMPT: Email=#{params[:email_address].inspect}"
+
+    # Strip whitespace from password to prevent copy-paste errors
+    password_param = params[:password]&.strip
+
+    if user = User.authenticate_by(email_address: params[:email_address], password: password_param)
+      Rails.logger.info "LOGIN SUCCESS: User=#{user.id}"
       start_new_session_for user
       ahoy.authenticate(user)
 
@@ -18,6 +24,7 @@ class SessionsController < ApplicationController
 
       redirect_to after_authentication_url
     else
+      Rails.logger.info "LOGIN FAILED: Invalid credentials for #{params[:email_address]}"
       redirect_to new_session_path, alert: "Try another email address or password."
     end
   end

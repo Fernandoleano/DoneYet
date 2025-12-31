@@ -10,55 +10,88 @@
     </button>
   </div>
 
-  <!-- Team Grid -->
-  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+  <!-- Team List -->
+  <div class="space-y-3">
     <% Current.user.workspace.users.each do |user| %>
-      <div class="bg-gray-800 border border-gray-700 rounded-xl p-6">
-        <div class="flex items-start gap-4">
-          <div class="h-12 w-12 rounded-full bg-indigo-600 flex items-center justify-center font-bold text-white text-lg shrink-0">
-            <%= user.name[0] %>
-          </div>
-          <div class="flex-1 min-w-0">
-            <h3 class="font-semibold text-white text-lg"><%= user.name %></h3>
-            <p class="text-sm text-gray-400 truncate"><%= user.email_address %></p>
-            <% if user == Current.user %>
-              <span class="inline-block mt-2 px-2 py-0.5 bg-indigo-500/10 text-indigo-400 rounded text-xs font-semibold">You</span>
+      <div class="group bg-[#1E1E1E] border border-gray-800 rounded-xl p-4 flex items-center justify-between hover:border-gray-700 transition-colors">
+        <div class="flex items-center gap-4">
+          <!-- Avatar -->
+          <div class="h-12 w-12 rounded-full bg-indigo-900/50 border border-indigo-500/30 flex items-center justify-center text-indigo-400 font-bold text-lg shrink-0 overflow-hidden relative">
+            <% if user.avatar.attached? %>
+              <%= image_tag user.avatar, class: "w-full h-full object-cover" %>
+            <% else %>
+              <%= user.name[0].upcase %>
             <% end %>
           </div>
+          
+          <!-- User Info -->
+          <div>
+            <div class="flex items-center gap-2">
+              <h3 class="font-bold text-white text-base"><%= user.name %></h3>
+              <% if user == Current.user %>
+                <span class="px-2 py-0.5 bg-indigo-500/20 text-indigo-300 rounded text-[10px] font-bold uppercase tracking-wide">You</span>
+              <% end %>
+            </div>
+            
+            <div class="flex items-center gap-3 text-sm mt-0.5">
+              <span class="text-gray-500"><%= user.email_address %></span>
+              <span class="text-gray-700 mx-1">|</span>
+              <div class="flex items-center gap-1.5">
+                <span class="text-[#d97706] font-bold text-xs uppercase tracking-wider">Lvl <%= user.user_stat&.level %></span>
+                <span class="text-gray-600 text-xs">•</span>
+                <span class="text-gray-400 text-xs"><%= user.user_stat&.rank %></span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Actions -->
+        <div>
+          <% if Current.user.captain? && user != Current.user %>
+            <%= button_to team_member_path(user.id), method: :delete, data: { turbo_confirm: "Confirm Disavowal: Remove Agent #{user.name}?" }, class: "p-2 text-gray-600 hover:text-red-500 hover:bg-red-500/10 rounded-lg transition-all opacity-0 group-hover:opacity-100 focus:opacity-100" do %>
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+            <% end %>
+          <% end %>
         </div>
       </div>
     <% end %>
   </div>
 
   <!-- Invite Modal -->
-  <div data-team-target="modal" class="hidden fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center">
-    <div class="bg-gray-800 border border-gray-700 rounded-2xl p-8 max-w-md w-full mx-4">
-      <div class="flex items-center justify-between mb-6">
-        <h2 class="text-2xl font-bold text-white">Invite Team Member</h2>
-        <button data-action="click->team#hideInviteModal" class="text-gray-400 hover:text-white">
+  <div data-team-target="modal" class="hidden fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center">
+    <div class="bg-[#1E1E1E] border border-gray-800 rounded-2xl p-8 max-w-md w-full mx-4 shadow-2xl relative overflow-hidden">
+      <!-- Decorator Line -->
+      <div class="absolute top-0 left-0 w-full h-1 bg-indigo-600"></div>
+
+      <div class="flex items-center justify-between mb-8">
+        <div>
+          <h2 class="text-2xl font-bold text-white tracking-tight">Recruit Agent</h2>
+          <p class="text-indigo-500 text-xs font-bold uppercase tracking-widest mt-1">Clearance Level 1 Required</p>
+        </div>
+        <button data-action="click->team#hideInviteModal" class="text-gray-500 hover:text-white transition-colors">
           <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
         </button>
       </div>
 
-      <%= form_with(url: team_invite_path, method: :post, class: "space-y-4") do |f| %>
+      <%= form_with(url: team_invite_path, method: :post, class: "space-y-5") do |f| %>
         <div>
-          <%= f.label :email, "Email Address", class: "block text-sm font-semibold text-gray-400 mb-2" %>
-          <%= f.email_field :email, class: "w-full bg-gray-900 border border-gray-700 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:ring-2 focus:ring-indigo-500", placeholder: "colleague@company.com", required: true %>
+          <%= f.label :email, "COMMUNICATION CHANNEL (EMAIL)", class: "block text-[10px] font-bold text-gray-400 mb-1.5 uppercase tracking-widest" %>
+          <%= f.email_field :email, class: "w-full bg-black/30 border border-gray-700 rounded-lg px-4 py-3 text-white placeholder-gray-600 focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 transition-all font-mono text-sm", placeholder: "agent@doneyet.ai", required: true %>
         </div>
 
         <div>
-          <%= f.label :name, "Full Name", class: "block text-sm font-semibold text-gray-400 mb-2" %>
-          <%= f.text_field :name, class: "w-full bg-gray-900 border border-gray-700 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:ring-2 focus:ring-indigo-500", placeholder: "John Doe", required: true %>
+          <%= f.label :name, "IDENTITY (FULL NAME)", class: "block text-[10px] font-bold text-gray-400 mb-1.5 uppercase tracking-widest" %>
+          <%= f.text_field :name, class: "w-full bg-black/30 border border-gray-700 rounded-lg px-4 py-3 text-white placeholder-gray-600 focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 transition-all font-mono text-sm", placeholder: "James Bond", required: true %>
         </div>
 
-        <div class="bg-gray-900 border border-gray-700 rounded-lg p-4">
-          <p class="text-xs text-gray-400">
-            <svg class="w-4 h-4 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-            They'll receive an email invite to join your workspace
+        <div class="bg-indigo-900/20 border border-indigo-500/20 rounded-lg p-3 flex gap-3">
+          <svg class="w-5 h-5 text-indigo-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+          <p class="text-xs text-indigo-300 leading-relaxed">
+            Target will receive encrypted transmission with secure access credentials immediately.
           </p>
         </div>
 
-        <%= f.submit "Send Invite", class: "w-full bg-indigo-600 hover:bg-indigo-500 text-white py-3 rounded-xl font-semibold transition" %>
+        <%= f.submit "INITIATE RECRUITMENT", class: "w-full bg-indigo-600 hover:bg-indigo-500 text-white py-3.5 rounded-lg font-bold text-sm tracking-widest uppercase transition-all shadow-lg shadow-indigo-900/20" %>
       <% end %>
     </div>
   </div>

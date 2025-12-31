@@ -29,10 +29,30 @@ class TeamController < ApplicationController
         workspace: Current.user.workspace
       )
 
-      # TODO: Send invite email with password reset link
-      redirect_to team_index_path, notice: "Invite sent to #{email}! (Password: #{password})"
+      TeamInvitationMailer.invite(user, Current.user, password).deliver_later
+      redirect_to team_index_path, notice: "Invite sent to #{email}! Please advise them to check their spam folder. (Password: #{password})"
     end
   rescue => e
     redirect_to team_index_path, alert: "Error: #{e.message}"
+  end
+
+  def destroy
+    user = User.find(params[:id])
+
+    # Authorization Check
+    unless Current.user.captain?
+      return redirect_to team_index_path, alert: "Unauthorized: Only Captains can remove agents."
+    end
+
+    if user == Current.user
+      return redirect_to team_index_path, alert: "Protocol Violation: You cannot remove yourself."
+    end
+
+    if user.workspace_id != Current.user.workspace_id
+      return redirect_to team_index_path, alert: "Target outside jurisdiction."
+    end
+
+    user.destroy
+    redirect_to team_index_path, notice: "Agent #{user.name} has been disavowed and removed from the unit."
   end
 end

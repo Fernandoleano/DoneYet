@@ -19,6 +19,7 @@ Rails.application.routes.draw do
 
   get "team" => "team#index", as: :team_index
   post "team/invite" => "team#invite", as: :team_invite
+  delete "team/:id" => "team#destroy", as: :team_member
   resource :session
   resources :passwords, param: :token
   resources :registrations, only: [ :new, :create ]

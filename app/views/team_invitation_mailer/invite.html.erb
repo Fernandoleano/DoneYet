@@ -1,0 +1,65 @@
+<div class="max-w-[500px] mx-auto bg-[#1E1E1E] rounded-lg shadow-xl overflow-hidden border border-gray-800">
+  <div class="p-8">
+    <!-- Header -->
+    <div class="mb-4">
+      <span class="text-xs uppercase tracking-widest text-[#4f46e5] font-bold">DoneYet Recruitment</span>
+    </div>
+    
+    <h1 class="text-2xl font-bold text-white mb-2">You Have Been Activated</h1>
+    
+    <p class="text-gray-400 text-sm mb-8">
+      A handler has requested your expertise for an upcoming mission.
+    </p>
+
+    <!-- Details Box -->
+    <div class="space-y-3 mb-8 text-sm">
+      <div class="flex items-start">
+        <span class="text-[#4f46e5] mr-2 text-xl leading-none">&bull;</span>
+        <span class="text-gray-400 w-24">Handler:</span>
+        <span class="text-white font-medium"><%= @inviter.name %></span>
+      </div>
+      <div class="flex items-start">
+        <span class="text-[#4f46e5] mr-2 text-xl leading-none">&bull;</span>
+        <span class="text-gray-400 w-24">Unit:</span>
+        <span class="text-white font-medium"><%= @workspace.name %></span>
+      </div>
+      <div class="flex items-start">
+        <span class="text-[#4f46e5] mr-2 text-xl leading-none">&bull;</span>
+        <span class="text-gray-400 w-24">Role:</span>
+        <span class="text-white font-medium">Field Agent</span>
+      </div>
+    </div>
+
+    <!-- Credentials -->
+    <div class="bg-[#121212] p-4 rounded mb-6 border border-gray-700">
+      <p class="text-xs text-gray-500 uppercase tracking-widest mb-2 font-bold">Temporary Credentials</p>
+      <div class="flex justify-between items-center mb-1">
+        <span class="text-gray-400 text-sm">Codename:</span>
+        <span class="text-white font-mono text-sm"><%= @user.email_address %></span>
+      </div>
+      <div class="flex justify-between items-center">
+        <span class="text-gray-400 text-sm">Passkey:</span>
+        <span class="text-[#4f46e5] font-mono font-bold text-sm tracking-wider"><%= @password %></span>
+      </div>
+    </div>
+
+    <!-- Button -->
+    <div class="mb-8">
+      <%= link_to "Accept Assignment", new_session_url, class: "block w-full bg-[#2a2a2a] hover:bg-[#333] text-white text-center font-bold py-4 rounded border border-gray-700 uppercase tracking-wider text-sm transition-colors decoration-0 no-underline" %>
+    </div>
+
+    <!-- Footer Warning -->
+    <div class="border-t border-gray-800 pt-6">
+      <h3 class="text-white font-bold text-sm mb-2">Protocol 9</h3>
+      <p class="text-gray-500 text-xs leading-relaxed">
+        Upon first login, you are required to rotate your passkey immediately to secure the communication channel.
+      </p>
+    </div>
+  </div>
+</div>
+
+<div class="text-center mt-6">
+  <p class="text-xs text-gray-600">
+    Encrypted via DoneYet HQ // <a href="#" class="text-[#4f46e5] no-underline">Secure Channel</a>
+  </p>
+</div>

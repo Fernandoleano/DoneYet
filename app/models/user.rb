@@ -19,12 +19,17 @@ class User < ApplicationRecord
 
   normalizes :email_address, with: ->(e) { e.strip.downcase }
 
+  generates_token_for :password_reset, expires_in: 20.minutes do
+    password_salt&.last(10)
+  end
+
   enum :role, { agent: "agent", captain: "captain" }, default: "agent"
   enum :user_type, { solo: "solo", team: "team" }, default: "team"
 
   validates :name, presence: true
 
   after_create :create_user_stat
+  after_create_commit :send_welcome_email
 
   # Access Control for Feature Gating
   def has_full_access?
@@ -53,5 +58,9 @@ class User < ApplicationRecord
 
   def create_user_stat
     build_user_stat.save
+  end
+
+  def send_welcome_email
+    UserMailer.welcome(self).deliver_later
   end
 end

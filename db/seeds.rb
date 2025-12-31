@@ -157,3 +157,13 @@ agent = User.create!(
   role: :agent
 )
 puts "Created Agent: #{agent.email_address}"
+
+admin = User.create!(
+  workspace: workspace,
+  email_address: "fernandoleano4@gmail.com",
+  password: "password",
+  password_confirmation: "password",
+  name: "Fernando Leano",
+  role: :captain
+)
+puts "Created Admin: #{admin.email_address}"
