@@ -20,6 +20,7 @@ class User < ApplicationRecord
   normalizes :email_address, with: ->(e) { e.strip.downcase }
 
   enum :role, { agent: "agent", captain: "captain" }, default: "agent"
+  enum :user_type, { solo: "solo", team: "team" }, default: "team"
 
   validates :name, presence: true
 

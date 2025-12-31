@@ -217,13 +217,13 @@
 
 <script>
 // Live Timer for Mission Time Tracking
-let missionTimerInterval = null;
+window.missionTimerInterval = window.missionTimerInterval || null;
 
 function initMissionTimer() {
   // Clear any existing interval
-  if (missionTimerInterval) {
-    clearInterval(missionTimerInterval);
-    missionTimerInterval = null;
+  if (window.missionTimerInterval) {
+    clearInterval(window.missionTimerInterval);
+    window.missionTimerInterval = null;
   }
 
   const timerDisplay = document.getElementById('timer-display');
@@ -235,7 +235,7 @@ function initMissionTimer() {
 
   if (isRunning && startedAt) {
     // Update timer every second
-    missionTimerInterval = setInterval(() => {
+    window.missionTimerInterval = setInterval(() => {
       const started = new Date(startedAt);
       const now = new Date();
       const currentSessionSeconds = Math.floor((now - started) / 1000);
@@ -268,9 +268,9 @@ document.addEventListener('turbo:load', initMissionTimer);
 
 // Cleanup on Turbo before cache
 document.addEventListener('turbo:before-cache', () => {
-  if (missionTimerInterval) {
-    clearInterval(missionTimerInterval);
-    missionTimerInterval = null;
+  if (window.missionTimerInterval) {
+    clearInterval(window.missionTimerInterval);
+    window.missionTimerInterval = null;
   }
 });
 </script>

@@ -16,7 +16,16 @@ class RegistrationsController < ApplicationController
     if @user.save
       start_new_session_for @user
       ahoy.authenticate(@user)
-      redirect_to root_path, notice: "Welcome to DoneYet!"
+
+      if params[:user_type] == "solo"
+        @user.update(user_type: :solo)
+        # Update workspace name to include user name now that we have it
+        @user.workspace.update(name: "#{@user.name}'s HQ")
+        redirect_to mission_control_path, notice: "Welcome, Agent #{@user.name}. Mission Control is online."
+      else
+        @user.update(user_type: :team)
+        redirect_to root_path, notice: "Welcome to DoneYet!"
+      end
     else
       render :new, status: :unprocessable_entity
     end

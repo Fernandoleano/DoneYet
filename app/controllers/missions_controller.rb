@@ -1,6 +1,25 @@
 class MissionsController < ApplicationController
   before_action :set_meeting, only: [ :create, :destroy ]
 
+  def index
+    @missions = Current.user.workspace.missions.order(due_at: :asc)
+
+    # Filter Logic
+    case params[:filter]
+    when "done"
+      @missions = @missions.done
+      @page_title = "Completed Missions"
+    when "active"
+      @missions = @missions.pending.where("due_at >= ?", Time.current)
+      @page_title = "Active Missions"
+    when "overdue"
+      @missions = @missions.pending.where("due_at < ?", Time.current)
+      @page_title = "Overdue Missions"
+    else
+      @page_title = "All Missions"
+    end
+  end
+
   def show
     @mission = Mission.find(params[:id])
     ensure_agent_access!

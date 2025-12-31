@@ -1,0 +1,182 @@
+<div class="space-y-8 max-w-6xl">
+  <!-- Personalized Header -->
+  <div class="mb-10">
+    <h2 class="text-4xl sm:text-5xl font-black text-white font-['Rajdhani'] tracking-tight leading-none mb-2 capitalize">
+      Good evening, <span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-400"><%= Current.user&.name %></span>
+    </h2>
+    <p class="text-sm font-mono text-gray-500 tracking-widest uppercase">Encryption status: Active | Operational Briefing Ready</p>
+  </div>
+
+  <!-- Key Metrics Grid -->
+  <div class="grid grid-cols-3 gap-3 mb-6">
+    <!-- Rank Card -->
+    <div class="bg-[#13131f] border border-white/5 rounded-2xl p-4 relative overflow-hidden group">
+      <div class="absolute top-0 right-0 w-16 h-16 bg-gradient-to-bl from-indigo-500/10 to-transparent rounded-bl-3xl"></div>
+      <div class="text-[10px] uppercase text-gray-500 font-bold mb-1 tracking-wider">Rank</div>
+      <div class="text-2xl sm:text-3xl font-['Rajdhani'] font-bold text-white mb-0.5"><%= @rank %></div>
+      <div class="text-[10px] text-indigo-400 font-mono">Class 00</div>
+    </div>
+
+    <!-- LOC Card -->
+    <div class="bg-[#13131f] border border-white/5 rounded-2xl p-4 relative overflow-hidden">
+      <!-- Map Background Effect -->
+      <div class="absolute inset-0 opacity-20 bg-[url('https://api.mapbox.com/styles/v1/mapbox/dark-v10/static/16.3,48.2,12,0/300x200?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYyeXB0NGxqnNxcHIifQ.j0dLG9Kk5s_FpY2e-Cn4q')] bg-cover bg-center grayscale mix-blend-overlay"></div>
+      <div class="relative z-10">
+         <div class="text-[10px] uppercase text-gray-500 font-bold mb-1 tracking-wider">LOC</div>
+         <div class="text-sm font-mono text-white mb-0.5"><%= @coordinates[:lat] %></div>
+         <div class="text-sm font-mono text-white"><%= @coordinates[:lng] %></div>
+      </div>
+    </div>
+
+    <!-- Success Rate Card -->
+    <div class="bg-[#13131f] border border-white/5 rounded-2xl p-4 flex flex-col justify-between">
+      <div>
+        <div class="text-[10px] uppercase text-gray-500 font-bold mb-1 tracking-wider">Success</div>
+        <div class="flex items-baseline gap-1">
+          <div class="text-2xl sm:text-3xl font-['Rajdhani'] font-bold text-white"><%= @success_rate %></div>
+          <span class="text-xs text-gray-500 font-bold">%</span>
+        </div>
+      </div>
+      <div class="h-1 bg-gray-800 rounded-full overflow-hidden mt-2">
+        <div class="h-full bg-indigo-500 w-[94%] shadow-[0_0_10px_rgba(99,102,241,0.5)]"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Intel Feed -->
+  <div class="bg-[#13131f] border border-indigo-500/30 rounded-2xl p-5 mb-8 relative overflow-hidden group">
+    <div class="absolute left-0 top-0 bottom-0 w-1 bg-indigo-500 shadow-[0_0_15px_rgba(99,102,241,0.8)]"></div>
+    <div class="flex items-start justify-between mb-4">
+      <div class="flex items-center gap-4">
+        <div class="w-10 h-10 rounded-xl bg-indigo-900/30 border border-indigo-500/30 flex items-center justify-center text-indigo-400">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+        </div>
+        <div>
+          <h3 class="font-['Rajdhani'] font-bold text-lg text-white tracking-wide">NEW INTEL AVAILABLE</h3>
+          <p class="text-xs text-gray-400 mt-0.5">Operation Nightfall briefing updated.</p>
+        </div>
+      </div>
+      <span class="px-2 py-1 bg-indigo-500/10 border border-indigo-500/20 text-[10px] font-bold text-indigo-400 rounded uppercase tracking-wider">Confidential</span>
+    </div>
+    <p class="text-xs text-gray-500 mb-4 pl-[3.5rem]">Decryption key required for access.</p>
+    <div class="pl-[3.5rem]">
+      <button class="group/btn relative px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold uppercase tracking-wider rounded-lg transition-all shadow-[0_0_20px_rgba(79,70,229,0.4)] hover:shadow-[0_0_25px_rgba(79,70,229,0.6)] flex items-center gap-2 overflow-hidden">
+        <div class="absolute inset-0 bg-white/20 translate-x-[-100%] group-hover/btn:translate-x-[100%] transition-transform duration-700"></div>
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+        </svg>
+        Decrypt File
+      </button>
+    </div>
+  </div>
+
+  <!-- Critical Missions -->
+  <div class="mb-8">
+    <div class="flex items-center justify-between mb-4">
+      <div class="flex items-center gap-2">
+        <div class="w-4 h-4 rounded-full border-2 border-indigo-500 border-t-transparent animate-spin"></div>
+        <h3 class="font-['Rajdhani'] font-bold text-sm tracking-[0.15em] text-white uppercase">Critical Missions</h3>
+      </div>
+      <div class="text-[10px] font-mono text-gray-600">UPDATED 09:42</div>
+    </div>
+
+    <!-- Missions Table Header -->
+    <div class="grid grid-cols-[1fr_auto_auto] gap-4 px-4 py-2 bg-white/5 rounded-t-lg border-b border-white/5 text-[10px] font-bold text-gray-500 uppercase tracking-wider">
+      <div>Mission</div>
+      <div class="text-right w-20">T-Minus</div>
+      <div class="text-right w-12">Threat</div>
+    </div>
+
+    <!-- Mission Items -->
+    <div class="bg-[#13131f] border border-white/5 rounded-b-lg divide-y divide-white/5">
+      <% @missions.each do |mission| %>
+        <div class="grid grid-cols-[1fr_auto_auto] gap-4 px-4 py-4 items-center hover:bg-white/[0.02] transition group cursor-pointer">
+          <div>
+            <div class="font-bold text-white text-sm mb-0.5 group-hover:text-indigo-400 transition"><%= mission[:name] %></div>
+            <div class="text-[10px] text-gray-600"><%= mission[:location] %></div>
+          </div>
+          
+          <div class="text-right font-mono text-xs text-indigo-400">
+            <% 
+               h = (mission[:t_minus] / 3600).to_i 
+               m = ((mission[:t_minus] % 3600) / 60).to_i
+               s = (mission[:t_minus] % 60).to_i
+            %>
+            <%= "%02d:%02d:%02d" % [h, m, s] %>
+          </div>
+          
+          <div class="flex justify-end">
+            <div class="w-2 h-2 rounded-full <%= 
+              case mission[:threat]
+              when 'Critical' then 'bg-red-500 shadow-[0_0_8px_rgba(239,68,68,0.6)] animate-pulse'
+              when 'High' then 'bg-yellow-500 shadow-[0_0_8px_rgba(234,179,8,0.6)]' 
+              else 'bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.6)]'
+              end 
+            %>"></div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+  <!-- Recent Decryptions -->
+  <div>
+    <div class="flex items-center gap-2 mb-4 text-gray-400">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 19a2 2 0 01-2-2V7a2 2 0 012-2h4l2 2h4a2 2 0 012 2v1M5 19h14a2 2 0 002-2v-5a2 2 0 00-2-2H9a2 2 0 00-2 2v5a2 2 0 01-2 2z" />
+      </svg>
+      <h3 class="font-['Rajdhani'] font-bold text-sm tracking-[0.15em] text-white uppercase">Recent Decryptions</h3>
+    </div>
+
+    <div class="space-y-3">
+      <!-- Item 1 -->
+      <div class="bg-[#13131f] border border-white/5 rounded-xl p-3 flex items-center justify-between group cursor-pointer hover:border-white/10 transition">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-lg bg-gray-800 flex items-center justify-center text-gray-500 group-hover:bg-emerald-500/10 group-hover:text-emerald-400 transition">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+            </svg>
+          </div>
+          <div>
+            <div class="text-sm font-bold text-white group-hover:text-emerald-400 transition">Project Bluebook</div>
+            <div class="h-1 w-20 bg-gray-800 rounded-full mt-1.5 overflow-hidden">
+               <div class="h-full bg-emerald-500 w-full"></div>
+            </div>
+          </div>
+        </div>
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-gray-600 group-hover:text-gray-400 transition" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+        </svg>
+      </div>
+
+      <!-- Item 2 -->
+      <div class="bg-[#13131f] border border-white/5 rounded-xl p-3 flex items-center justify-between group cursor-pointer hover:border-white/10 transition">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-lg bg-gray-800 flex items-center justify-center text-gray-500 group-hover:bg-indigo-500/10 group-hover:text-indigo-400 transition">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+            </svg>
+          </div>
+          <div>
+            <div class="text-sm font-bold text-white group-hover:text-indigo-400 transition">Spectre Org Chart</div>
+            <div class="h-1 w-24 bg-gray-800 rounded-full mt-1.5 overflow-hidden flex">
+               <div class="h-full bg-indigo-500 w-[40%]"></div>
+            </div>
+          </div>
+        </div>
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-gray-600 group-hover:text-gray-400 transition" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+        </svg>
+      </div>
+    </div>
+  </div>
+
+  <!-- FAB -->
+  <button class="fixed bottom-6 right-6 w-14 h-14 bg-indigo-600 hover:bg-indigo-500 rounded-full flex items-center justify-center text-white shadow-[0_0_30px_rgba(79,70,229,0.5)] transition hover:scale-105 hover:rotate-90 z-50 md:hidden">
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+    </svg>
+  </button>
+</div>

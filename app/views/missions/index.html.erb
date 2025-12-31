@@ -1,0 +1,51 @@
+<div class="min-h-screen bg-gray-900 text-white p-6">
+  <div class="max-w-4xl mx-auto">
+    <div class="flex items-center justify-between mb-8">
+      <div>
+        <h1 class="text-3xl font-black mb-2"><%= @page_title %></h1>
+        <%= link_to "← Back to HQ", root_path, class: "text-indigo-400 hover:text-indigo-300 font-semibold" %>
+      </div>
+    </div>
+
+    <div class="space-y-4">
+      <% @missions.each do |mission| %>
+        <%= link_to mission, class: "block group" do %>
+          <div class="bg-gray-800 border border-gray-700 rounded-xl p-5 hover:border-indigo-500 hover:shadow-lg transition-all transform hover:scale-[1.01]">
+            <div class="flex items-start gap-4">
+              <% if mission.agent&.avatar&.attached? %>
+                <%= image_tag mission.agent.avatar, class: "h-12 w-12 rounded-xl object-cover shrink-0" %>
+              <% else %>
+                <div class="h-12 w-12 rounded-xl bg-indigo-600 flex items-center justify-center font-bold text-lg">
+                  <%= mission.agent&.name&.first || "?" %>
+                </div>
+              <% end %>
+              
+              <div class="flex-1">
+                <h3 class="font-bold text-lg mb-1 group-hover:text-indigo-400 transition"><%= mission.title %></h3>
+                <div class="flex items-center gap-4 text-sm text-gray-400">
+                  <span><%= mission.agent&.name || "Unassigned" %></span>
+                  <span>•</span>
+                  <span class="<%= 'text-red-400 font-bold' if mission.due_at < Time.current && !mission.done? %>">
+                    Due <%= mission.due_at.strftime("%b %d") %>
+                  </span>
+                  <span>•</span>
+                  <span class="uppercase font-bold text-xs px-2 py-0.5 rounded bg-gray-700">
+                    <%= mission.status %>
+                  </span>
+                </div>
+              </div>
+              
+              <svg class="w-5 h-5 text-gray-500 group-hover:text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+            </div>
+          </div>
+        <% end %>
+      <% end %>
+
+      <% if @missions.empty? %>
+        <div class="text-center py-12 text-gray-500">
+          No missions found.
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

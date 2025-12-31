@@ -13,25 +13,34 @@
       </div>
     <% end %>
 
-    <div>
-      <%= form.label :name, "Full name", class: "block text-sm font-medium text-gray-300 mb-2" %>
-      <%= form.text_field :name, required: true, autofocus: true, placeholder: "John Doe", class: "w-full bg-gray-900 border border-gray-700 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition" %>
-    </div>
+    <% is_solo = params[:user_type] == 'solo' %>
+    <%= hidden_field_tag :user_type, params[:user_type] %>
 
     <div>
-      <%= form.label :workspace_name, "Organization name", class: "block text-sm font-medium text-gray-300 mb-2" %>
-      <%= form.text_field :workspace_name, required: true, placeholder: "Acme Inc.", class: "w-full bg-gray-900 border border-gray-700 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition" %>
+      <%= form.label :name, is_solo ? "Agent Codename" : "Full name", class: "block text-sm font-medium text-gray-300 mb-2" %>
+      <%= form.text_field :name, required: true, autofocus: true, placeholder: is_solo ? "007" : "John Doe", class: "w-full bg-gray-900 border border-gray-700 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition" %>
     </div>
 
-    <div>
-      <%= form.label :role, "Role", class: "block text-sm font-medium text-gray-300 mb-2" %>
-      <%= form.select :role, 
-          [["Agent (Team Member)", "agent"], ["Captain (Admin)", "captain"]], 
-          { selected: "captain" },
-          { class: "w-full bg-gray-900 border border-gray-700 rounded-lg px-4 py-3 text-white focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition cursor-pointer" } 
-      %>
-      <p class="text-xs text-gray-500 mt-1">Captains have full admin access to the workspace</p>
-    </div>
+    <% if is_solo %>
+      <!-- Auto-set workspace for solo agents -->
+      <%= form.hidden_field :workspace_name, value: "Classified HQ" %>
+      <%= form.hidden_field :role, value: "captain" %>
+    <% else %>
+      <div>
+        <%= form.label :workspace_name, "Organization name", class: "block text-sm font-medium text-gray-300 mb-2" %>
+        <%= form.text_field :workspace_name, required: true, placeholder: "Acme Inc.", class: "w-full bg-gray-900 border border-gray-700 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition" %>
+      </div>
+
+      <div>
+        <%= form.label :role, "Role", class: "block text-sm font-medium text-gray-300 mb-2" %>
+        <%= form.select :role, 
+            [["Agent (Team Member)", "agent"], ["Captain (Admin)", "captain"]], 
+            { selected: "captain" },
+            { class: "w-full bg-gray-900 border border-gray-700 rounded-lg px-4 py-3 text-white focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition cursor-pointer" } 
+        %>
+        <p class="text-xs text-gray-500 mt-1">Captains have full admin access to the workspace</p>
+      </div>
+    <% end %>
 
     <div>
       <%= form.label :email_address, "Email address", class: "block text-sm font-medium text-gray-300 mb-2" %>

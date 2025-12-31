@@ -38,7 +38,7 @@ class SubscriptionsController < ApplicationController
           recurring: {
             interval: "month"
           },
-          unit_amount: 1200 # $12.00 in cents
+          unit_amount: 1800 # $18.00 in cents
         },
         quantity: 1
       } ],
@@ -62,14 +62,29 @@ class SubscriptionsController < ApplicationController
   def cancel
     @workspace = current_workspace
 
-    if @workspace.stripe_subscription_id.blank?
+    if @workspace.stripe_subscription_id.blank? && !@workspace.pro?
       redirect_to subscriptions_path, alert: "No active subscription found."
       return
     end
 
+    # Store cancellation feedback
+    cancellation_reason = params[:cancellation_reason]
+    cancellation_feedback = params[:cancellation_feedback]
+
+    Rails.logger.info "Subscription canceled - Reason: #{cancellation_reason}, Feedback: #{cancellation_feedback}"
+    # TODO: Store this in a CancellationFeedback model or workspace settings if needed
+
     begin
-      Stripe::Subscription.cancel(@workspace.stripe_subscription_id)
-      flash[:notice] = "Your subscription has been canceled. You'll retain access until the end of your billing period."
+      # Cancel Stripe subscription if exists
+      if @workspace.stripe_subscription_id.present?
+        Stripe::Subscription.cancel(@workspace.stripe_subscription_id)
+      end
+
+      # Downgrade to free tier
+      @workspace.free!
+      @workspace.update(subscription_status: "canceled")
+
+      flash[:notice] = "Your subscription has been canceled. You've been downgraded to the Free plan."
     rescue Stripe::StripeError => e
       flash[:alert] = "Error canceling subscription: #{e.message}"
     end

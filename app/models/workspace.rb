@@ -11,7 +11,7 @@ class Workspace < ApplicationRecord
   validates :name, presence: true
 
   enum :subscription_status, { trial: 0, active: 1, past_due: 2, canceled: 3 }, default: :trial
-  enum :plan_type, { free: 0, pro: 1 }, default: :free
+  enum :plan_type, { free: "free", pro: "pro" }, default: :free
 
   def active_subscription?
     active? || trial?

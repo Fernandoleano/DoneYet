@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Mission Control | DoneYet</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
+    
+    <!-- Google Fonts for that tactical look -->
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+  </head>
+
+  <body class="bg-[#0a0a0f] text-gray-300 font-sans antialiased h-screen overflow-hidden selection:bg-indigo-500/30 selection:text-indigo-200" x-data="{ mobileMenuOpen: false }">
+    <div class="flex h-screen overflow-hidden">
+      <!-- Sidebar -->
+      <aside 
+        :class="mobileMenuOpen ? 'translate-x-0' : '-translate-x-full'"
+        class="w-64 bg-[#0d0d14] border-r border-white/5 flex flex-col fixed md:relative h-full transition-transform duration-300 ease-in-out md:translate-x-0 z-40">
+        <!-- Logo -->
+        <div class="h-16 flex items-center px-6 border-b border-white/5">
+          <%= link_to mission_control_path, class: "flex items-center gap-2 group" do %>
+            <%= image_tag "logo.svg", class: "h-8 w-8 group-hover:rotate-12 transition-transform" %>
+            <span class="font-bold text-xl font-['Rajdhani'] tracking-widest text-white">DoneYet</span>
+          <% end %>
+        </div>
+
+        <!-- Navigation -->
+        <nav class="flex-1 px-4 py-6 space-y-1">
+          <%= link_to mission_control_path, class: "flex items-center gap-3 px-4 py-4 min-h-[48px] rounded-lg #{controller_name == 'mission_control' ? 'bg-indigo-600/10 text-white shadow-[inset_0_0_10px_rgba(79,70,229,0.1)]' : 'text-gray-400 hover:bg-white/5 hover:text-white'} transition group" do %>
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+            <span class="font-['Rajdhani'] font-bold tracking-wider text-sm">Mission Control</span>
+          <% end %>
+
+          <div class="px-4 py-2 mt-4">
+             <span class="text-[10px] font-mono text-gray-600 uppercase tracking-[0.2em]">Operational</span>
+          </div>
+
+          <%= link_to "#", class: "flex items-center gap-3 px-4 py-4 min-h-[48px] rounded-lg text-gray-500 hover:bg-white/5 hover:text-gray-300 transition group cursor-not-allowed" do %>
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+            <span class="font-['Rajdhani'] font-bold tracking-wider text-sm">Active Missions</span>
+          <% end %>
+
+          <%= link_to "#", class: "flex items-center gap-3 px-4 py-4 min-h-[48px] rounded-lg text-gray-500 hover:bg-white/5 hover:text-gray-300 transition group cursor-not-allowed" do %>
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+            <span class="font-['Rajdhani'] font-bold tracking-wider text-sm">Intel Feed</span>
+          <% end %>
+
+          <div class="px-4 py-2 mt-4">
+             <span class="text-[10px] font-mono text-gray-600 uppercase tracking-[0.2em]">Comms</span>
+          </div>
+
+          <%= link_to "#", class: "flex items-center gap-3 px-4 py-4 min-h-[48px] rounded-lg text-gray-500 hover:bg-white/5 hover:text-gray-300 transition group cursor-not-allowed" do %>
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>
+            <span class="font-['Rajdhani'] font-bold tracking-wider text-sm">Secure Line</span>
+          <% end %>
+        </nav>
+
+        <!-- User Section -->
+        <div class="border-t border-white/5 p-4">
+          <div class="flex items-center gap-3 mb-3 p-2 rounded-lg bg-white/5">
+            <div class="h-10 w-10 rounded-full bg-indigo-600 flex items-center justify-center font-bold overflow-hidden shrink-0 shadow-[0_0_15px_rgba(79,70,229,0.3)]">
+              <% if Current.user&.avatar&.attached? %>
+                <%= image_tag Current.user.avatar, class: "h-full w-full object-cover" %>
+              <% else %>
+                <%= Current.user&.name&.first || "?" %>
+              <% end %>
+            </div>
+            <div class="flex-1 min-w-0">
+              <p class="text-sm font-bold text-white truncate font-['Rajdhani'] tracking-wide"><%= Current.user&.name %></p>
+              <div class="flex items-center gap-1.5">
+                <span class="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse shadow-[0_0_5px_rgba(16,185,129,0.5)]"></span>
+                <p class="text-[10px] text-gray-500 font-mono">ACTIVE</p>
+              </div>
+            </div>
+          </div>
+          
+          <div class="space-y-1">
+            <%= button_to session_path, method: :delete, class: "w-full flex items-center gap-2 px-3 py-2 rounded-lg text-gray-500 hover:bg-red-500/10 hover:text-red-400 transition text-sm font-bold font-['Rajdhani'] uppercase tracking-wider" do %>
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
+              Logout
+            <% end %>
+          </div>
+        </div>
+      </aside>
+
+      <!-- Main Content Area -->
+      <div class="flex-1 flex flex-col overflow-hidden relative">
+        <!-- Background Grid Effect (Full Page) -->
+        <div class="absolute inset-0 bg-[linear-gradient(rgba(30,30,40,0.3)_1px,transparent_1px),linear-gradient(90deg,rgba(30,30,40,0.3)_1px,transparent_1px)] bg-[size:60px_60px] -z-10 pointer-events-none"></div>
+
+        <!-- Top Bar -->
+        <header class="h-16 bg-[#0a0a0f]/80 backdrop-blur-md border-b border-white/5 flex items-center justify-between px-6 z-20">
+          <div class="flex-1 flex items-center gap-4">
+             <div class="h-1 w-24 bg-gray-800 rounded-full overflow-hidden">
+                <div class="h-full bg-indigo-500 w-2/3 shadow-[0_0_10px_rgba(79,70,229,0.5)]"></div>
+             </div>
+             <span class="text-[10px] font-mono text-gray-500 uppercase tracking-widest">System Load 67%</span>
+          </div>
+          
+          <div class="flex items-center gap-4">
+            <div class="px-3 py-1.5 bg-emerald-500/10 border border-emerald-500/20 rounded-lg flex items-center gap-2">
+              <span class="w-2 h-2 bg-emerald-500 rounded-full shadow-[0_0_5px_rgba(16,185,129,0.5)]"></span>
+              <span class="text-[10px] font-bold text-emerald-400 uppercase tracking-widest">Secure Link Established</span>
+            </div>
+          </div>
+        </header>
+
+        <!-- Page Content -->
+        <main class="flex-1 overflow-y-auto p-6 md:p-8">
+          <% if notice %>
+            <div class="mb-6 p-4 bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 rounded-lg flex items-center gap-3 font-mono text-xs">
+              <span class="text-emerald-500">[SYSTEM]</span>
+              <%= notice %>
+            </div>
+          <% end %>
+          
+          <%= yield %>
+        </main>
+      </div>
+    </div>
+  </body>
+</html>

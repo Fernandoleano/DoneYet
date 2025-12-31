@@ -107,7 +107,7 @@
             <% if Current.user&.captain? %>
               <%= link_to "Billing", subscriptions_path, class: "w-full px-6 py-3 bg-emerald-600 hover:bg-emerald-500 rounded-lg font-semibold text-white transition text-center block" %>
             <% end %>
-            <% if Current.user&.captain? || Current.user&.email_address == "fernandoleano4@gmail.com" %>
+            <% if Current.user&.email_address == "fernandoleano4@gmail.com" %>
               <%= link_to "Admin View", admin_path, class: "w-full px-6 py-3 bg-indigo-600 hover:bg-indigo-500 rounded-lg font-semibold text-white transition text-center block" %>
             <% end %>
           </div>
