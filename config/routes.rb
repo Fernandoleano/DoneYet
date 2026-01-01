@@ -123,8 +123,16 @@ Rails.application.routes.draw do
   # get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
   # get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
 
-  # Mission Control (Solo Agent Dashboard)
-  # get "mission_control" => "mission_control#index", as: :mission_control
+  # Mission Control (Solid Queue Dashboard)
+  MissionControl::Jobs::Engine.routes.default_url_options = { host: "doneyet.ai" }
+  mount MissionControl::Jobs::Engine, at: "/admin/jobs"
+
+  # Basic Auth for Mission Control in Production
+  if Rails.env.production?
+    MissionControl::Jobs::Engine.middleware.use Rack::Auth::Basic do |username, password|
+      username == "admin" && password == "password"
+    end
+  end
 
   # Defines the root path route ("/")
   root "landing#index"

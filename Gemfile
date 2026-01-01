@@ -84,3 +84,5 @@ gem "stripe", "~> 18.1"
 gem "slack-ruby-client"
 
 gem "google-api-client", "~> 0.53.0"
+
+gem "mission_control-jobs", "~> 1.1"
