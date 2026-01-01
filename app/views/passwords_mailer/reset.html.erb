@@ -37,7 +37,7 @@
 
     <!-- Button -->
     <div class="mb-8">
-      <%= link_to "Reset Security Credentials", edit_password_url(token: @user.password_reset_token), class: "block w-full bg-[#2a2a2a] hover:bg-[#333] text-white text-center font-bold py-4 rounded border border-gray-700 uppercase tracking-wider text-sm transition-colors decoration-0 no-underline" %>
+      <%= link_to "Reset Security Credentials", edit_password_url(token: @user.generate_token_for(:password_reset)), class: "block w-full bg-[#2a2a2a] hover:bg-[#333] text-white text-center font-bold py-4 rounded border border-gray-700 uppercase tracking-wider text-sm transition-colors decoration-0 no-underline" %>
     </div>
 
     <!-- Footer Warning -->
