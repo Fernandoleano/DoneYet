@@ -8,6 +8,10 @@ image: fernandoleanodoneyet/doneyet
 servers:
   web:
     - 104.131.92.251
+  job:
+    hosts:
+      - 104.131.92.251
+    cmd: bin/jobs
 
 # Enable SSL auto certification via Let's Encrypt
 proxy:
