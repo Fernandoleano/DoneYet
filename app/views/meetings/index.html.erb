@@ -2,10 +2,22 @@
   <!-- Animated Header -->
   <div class="flex items-center justify-between">
     <div>
-      <h1 class="text-2xl sm:text-3xl lg:text-5xl font-black mb-3" data-controller="typewriter">
-        <span class="text-indigo-400" 
+      <h1 class="text-2xl sm:text-3xl lg:text-5xl font-black mb-3">
+        <span class="text-white" 
+              data-controller="typewriter"
               data-typewriter-target="text" 
-              data-text="<%= greeting_for_time_of_day %>, <%= Current.user.name.split.first %>">
+              data-text="<%= greeting_for_time_of_day %>,">
+        </span>
+        <% 
+           greeting_length = greeting_for_time_of_day.length + 1 # +1 for comma
+           typing_speed = 50 
+           delay = (greeting_length * typing_speed) + 200 # +200ms buffer
+        %>
+        <span class="text-purple-400" 
+              data-controller="typewriter"
+              data-typewriter-target="text" 
+              data-typewriter-delay-value="<%= delay %>"
+              data-text=" <%= Current.user.name.split.first %>">
         </span>
       </h1>
       <p class="text-lg sm:text-xl text-gray-300 font-semibold">Here is your debriefing</p>

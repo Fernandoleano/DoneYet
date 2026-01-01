@@ -94,7 +94,7 @@
         <!-- Profile Card -->
         <div class="bg-gradient-to-br from-gray-800/40 to-gray-800/20 backdrop-blur-sm border border-gray-700/50 rounded-2xl p-6 text-center">
           <% if @user.avatar.attached? %>
-            <%= image_tag @user.avatar, class: "w-24 h-24 rounded-full mx-auto mb-4 ring-4 ring-indigo-500/30 object-cover" %>
+            <%= image_tag url_for(@user.avatar), class: "w-24 h-24 rounded-full mx-auto mb-4 ring-4 ring-indigo-500/30 object-cover" %>
           <% else %>
             <div class="w-24 h-24 rounded-full mx-auto mb-4 bg-gradient-to-br from-indigo-600 to-purple-600 flex items-center justify-center text-4xl font-black text-white ring-4 ring-indigo-500/30">
               <%= @user.name.first.upcase %>

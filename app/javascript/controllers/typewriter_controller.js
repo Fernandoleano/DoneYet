@@ -2,10 +2,15 @@ import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
   static targets = ["text"]
-  static values = { speed: { type: Number, default: 50 } }
+  static values = { 
+    speed: { type: Number, default: 50 },
+    delay: { type: Number, default: 0 }
+  }
   
   connect() {
-    this.typeText()
+    setTimeout(() => {
+      this.typeText()
+    }, this.delayValue)
   }
   
   typeText() {

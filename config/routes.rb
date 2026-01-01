@@ -124,15 +124,14 @@ Rails.application.routes.draw do
   # get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
 
   # Mission Control (Solid Queue Dashboard)
-  MissionControl::Jobs::Engine.routes.default_url_options = { host: "doneyet.ai" }
   mount MissionControl::Jobs::Engine, at: "/admin/jobs"
 
   # Basic Auth for Mission Control in Production
-  if Rails.env.production?
-    MissionControl::Jobs::Engine.middleware.use Rack::Auth::Basic do |username, password|
-      username == "admin" && password == "password"
-    end
-  end
+  # if Rails.env.production?
+  #   MissionControl::Jobs::Engine.middleware.use Rack::Auth::Basic do |username, password|
+  #     username == "admin" && password == "password"
+  #   end
+  # end
 
   # Defines the root path route ("/")
   root "landing#index"
