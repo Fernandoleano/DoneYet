@@ -11,12 +11,12 @@
   </div>
 
   <!-- Team List -->
-  <div class="space-y-3">
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
     <% Current.user.workspace.users.each do |user| %>
-      <div class="group bg-[#1E1E1E] border border-gray-800 rounded-xl p-4 flex items-center justify-between hover:border-gray-700 transition-colors">
+      <div class="group bg-slate-800 border border-slate-700 rounded-xl p-4 flex items-center justify-between hover:border-slate-600 transition-colors">
         <div class="flex items-center gap-4">
           <!-- Avatar -->
-          <div class="h-12 w-12 rounded-full bg-indigo-900/50 border border-indigo-500/30 flex items-center justify-center text-indigo-400 font-bold text-lg shrink-0 overflow-hidden relative">
+          <div class="h-12 w-12 rounded-full bg-indigo-600 flex items-center justify-center text-white font-bold text-lg shrink-0 overflow-hidden relative">
             <% if user.avatar.attached? %>
               <%= image_tag user.avatar, class: "w-full h-full object-cover" %>
             <% else %>
@@ -28,9 +28,6 @@
           <div>
             <div class="flex items-center gap-2">
               <h3 class="font-bold text-white text-base"><%= user.name %></h3>
-              <% if user == Current.user %>
-                <span class="px-2 py-0.5 bg-indigo-500/20 text-indigo-300 rounded text-[10px] font-bold uppercase tracking-wide">You</span>
-              <% end %>
             </div>
             
             <div class="flex items-center gap-3 text-sm mt-0.5">
@@ -42,6 +39,12 @@
                 <span class="text-gray-400 text-xs"><%= user.user_stat&.rank %></span>
               </div>
             </div>
+
+            <% if user == Current.user %>
+              <div class="mt-2">
+                <span class="px-2 py-0.5 bg-[#2D2B52] text-[#818CF8] rounded text-[10px] font-bold uppercase tracking-wide">You</span>
+              </div>
+            <% end %>
           </div>
         </div>
 
