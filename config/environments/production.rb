@@ -63,12 +63,13 @@ Rails.application.configure do
 
   config.action_mailer.smtp_settings = {
     address:        ENV.fetch("SMTP_ADDRESS", "smtp.sendgrid.net"),
-    port:           ENV.fetch("SMTP_PORT", 587),
+    port:           ENV.fetch("SMTP_PORT", 587).to_i,
     domain:         ENV.fetch("SMTP_DOMAIN", "doneyet.ai"),
     user_name:      ENV.fetch("SMTP_USERNAME", nil),
     password:       ENV.fetch("SMTP_PASSWORD", nil),
-    authentication: :plain,
-    enable_starttls_auto: true
+    authentication: :login,
+    enable_starttls_auto: true,
+    tls:            ENV.fetch("SMTP_PORT", 587).to_i == 465
   }
 
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
