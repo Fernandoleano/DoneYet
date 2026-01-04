@@ -59,15 +59,9 @@ Rails.application.configure do
 
   # Set host to be used by links generated in mailer templates.
   config.action_mailer.default_url_options = { host: "doneyet.ai", protocol: "https" }
-  config.action_mailer.delivery_method = :smtp
-  config.action_mailer.smtp_settings = {
-    address:        "smtp.resend.com",
-    port:           2525,
-    user_name:      "resend",
-    password:       ENV["RESEND_API_KEY"],
-    authentication: :login,
-    tls:            false,
-    enable_starttls_auto: true
+  config.action_mailer.delivery_method = :resend_api
+  config.action_mailer.resend_api_settings = {
+    api_key: ENV["RESEND_API_KEY"]
   }
 
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
