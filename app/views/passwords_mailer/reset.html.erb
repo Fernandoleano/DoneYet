@@ -1,57 +1,64 @@
-<div class="max-w-[500px] mx-auto bg-[#1E1E1E] rounded-lg shadow-xl overflow-hidden border border-gray-800">
-  <div class="p-8">
-    <!-- Header -->
-    <div class="mb-4">
-      <span class="text-xs uppercase tracking-widest text-[#d97706] font-bold">DoneYet Intelligence</span>
+  <div class="p-10">
+    <!-- Header Logo -->
+    <div class="mb-8">
+      <h2 class="text-2xl font-bold text-gray-800 flex items-center">
+        <span class="text-orange-500 mr-2 text-3xl">DoneYet</span>
+      </h2>
     </div>
+
+    <!-- Main Title -->
+    <h1 class="text-2xl font-bold text-gray-800 mb-6">Verification needed</h1>
+
+    <!-- Intro -->
+    <p class="text-gray-600 text-base mb-6">
+      Please confirm your password reset request.
+    </p>
     
-    <h1 class="text-2xl font-bold text-white mb-2">Security Breach Protocol</h1>
-    
-    <p class="text-gray-400 text-sm mb-8">
-      We received a request to override security clearance for your account.
+    <p class="text-gray-600 text-sm mb-6">
+      We have received a request to reset the password for your account from a device we don't recognize.
     </p>
 
     <!-- Details Box -->
-    <div class="space-y-3 mb-8 text-sm">
+    <div class="space-y-4 mb-8 text-sm">
       <div class="flex items-start">
-        <span class="text-[#d97706] mr-2 text-xl leading-none">&bull;</span>
-        <span class="text-gray-400 w-24">Agent:</span>
-        <span class="text-white font-medium"><%= @user.name %></span>
+        <span class="text-orange-500 mr-3 text-xl leading-none">&bull;</span>
+        <span class="text-gray-500 w-24">Account:</span>
+        <span class="text-gray-900 font-bold"><%= @user.name %></span>
       </div>
       <div class="flex items-start">
-        <span class="text-[#d97706] mr-2 text-xl leading-none">&bull;</span>
-        <span class="text-gray-400 w-24">Action:</span>
-        <span class="text-white font-medium">Password Reset</span>
+        <span class="text-orange-500 mr-3 text-xl leading-none">&bull;</span>
+        <span class="text-gray-500 w-24">When:</span>
+        <span class="text-gray-900 font-bold"><%= Time.now.utc.strftime("%Y-%m-%d %H:%M UT") %></span>
       </div>
       <div class="flex items-start">
-        <span class="text-[#d97706] mr-2 text-xl leading-none">&bull;</span>
-        <span class="text-gray-400 w-24">Time:</span>
-        <span class="text-white font-medium"><%= Time.now.utc.strftime("%Y-%m-%d %H:%M UT") %></span>
+        <span class="text-orange-500 mr-3 text-xl leading-none">&bull;</span>
+        <span class="text-gray-500 w-24">Device:</span>
+        <span class="text-gray-900 font-bold">Unknown Device (Web Browser)</span>
       </div>
     </div>
 
     <!-- Instructions -->
-    <p class="text-gray-400 text-sm mb-6">
-      To restore secure access, verify your identity by clicking the button below. This link expires in 20 minutes.
+    <p class="text-gray-600 text-sm mb-6">
+      To verify your account is safe, please click the button below to proceed — it will expire in 20 minutes:
     </p>
 
     <!-- Button -->
-    <div class="mb-8">
-      <%= link_to "Reset Security Credentials", edit_password_url(token: @user.generate_token_for(:password_reset)), class: "block w-full bg-[#2a2a2a] hover:bg-[#333] text-white text-center font-bold py-4 rounded border border-gray-700 uppercase tracking-wider text-sm transition-colors decoration-0 no-underline" %>
+    <div class="mb-10 text-center">
+      <%= link_to "Reset Password", edit_password_url(token: @user.generate_token_for(:password_reset)), class: "inline-block bg-gray-100 hover:bg-gray-200 text-teal-600 text-center font-bold text-xl py-4 px-12 rounded border border-gray-200 transition-colors decoration-0 no-underline w-full sm:w-auto" %>
     </div>
 
     <!-- Footer Warning -->
-    <div class="border-t border-gray-800 pt-6">
-      <h3 class="text-white font-bold text-sm mb-2">False Flag?</h3>
-      <p class="text-gray-500 text-xs leading-relaxed">
-        If you did not initiate this protocol, enable "Stealth Mode" immediately by ignoring this transmission. Your account remains secure under current encryption standards.
+    <div class="border-t border-gray-100 pt-8">
+      <h3 class="text-gray-800 font-bold text-base mb-2">That wasn't me!</h3>
+      <p class="text-gray-500 text-sm leading-relaxed mb-4">
+        If the above sign-in attempt wasn't you, please <a href="#" class="text-orange-500 no-underline hover:underline">contact support</a> immediately and enable <a href="#" class="text-orange-500 no-underline hover:underline">2-factor authentication</a> (2FA) as soon as possible to safeguard your account.
       </p>
+      
+      <div class="text-xs text-gray-400 mt-6">
+        <p class="mb-2">How do I know this email is from <span class="bg-yellow-100 text-gray-800 px-1">DoneYet</span>?</p>
+        <p>
+          The links provided in this email start with <span class="text-orange-500">https://doneyet.ai</span>. To contact customer service you can visit our website directly.
+        </p>
+      </div>
     </div>
   </div>
-</div>
-
-<div class="text-center mt-6">
-  <p class="text-xs text-gray-600">
-    Encrypted via DoneYet HQ // <a href="#" class="text-[#d97706] no-underline">Secure Channel</a>
-  </p>
-</div>

@@ -10,9 +10,17 @@
     </style>
   </head>
 
-  <body class="bg-[#121212] m-0 p-0 text-gray-300">
-    <div class="w-full h-full bg-[#121212] py-10">
-      <%= yield %>
+  <body class="bg-gray-100 m-0 p-0 text-gray-800 font-sans">
+    <div class="w-full h-full bg-gray-100 py-10 px-4">
+      <div class="max-w-[600px] mx-auto bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
+        <%= yield %>
+      </div>
+      
+      <div class="text-center mt-6">
+        <p class="text-xs text-gray-500">
+          Sending email via DoneYet HQ // <a href="#" class="text-orange-600 no-underline hover:underline">Secure Channel</a>
+        </p>
+      </div>
     </div>
   </body>
 </html>
