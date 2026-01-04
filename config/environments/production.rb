@@ -59,17 +59,9 @@ Rails.application.configure do
 
   # Set host to be used by links generated in mailer templates.
   config.action_mailer.default_url_options = { host: "doneyet.ai", protocol: "https" }
-  config.action_mailer.delivery_method = :smtp
-
-  config.action_mailer.smtp_settings = {
-    address:        ENV.fetch("SMTP_ADDRESS", "smtp.sendgrid.net"),
-    port:           ENV.fetch("SMTP_PORT", 587).to_i,
-    domain:         ENV.fetch("SMTP_DOMAIN", "doneyet.ai"),
-    user_name:      ENV.fetch("SMTP_USERNAME", nil),
-    password:       ENV.fetch("SMTP_PASSWORD", nil),
-    authentication: :login,
-    enable_starttls_auto: ENV.fetch("SMTP_PORT", 587).to_i != 465,
-    tls:            ENV.fetch("SMTP_PORT", 587).to_i == 465
+  config.action_mailer.delivery_method = :resend
+  config.action_mailer.resend_settings = {
+    api_key: ENV["RESEND_API_KEY"]
   }
 
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to

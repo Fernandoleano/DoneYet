@@ -29,6 +29,12 @@ env:
   secret:
     - RAILS_MASTER_KEY
     - DATABASE_URL
+    - SMTP_USERNAME
+    - SMTP_PASSWORD
+    - SMTP_ADDRESS
+    - SMTP_ADDRESS
+    - SMTP_PORT
+    - RESEND_API_KEY
   clear:
     RAILS_ENV: production
     RAILS_SERVE_STATIC_FILES: true
