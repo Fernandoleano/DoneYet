@@ -34,5 +34,3 @@ class ResendDeliveryMethod
     Resend::Emails.send(params)
   end
 end
-
-ActionMailer::Base.add_delivery_method :resend_api, ResendDeliveryMethod
