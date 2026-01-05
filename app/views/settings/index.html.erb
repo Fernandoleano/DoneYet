@@ -83,5 +83,37 @@
         <% end %>
       </div>
     </div>
+
+    <!-- Integrations -->
+    <div class="bg-gray-800 border border-gray-700 rounded-2xl p-6">
+      <h2 class="text-xl font-bold text-white mb-4">Integrations</h2>
+      
+      <div class="flex items-center justify-between p-4 bg-gray-900 rounded-lg border border-gray-700">
+        <div class="flex items-center gap-4">
+          <div class="h-12 w-12 bg-white rounded-lg flex items-center justify-center p-2">
+            <svg class="w-full h-full text-black" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M5.042 15.165a2.528 2.528 0 0 1-2.52 2.523A2.528 2.528 0 0 1 0 15.165a2.527 2.527 0 0 1 2.522-2.52h2.52v2.52zM6.313 15.165a2.527 2.527 0 0 1 2.521-2.52 2.527 2.527 0 0 1 2.521 2.52v6.313A2.528 2.528 0 0 1 8.834 24a2.528 2.528 0 0 1-2.521-2.522v-6.313zM8.834 5.042a2.528 2.528 0 0 1-2.521-2.52A2.528 2.528 0 0 1 8.834 0a2.528 2.528 0 0 1 2.521 2.522v2.52H8.834zM8.834 6.313a2.528 2.528 0 0 1 2.521 2.521 2.528 2.528 0 0 1-2.521 2.521H2.522A2.528 2.528 0 0 1 0 8.834a2.528 2.528 0 0 1 2.522-2.521h6.312zM18.956 8.834a2.528 2.528 0 0 1 2.522-2.521A2.528 2.528 0 0 1 24 8.834a2.528 2.528 0 0 1-2.522 2.521h-2.522V8.834zM17.688 8.834a2.528 2.528 0 0 1-2.523 2.521 2.527 2.527 0 0 1-2.52-2.521V2.522A2.527 2.527 0 0 1 15.165 0a2.528 2.528 0 0 1 2.523 2.522v6.312zM15.165 18.956a2.528 2.528 0 0 1 2.523 2.522A2.528 2.528 0 0 1 15.165 24a2.527 2.527 0 0 1-2.52-2.522v-2.522h2.52zM15.165 17.688a2.527 2.527 0 0 1-2.52-2.523 2.526 2.526 0 0 1 2.52-2.52h6.313A2.527 2.527 0 0 1 24 15.165a2.528 2.528 0 0 1-2.522 2.523h-6.313z"/>
+            </svg>
+          </div>
+          <div>
+            <h3 class="font-bold text-white">Slack</h3>
+            <p class="text-sm text-gray-400">Receive mission updates and alerts</p>
+          </div>
+        </div>
+
+        <% if feature_available?(:slack_integration) %>
+          <% if @workspace.slack_connected? %>
+            <%= link_to "Manage", slack_integration_path, class: "px-4 py-2 bg-gray-700 hover:bg-gray-600 text-white rounded-lg transition font-medium" %>
+          <% else %>
+            <%= link_to "Connect", slack_integration_path, class: "px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg transition font-medium" %>
+          <% end %>
+        <% else %>
+           <div class="flex items-center gap-3">
+             <span class="px-2 py-0.5 bg-indigo-600 text-white text-xs rounded-full font-bold">Pro</span>
+             <span class="text-sm text-gray-500 font-medium">Upgrade to connect</span>
+           </div>
+        <% end %>
+      </div>
+    </div>
   </div>
 </div>

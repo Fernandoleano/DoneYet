@@ -50,6 +50,7 @@ class User < ApplicationRecord
     when :advanced_channels then false
     when :feature_voting then false
     when :file_attachments then false
+    when :slack_integration then false
     else true
     end
   end
