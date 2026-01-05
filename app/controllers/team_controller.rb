@@ -36,6 +36,35 @@ class TeamController < ApplicationController
     redirect_to team_index_path, alert: "Error: #{e.message}"
   end
 
+  def promote
+    target_user = User.find(params[:id])
+
+    # Authorization Checks
+    unless Current.user.captain?
+      return redirect_to team_index_path, alert: "Unauthorized: Only the Captain can transfer command."
+    end
+
+    if target_user.workspace_id != Current.user.workspace_id
+      return redirect_to team_index_path, alert: "Target outside jurisdiction."
+    end
+
+    if target_user == Current.user
+      return redirect_to team_index_path, alert: "You are already the Captain."
+    end
+
+    User.transaction do
+      # 1. Promote target to Captain
+      target_user.update!(role: :captain)
+
+      # 2. Demote current user to Agent
+      Current.user.update!(role: :agent)
+    end
+
+    redirect_to team_index_path, notice: "Command transferred. You are now an Agent reporting to Captain #{target_user.name}."
+  rescue => e
+    redirect_to team_index_path, alert: "Transfer failed: #{e.message}"
+  end
+
   def destroy
     user = User.find(params[:id])
 
