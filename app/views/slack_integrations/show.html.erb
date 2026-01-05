@@ -41,6 +41,7 @@
         Integrate your Slack workspace to receive notifications and sync messages with DoneYet.
       </p>
       <%= button_to "Connect with Slack", connect_slack_integration_path, 
+          data: { turbo: false },
           class: "inline-flex items-center gap-2 px-6 py-3 bg-indigo-600 hover:bg-indigo-500 text-white font-semibold rounded-lg transition" %>
     </div>
   <% end %>
