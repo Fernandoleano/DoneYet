@@ -84,7 +84,7 @@ group :development do
   gem "letter_opener"
 end
 
-gem "stripe", "~> 18.1"
+gem "stripe", "~> 18.2"
 
 # Slack Integration
 gem "slack-ruby-client"
